@@ -8,12 +8,15 @@ require('./bootstrap');
 
 import { App, plugin } from '@inertiajs/inertia-vue'
 import Vue from 'vue'
+import Vuetify from './plugins/vuetify'
 
 Vue.use(plugin)
+// Vue.use(Vuetify)
 
 const el = document.getElementById('app')
 
 new Vue({
+    vuetify: Vuetify,
     render: h => h(App, {
         props: {
             initialPage: JSON.parse(el.dataset.page),
