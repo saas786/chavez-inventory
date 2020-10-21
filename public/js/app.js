@@ -1942,9 +1942,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['components'],
+  data: function data() {
+    return {
+      headers: [{
+        text: 'ID',
+        value: 'id'
+      }, {
+        text: 'Name',
+        value: 'name'
+      }, {
+        text: 'Type',
+        value: 'keyboard_component_type_id'
+      }, {
+        text: 'Status',
+        value: 'status'
+      }]
+    };
+  },
   layout: function layout(h, page) {
     return h(_Shared_Layout__WEBPACK_IMPORTED_MODULE_1__["default"], [h(_Shared_InventoryLayout__WEBPACK_IMPORTED_MODULE_0__["default"], [page])]);
   }
@@ -1988,8 +2012,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Shared_InventoryLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../Shared/InventoryLayout */ "./resources/js/Shared/InventoryLayout.vue");
-/* harmony import */ var _Shared_Layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/Layout */ "./resources/js/Shared/Layout.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Shared_InventoryLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/InventoryLayout */ "./resources/js/Shared/InventoryLayout.vue");
+/* harmony import */ var _Shared_Layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../Shared/Layout */ "./resources/js/Shared/Layout.vue");
 //
 //
 //
@@ -2031,11 +2057,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   layout: function layout(h, page) {
-    return h(_Shared_Layout__WEBPACK_IMPORTED_MODULE_1__["default"], [h(_Shared_InventoryLayout__WEBPACK_IMPORTED_MODULE_0__["default"], [page])]);
+    return h(_Shared_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], [h(_Shared_InventoryLayout__WEBPACK_IMPORTED_MODULE_1__["default"], [page])]);
+  },
+  methods: {
+    inertiaVisit: function inertiaVisit(link) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"].visit(link);
+    }
   }
 });
 
@@ -2226,10 +2273,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
 //
 //
 //
@@ -38564,7 +38607,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Hello\n")])
+  return _c(
+    "v-container",
+    [
+      _c("v-data-table", {
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.components,
+          "items-per-page": 15
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38588,7 +38643,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Hello\n")])
+  return _c("v-container", { attrs: { "fill-height": "" } }, [
+    _vm._v("\n    Hello\n")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38614,17 +38671,33 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
+    { attrs: { "pa-12": "" } },
     [
       _c(
         "v-row",
         [
           _c(
             "v-col",
+            { attrs: { cols: "6" } },
             [
               _c(
                 "v-card",
+                { attrs: { link: "" } },
                 [
-                  _c("card-title", [_vm._v("Components")]),
+                  _c(
+                    "v-img",
+                    {
+                      staticClass: "white--text align-end",
+                      attrs: {
+                        src:
+                          "https://techcrunch.com/wp-content/uploads/2020/01/14.jpg",
+                        gradient: "to bottom, rgba(0,0,0,.3), rgba(0,0,0,.7)",
+                        height: "100px"
+                      }
+                    },
+                    [_c("v-card-title", [_vm._v("Prebuilt Orders")])],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("v-card-subtitle"),
                   _vm._v(" "),
@@ -38640,11 +38713,35 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "3" } },
             [
               _c(
                 "v-card",
+                { attrs: { link: "" } },
                 [
-                  _c("card-title", [_vm._v("Keyboards")]),
+                  _c("v-card-title", [_vm._v("Components")]),
+                  _vm._v(" "),
+                  _c("v-card-subtitle"),
+                  _vm._v(" "),
+                  _c("v-card-text"),
+                  _vm._v(" "),
+                  _c("v-card-actions")
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3" } },
+            [
+              _c(
+                "v-card",
+                { attrs: { link: "" } },
+                [
+                  _c("v-card-title", [_vm._v("Keyboards")]),
                   _vm._v(" "),
                   _c("v-card-subtitle"),
                   _vm._v(" "),
@@ -38666,11 +38763,13 @@ var render = function() {
         [
           _c(
             "v-col",
+            { attrs: { cols: "6" } },
             [
               _c(
                 "v-card",
+                { attrs: { link: "" } },
                 [
-                  _c("card-title", [_vm._v("Prebuilt Orders")]),
+                  _c("v-card-title", [_vm._v("Custom Orders")]),
                   _vm._v(" "),
                   _c("v-card-subtitle"),
                   _vm._v(" "),
@@ -38689,8 +38788,9 @@ var render = function() {
             [
               _c(
                 "v-card",
+                { attrs: { cols: "6" } },
                 [
-                  _c("card-title", [_vm._v("Custom Orders")]),
+                  _c("v-card-title", [_vm._v("Statistics")]),
                   _vm._v(" "),
                   _c("v-card-subtitle"),
                   _vm._v(" "),
@@ -38732,7 +38832,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Hello\n")])
+  return _c("v-container", [_vm._v("\n    Hello\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38756,7 +38856,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Hello\n")])
+  return _c("v-container", [_vm._v("\n    Hello\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38910,7 +39010,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
-    { attrs: { "fill-height": "", "ma-0": "" } },
+    { staticClass: "align-start", attrs: { "fill-height": "", "ma-0": "" } },
     [
       _c(
         "v-row",
@@ -38918,7 +39018,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "2" } },
+            { attrs: { cols: "2", "fill-height": "" } },
             [
               _c(
                 "v-navigation-drawer",
@@ -38999,7 +39099,9 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-footer", { attrs: { absolute: "" } }, [_vm._v("\r\n    HEllo\r\n")])
+      _c("v-footer", { attrs: { absolute: "" } }, [
+        _vm._v("\r\n        HEllo\r\n    ")
+      ])
     ],
     1
   )

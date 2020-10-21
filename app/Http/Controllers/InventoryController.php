@@ -15,7 +15,9 @@ class InventoryController extends Controller
 
     public function components()
     {
-        return Inertia::render('Inventory/Components');
+        return Inertia::render('Inventory/Components', [
+            'components' => \App\Models\KeyboardComponent::all(),
+        ]);
     }
 
     public function keyboards()

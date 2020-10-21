@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <v-container fill-height>
         Hello
-    </div>
+    </v-container>
 </template>
 
 <script>
