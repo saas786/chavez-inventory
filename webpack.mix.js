@@ -1,16 +1,16 @@
-const mix = require('laravel-mix');
-const VuetifyLoaderPlugin = require('vuetify-loader')
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const mix = require('laravel-mix')
 require('vuetifyjs-mix-extension')
 
-var webpackConfig = {
-    plugins: [
-        new VuetifyLoaderPlugin(),
-        new CaseSensitivePathsPlugin(),
-    ]
-}
+// var webpackConfig = {
+//     plugins: [
+//         new VuetifyLoaderPlugin({
+//             options: {}
+//         }),
+// //         new CaseSensitivePathsPlugin(),
+//     ]
+// }
 
-mix.webpackConfig( webpackConfig );
+// mix.webpackConfig( webpackConfig );
 
 /*
  |--------------------------------------------------------------------------
@@ -23,5 +23,5 @@ mix.webpackConfig( webpackConfig );
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').vuetify('vuetify-loader')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/app.js', 'public/js').vuetify()
+    .sass('resources/sass/app.scss', 'public/css')

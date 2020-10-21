@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="primary" block>Landing Page!</v-btn>
+  <v-btn color="primary" block>About!</v-btn>
 </template>
 
 <script>
