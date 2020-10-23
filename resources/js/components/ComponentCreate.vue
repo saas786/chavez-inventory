@@ -2,6 +2,7 @@
 <v-dialog
   v-model="componentAdd"
   persistent
+  max-width="600"
 >
   <v-card>
     <v-card-title>Add Component</v-card-title>

@@ -1972,6 +1972,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1980,31 +2009,70 @@ __webpack_require__.r(__webpack_exports__);
     ComponentCreate: _components_ComponentCreate__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ['components', 'comp_types', 'layouts'],
+  computed: {
+    tableSelectAll: {
+      get: function get() {
+        return this.table.selected == this.components.map(function (c) {
+          return c.id;
+        });
+      },
+      set: function set(v) {
+        if (!v) {
+          this.table.selected = [];
+        } else {
+          this.table.selected = this.components.map(function (c) {
+            return c.id;
+          });
+        }
+      }
+    }
+  },
   data: function data() {
     return {
-      headers: [{
-        text: 'ID',
-        value: 'id'
-      }, {
-        text: 'Name',
-        value: 'name'
-      }, {
-        text: 'Type',
-        value: 'keyboard_component_type_id'
-      }, {
-        text: 'Status',
-        value: 'status'
-      }],
+      table: {
+        selected: [],
+        search: '',
+        headers: [// {
+        //     text: 'ID',
+        //     value: 'id',
+        // },
+        {
+          text: 'Name',
+          value: 'name'
+        }, {
+          text: 'Type',
+          value: 'keyboard_component_type_id'
+        }, {
+          text: 'Price',
+          value: 'price'
+        }, {
+          text: 'Stock',
+          value: 'stock'
+        }, {
+          text: 'Status',
+          value: 'status'
+        }]
+      },
       componentAdd: false
     };
   },
   layout: function layout(h, page) {
     return h(_Shared_Layout__WEBPACK_IMPORTED_MODULE_1__["default"], [h(_Shared_InventoryLayout__WEBPACK_IMPORTED_MODULE_0__["default"], [page])]);
   },
+  watch: {
+    table: function table() {
+      console.log("CHANGED TABLE");
+    }
+  },
   methods: {
     showAdd: function showAdd() {
       // this.components = {},
       this.componentAdd = true;
+    },
+    getLayout: function getLayout(id) {
+      return this.comp_types.find(function (x) {
+        return x.id == id;
+      }).name;
     }
   }
 });
@@ -2622,6 +2690,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -38991,15 +39060,34 @@ var render = function() {
                   attrs: { color: "primary", text: "" },
                   on: { click: _vm.showAdd }
                 },
-                [_vm._v("\n                Add Component\n            ")]
+                [_vm._v("\n                Add\n            ")]
               ),
               _vm._v(" "),
               _c("v-btn", { attrs: { color: "success", text: "" } }, [
-                _vm._v("\n                Add Stock\n            ")
+                _vm._v("\n                Stock\n            ")
+              ]),
+              _vm._v(" "),
+              _c("v-btn", { attrs: { color: "red", text: "" } }, [
+                _vm._v("\n                Delete\n            ")
               ])
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c("v-select", { attrs: { "single-line": "", "hide-details": "" } }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { "hide-details": "", "single-line": "", label: "Search" },
+            model: {
+              value: _vm.table.search,
+              callback: function($$v) {
+                _vm.$set(_vm.table, "search", $$v)
+              },
+              expression: "table.search"
+            }
+          })
         ],
         1
       ),
@@ -39007,11 +39095,111 @@ var render = function() {
       _c("v-data-table", {
         staticClass: "mt-12",
         attrs: {
-          headers: _vm.headers,
+          headers: _vm.table.headers,
           items: _vm.components,
-          "items-per-page": 15,
+          search: _vm.table.search,
           "show-select": ""
-        }
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "item.name",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                !!item.img_url
+                  ? _c(
+                      "v-tooltip",
+                      {
+                        attrs: { bottom: "" },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                var attrs = ref.attrs
+                                return [
+                                  _c(
+                                    "span",
+                                    _vm._g(
+                                      _vm._b({}, "span", attrs, false),
+                                      on
+                                    ),
+                                    [
+                                      _vm._v(_vm._s(item.name) + " "),
+                                      _c("v-icon", { attrs: { small: "" } }, [
+                                        _vm._v("mdi-camera")
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          true
+                        )
+                      },
+                      [
+                        _vm._v(
+                          "\n              Click to see photo\n            "
+                        )
+                      ]
+                    )
+                  : _c("span", [_vm._v(_vm._s(item.name))])
+              ]
+            }
+          },
+          {
+            key: "header.data-table-select",
+            fn: function() {
+              return [
+                _c("v-checkbox", {
+                  model: {
+                    value: _vm.tableSelectAll,
+                    callback: function($$v) {
+                      _vm.tableSelectAll = $$v
+                    },
+                    expression: "tableSelectAll"
+                  }
+                })
+              ]
+            },
+            proxy: true
+          },
+          {
+            key: "item.data-table-select",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c("v-checkbox", {
+                  attrs: { value: item.id },
+                  model: {
+                    value: _vm.table.selected,
+                    callback: function($$v) {
+                      _vm.$set(_vm.table, "selected", $$v)
+                    },
+                    expression: "table.selected"
+                  }
+                })
+              ]
+            }
+          },
+          {
+            key: "item.keyboard_component_type_id",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.getLayout(item.keyboard_component_type_id)) +
+                    "\n        "
+                )
+              ]
+            }
+          }
+        ])
       })
     ],
     1
@@ -39853,7 +40041,7 @@ var render = function() {
   return _c(
     "v-dialog",
     {
-      attrs: { persistent: "" },
+      attrs: { persistent: "", "max-width": "600" },
       model: {
         value: _vm.componentAdd,
         callback: function($$v) {
