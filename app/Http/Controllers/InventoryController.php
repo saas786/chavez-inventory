@@ -13,10 +13,20 @@ class InventoryController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        return Inertia::render('Inventory/Index', [
+            'componentsFree' => \App\Models\KeyboardComponent::available(),
+            'componentsTotal' => \App\Models\KeyboardComponent::all()->count(),
+        ]);
+    }
+
     public function components()
     {
         return Inertia::render('Inventory/Components', [
             'components' => \App\Models\KeyboardComponent::all(),
+            'comp_types' => \App\Models\KeyboardComponentType::all(),
+            'layouts' => \App\Models\Layout::all(),
         ]);
     }
 
@@ -35,8 +45,4 @@ class InventoryController extends Controller
         return Inertia::render('Inventory/Customs');
     }
 
-    public function index()
-    {
-        return Inertia::render('Inventory/Index');
-    }
 }
