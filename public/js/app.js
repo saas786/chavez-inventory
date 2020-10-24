@@ -2001,6 +2001,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2010,6 +2021,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['components', 'comp_types', 'layouts'],
   computed: {
+    // groupByTypeVal(){
+    //     return ( this.groupByType ) ? 'type' : ''
+    // },
     tableSelectAll: {
       get: function get() {
         return this.table.selected == this.components.map(function (c) {
@@ -2032,22 +2046,29 @@ __webpack_require__.r(__webpack_exports__);
       table: {
         selected: [],
         search: '',
+        // groupByType: false,
         headers: [// {
         //     text: 'ID',
         //     value: 'id',
         // },
         {
           text: 'Name',
-          value: 'name'
+          value: 'name',
+          groupable: false
         }, {
           text: 'Type',
-          value: 'keyboard_component_type_id'
+          value: 'type'
+        }, {
+          text: 'Layout',
+          value: 'layoutName'
         }, {
           text: 'Price',
-          value: 'price'
+          value: 'price',
+          groupable: false
         }, {
           text: 'Stock',
-          value: 'stock'
+          value: 'stock',
+          groupable: false
         }, {
           text: 'Status',
           value: 'status'
@@ -2069,10 +2090,8 @@ __webpack_require__.r(__webpack_exports__);
       // this.components = {},
       this.componentAdd = true;
     },
-    getLayout: function getLayout(id) {
-      return this.comp_types.find(function (x) {
-        return x.id == id;
-      }).name;
+    amazonS3: function amazonS3(id) {
+      console.log("HELLO WORLD!");
     }
   }
 });
@@ -2604,6 +2623,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2633,9 +2683,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.page_status = false;
     });
   },
-  methods: {// inertiaVisit: function ( link ){
-    //   Inertia.visit(link);
-    // }
+  methods: {
+    logoutUser: function logoutUser() {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/logout');
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"].visit('/');
+    }
   }
 });
 
@@ -39076,8 +39128,6 @@ var render = function() {
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
-          _c("v-select", { attrs: { "single-line": "", "hide-details": "" } }),
-          _vm._v(" "),
           _c("v-text-field", {
             attrs: { "hide-details": "", "single-line": "", label: "Search" },
             model: {
@@ -39095,6 +39145,7 @@ var render = function() {
       _c("v-data-table", {
         staticClass: "mt-12",
         attrs: {
+          "show-group-by": "",
           headers: _vm.table.headers,
           items: _vm.components,
           search: _vm.table.search,
@@ -39106,7 +39157,7 @@ var render = function() {
             fn: function(ref) {
               var item = ref.item
               return [
-                !!item.img_url
+                item.image_url === null
                   ? _c(
                       "v-tooltip",
                       {
@@ -39125,13 +39176,7 @@ var render = function() {
                                       _vm._b({}, "span", attrs, false),
                                       on
                                     ),
-                                    [
-                                      _vm._v(_vm._s(item.name) + " "),
-                                      _c("v-icon", { attrs: { small: "" } }, [
-                                        _vm._v("mdi-camera")
-                                      ])
-                                    ],
-                                    1
+                                    [_vm._v(_vm._s(item.name))]
                                   )
                                 ]
                               }
@@ -39141,13 +39186,78 @@ var render = function() {
                           true
                         )
                       },
-                      [
-                        _vm._v(
-                          "\n              Click to see photo\n            "
-                        )
-                      ]
+                      [_vm._v("\n                No image\n            ")]
                     )
-                  : _c("span", [_vm._v(_vm._s(item.name))])
+                  : _c(
+                      "v-dialog",
+                      {
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var dialog = ref.on
+                                var attrs = ref.attrs
+                                return [
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var tooltip = ref.on
+                                              return [
+                                                _c(
+                                                  "span",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {},
+                                                      "span",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    Object.assign(
+                                                      {},
+                                                      tooltip,
+                                                      dialog
+                                                    )
+                                                  ),
+                                                  [
+                                                    _vm._v(_vm._s(item.name)),
+                                                    _c("v-icon", [
+                                                      _vm._v("mdi-camera")
+                                                    ])
+                                                  ],
+                                                  1
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                        Click to see image.\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          true
+                        )
+                      },
+                      [_vm._v(" "), _c("v-img", { attrs: { src: item.url } })],
+                      1
+                    )
               ]
             }
           },
@@ -39183,19 +39293,6 @@ var render = function() {
                     expression: "table.selected"
                   }
                 })
-              ]
-            }
-          },
-          {
-            key: "item.keyboard_component_type_id",
-            fn: function(ref) {
-              var item = ref.item
-              return [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.getLayout(item.keyboard_component_type_id)) +
-                    "\n        "
-                )
               ]
             }
           }
@@ -39913,26 +40010,184 @@ var render = function() {
                     [_vm._v("\n            FAQ\n        ")]
                   ),
                   _vm._v(" "),
-                  _vm.$page.props["auth.user"]
-                    ? _c(
-                        "v-btn",
+                  _c(
+                    "v-menu",
+                    {
+                      attrs: {
+                        "offset-x": "",
+                        "offset-y": "",
+                        "open-on-hover": ""
+                      },
+                      scopedSlots: _vm._u([
                         {
-                          attrs: { text: "" },
-                          on: {
-                            click: function($event) {
-                              return _vm.inertiaVisit("/inventory")
-                            }
+                          key: "activator",
+                          fn: function(ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _vm.$page.props["auth.user"]
+                                ? _c(
+                                    "v-btn",
+                                    _vm._g(
+                                      _vm._b(
+                                        {
+                                          attrs: { text: "" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.inertiaVisit(
+                                                "/inventory"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        "v-btn",
+                                        attrs,
+                                        false
+                                      ),
+                                      on
+                                    ),
+                                    [
+                                      _vm._v(
+                                        "\n              Welcome, " +
+                                          _vm._s(
+                                            _vm.$page.props["auth.user"].name
+                                          ) +
+                                          "\n            "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
                           }
-                        },
+                        }
+                      ])
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-list",
                         [
-                          _vm._v(
-                            "\n          Hello, " +
-                              _vm._s(_vm.$page.props["auth.user"].name) +
-                              "\n        "
+                          _c(
+                            "v-list-item",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.inertiaVisit(
+                                        "/inventory/components"
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v("Components")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.inertiaVisit(
+                                        "/inventory/cables"
+                                      )
+                                    }
+                                  }
+                                },
+                                [_c("v-list-item-title", [_vm._v("Cables")])],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.inertiaVisit(
+                                        "/inventory/prebuilt_orders"
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v("Prebuilt Orders")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.inertiaVisit(
+                                        "/inventory/custom_orders"
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v("Custom Orders")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "" },
+                                  on: { click: _vm.logoutUser }
+                                },
+                                [_c("v-list-item-title", [_vm._v("Logout")])],
+                                1
+                              )
+                            ],
+                            1
                           )
-                        ]
+                        ],
+                        1
                       )
-                    : _vm._e()
+                    ],
+                    1
+                  )
                 ],
                 1
               )

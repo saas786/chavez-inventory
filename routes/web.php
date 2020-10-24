@@ -33,6 +33,7 @@ Route::get('/inventory/prebuilt_orders', 'App\Http\Controllers\InventoryControll
 Route::get('/inventory/custom_orders', 'App\Http\Controllers\InventoryController@custom' )->name('inventory.customs');
 
 Route::post( '/inventory/components', 'App\Http\Controllers\KeyboardComponentController@store');
+Route::get( '/images/components/{id}', 'App\Http\Controllers\KeyboardComponentController@image_url');
 
 Auth::routes();
 

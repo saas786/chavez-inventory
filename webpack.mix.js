@@ -1,16 +1,18 @@
 const mix = require('laravel-mix')
 require('vuetifyjs-mix-extension')
+const LiveReloadPlugin = require('webpack-livereload-plugin')
 
-// var webpackConfig = {
-//     plugins: [
-//         new VuetifyLoaderPlugin({
-//             options: {}
-//         }),
-// //         new CaseSensitivePathsPlugin(),
-//     ]
-// }
+var webpackConfig = {
+    plugins: [
+        // new VuetifyLoaderPlugin({
+        //     options: {}
+        // }),
+        // new CaseSensitivePathsPlugin(),
+        new LiveReloadPlugin(),
+    ]
+}
 
-// mix.webpackConfig( webpackConfig );
+mix.webpackConfig( webpackConfig );
 
 /*
  |--------------------------------------------------------------------------

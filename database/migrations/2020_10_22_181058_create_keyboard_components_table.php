@@ -18,8 +18,8 @@ class CreateKeyboardComponentsTable extends Migration
 
             $table->string('name');
             
-            $table->foreignIdFor( \App\Models\KeyboardComponentType::class );
-            $table->foreignIdFor( \App\Models\Layout::class );
+            $table->foreignIdFor( \App\Models\KeyboardComponentType::class )->constrained();
+            $table->foreignIdFor( \App\Models\Layout::class )->nullable()->constrained();
             $table->unsignedInteger('stock')->default(0);
             $table->unsignedFloat('price')->default(0);
 

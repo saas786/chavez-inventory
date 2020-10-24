@@ -24,10 +24,11 @@
                 </v-btn>
             </v-toolbar-items>
             <v-spacer></v-spacer>
-            <v-select single-line hide-details></v-select>
+            <!-- <v-checkbox v-model="table.groupByType" hide-details class="mr-2" label="Group by Type"></v-checkbox> -->
             <v-text-field hide-details single-line label="Search" v-model="table.search"></v-text-field>
         </v-toolbar>
         <v-data-table
+            show-group-by
             :headers="table.headers"
             :items="components"
             :search="table.search"
@@ -35,15 +36,25 @@
             show-select
         >
             <template v-slot:item.name="{item}">
-                <v-tooltip v-if="!!item.img_url" bottom
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <span v-bind="attrs" v-on="on">{{item.name}} <v-icon small>mdi-camera</v-icon></span>
-                  </template>
-                  Click to see photo
+                <v-tooltip bottom v-if="item.image_url===null">
+                    <template v-slot:activator="{ on, attrs }">
+                        <span v-bind="attrs" v-on="on">{{item.name}}</span>
+                    </template>
+                    No image
                 </v-tooltip>
-                <span v-else>{{item.name}}</span>
+                <v-dialog v-else>
+                    <template v-slot:activator="{ on: dialog, attrs }">
+                        <v-tooltip bottom >
+                            <template v-slot:activator="{ on: tooltip }">
+                                <span v-bind="attrs" v-on="{ ...tooltip, ...dialog}">{{item.name}}<v-icon>mdi-camera</v-icon></span>
+                            </template>
+                            Click to see image.
+                        </v-tooltip>
+                    </template>
+                    <v-img :src="item.url"></v-img>
+                </v-dialog>
             </template>
+
             <template v-slot:header.data-table-select>
                 <v-checkbox v-model="tableSelectAll"></v-checkbox>
             </template>
@@ -55,9 +66,9 @@
                     ></v-checkbox>
                 <!-- </td> -->
             </template>
-            <template v-slot:item.keyboard_component_type_id="{ item }">
+            <!-- <template v-slot:item.keyboard_component_type_id="{ item }">
                 {{ getLayout(item.keyboard_component_type_id) }}
-            </template>
+            </template> -->
         </v-data-table>
     </v-container>
 </template>
@@ -82,6 +93,9 @@ export default {
     ],
 
     computed: {
+        // groupByTypeVal(){
+        //     return ( this.groupByType ) ? 'type' : ''
+        // },
         tableSelectAll: {
             get: function(){
                 return this.table.selected == this.components.map( c => c.id )
@@ -104,6 +118,7 @@ export default {
             table: {
                 selected: [ ],
                 search: '',
+                // groupByType: false,
                 headers: [
                     // {
                     //     text: 'ID',
@@ -112,18 +127,25 @@ export default {
                     {
                         text: 'Name',
                         value: 'name',
+                        groupable: false,
                     },
                     {
                         text: 'Type',
-                        value: 'keyboard_component_type_id'
+                        value: 'type'
+                    },
+                    {
+                        text: 'Layout',
+                        value: 'layoutName'
                     },
                     {
                         text: 'Price',
-                        value: 'price'
+                        value: 'price',
+                        groupable: false,
                     },
                     {
                         text: 'Stock',
-                        value: 'stock'
+                        value: 'stock',
+                        groupable: false,
                     },
                     {
                         text: 'Status',
@@ -152,8 +174,8 @@ export default {
             // this.components = {},
             this.componentAdd = true;
         },
-        getLayout( id ){
-            return this.comp_types.find( x => x.id == id ).name
+        amazonS3( id ){
+            console.log("HELLO WORLD!")
         }
     },
 
