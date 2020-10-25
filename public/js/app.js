@@ -7257,7 +7257,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -39674,7 +39674,7 @@ var render = function() {
             expression: "$parent.$parent.$parent.flash_success"
           }
         },
-        [_vm._v("\r\n    " + _vm._s(_vm.$page.props.flash.success) + "\r\n  ")]
+        [_vm._v("\n    " + _vm._s(_vm.$page.props.flash.success) + "\n  ")]
       ),
       _vm._v(" "),
       _c(
@@ -39704,13 +39704,11 @@ var render = function() {
                         "v-list-item-content",
                         [
                           _c("v-list-item-title", { staticClass: "title" }, [
-                            _vm._v("\r\n            Inventory\r\n          ")
+                            _vm._v("\n            Inventory\n          ")
                           ]),
                           _vm._v(" "),
                           _c("v-list-item-subtitle", [
-                            _vm._v(
-                              "\r\n            Notifications!\r\n          "
-                            )
+                            _vm._v("\n            Notifications!\n          ")
                           ])
                         ],
                         1
@@ -39800,7 +39798,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("v-footer", { attrs: { absolute: "" } }, [
-        _vm._v("\r\n        HEllo\r\n    ")
+        _vm._v("\n        HEllo\n    ")
       ])
     ],
     1
@@ -96159,7 +96157,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -97416,8 +97414,8 @@ var opts = {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\Libraries\Workspace\Laravel Workspace\custommkbd\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\Libraries\Workspace\Laravel Workspace\custommkbd\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /workspace/chavez-inventory/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /workspace/chavez-inventory/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
