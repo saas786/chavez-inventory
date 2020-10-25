@@ -35,7 +35,26 @@ class AppServiceProvider extends ServiceProvider
                 return (object)[];
             },
             'flash' => function () {
+                $bags = null;
+                if( $errors = Session::get('errors') ){
+                    $bags = [];
+                    foreach( $errors->getBags() as $name => $bag ){
+                        $messages = [];
+                        foreach( $bag->getMessages() as $category => $message ){
+                            array_push( $messages, [
+                                'name' => $category,
+                                'content' => $message,
+                            ]);
+                        }
+
+                        array_push( $bags, [
+                            'bag' => $name,
+                            'message' => $messages,
+                        ]);
+                    }
+                }
                 return [
+                    'errors' => $bags,
                     'success' => Session::get('success'),
                 ];
             },

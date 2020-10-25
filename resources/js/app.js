@@ -19,6 +19,10 @@ Vue.mixin({
         inertiaVisit: function (link) {
             Inertia.visit(link);
         },
+        inertiaMessages(){
+            let message = {};
+            return messages;
+        },
         laravelErrorBag( field, errorBag = 'default' ){
             if( !this.$page.props.error.hasOwnProperty( errorBag ) ){
                 return null;

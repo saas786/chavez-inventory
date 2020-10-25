@@ -23,7 +23,7 @@ class KeyboardComponentFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'keyboard_component_type_id' => mt_rand( 1, 5 ),
+            'keyboard_component_type_id' => mt_rand( 1, 4 ),
             'layout_id' => mt_rand( 1, 6 ),
             'stock' => mt_rand( 0, 10 ),
             'price' => mt_rand( 0, 130000) / 100,

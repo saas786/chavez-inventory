@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $layouts = [ 'Full-size', '1800-compact', 'Tenkeyless', '75%', '60%', '40%', '20%'];
-        $compTypes = [ 'Switch', 'Keycap', 'Cable', 'Plate', 'Case'];
+        $compTypes = [ 'Switch', 'Keycap', 'Plate', 'Case'];
 
         foreach ($layouts as  $layout) {
             DB::table('layouts')->insert([

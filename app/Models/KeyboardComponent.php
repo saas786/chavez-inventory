@@ -35,8 +35,8 @@ class KeyboardComponent extends Model
 
     public function getUrlAttribute(){
         if ($this->image_url != null)
-            return Storage::disk('s3')->url($this->image_url);
-        return null;
+            return env('AWS_CLOUDFRONT_URL').$this->image_url;
+        return env('AWS_CLOUDFRONT_URL').'static'.$this->layoutName.'.jpg';
     }
 
     //Relationships

@@ -35,6 +35,15 @@ Route::get('/inventory/custom_orders', 'App\Http\Controllers\InventoryController
 Route::post( '/inventory/components', 'App\Http\Controllers\KeyboardComponentController@store');
 Route::get( '/images/components/{id}', 'App\Http\Controllers\KeyboardComponentController@image_url');
 
-Auth::routes();
+//Auth Routes
+Route::get( '/login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+Route::post( '/login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::post( '/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
+// Auth::routes([
+//     'register' => false,
+//     'reset' => false,
+//     'verify' => false,
+// ]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
