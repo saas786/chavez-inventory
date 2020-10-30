@@ -1,49 +1,70 @@
 <?php
 
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\KeyboardComponentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers;
-use Inertia\Inertia;
+use App\Http\Controllers\ShopController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/shop', [ShopController::class, 'shop'])->name('shop.prebuilt');
+Route::get('/custom', [ShopController::class, 'custom'])->name('shop.custom');
+Route::get('/about', [ShopController::class, 'about'])->name('shop.about');
+Route::get('/faq', [ShopController::class, 'faq'])->name('shop.faq');
 
-// Route::get('/', function () {
-//     return Inertia::render('Shop/Index');
-// });
+Route::get('/inventory/components/debug', [
+	KeyboardComponentController::class,
+	'debug',
+])->name('components.debug');
+Route::post('/inventory/components/stock', [
+	KeyboardComponentController::class,
+	'stock',
+])->name('components.stock');
+Route::post('/inventory/components/{component}', [
+	KeyboardComponentController::class,
+	'update',
+])->name('components.update');
+Route::delete('/inventory/components/', [
+	KeyboardComponentController::class,
+	'destroy',
+])->name('components.delete');
+Route::post('/inventory/components', [
+	KeyboardComponentController::class,
+	'store',
+])->name('components.store');
+Route::get('/inventory', [InventoryController::class, 'index'])->name(
+	'inventory.index'
+);
 
-Route::get( '/', 'App\Http\Controllers\ShopController@index' )->name('shop.index');
-Route::get( '/shop', 'App\Http\Controllers\ShopController@shop' )->name('shop.prebuilt');
-Route::get( '/custom', 'App\Http\Controllers\ShopController@custom' )->name('shop.custom');
-Route::get( '/about', 'App\Http\Controllers\ShopController@about' )->name('shop.about');
-Route::get( '/faq', 'App\Http\Controllers\ShopController@faq' )->name('shop.faq');
-
-Route::get( '/inventory', 'App\Http\Controllers\InventoryController@index' )->name('inventory.index');
-Route::get( '/inventory/components', 'App\Http\Controllers\InventoryController@components' )->name('inventory.components');
-Route::get( '/inventory/keyboards', 'App\Http\Controllers\InventoryController@keyboards' )->name('inventory.keyboards');
-Route::get('/inventory/prebuilt_orders', 'App\Http\Controllers\InventoryController@prebuilt' )->name('inventory.prebuilts');
-Route::get('/inventory/custom_orders', 'App\Http\Controllers\InventoryController@custom' )->name('inventory.customs');
-
-Route::post( '/inventory/components', 'App\Http\Controllers\KeyboardComponentController@store');
-Route::get( '/images/components/{id}', 'App\Http\Controllers\KeyboardComponentController@image_url');
+Route::get('/inventory/keyboards', [
+	InventoryController::class,
+	'keyboards',
+])->name('inventory.keyboards');
+Route::get('/inventory/prebuilt_orders', [
+	InventoryController::class,
+	'prebuilt',
+])->name('inventory.prebuilts');
+Route::get('/inventory/custom_orders', [
+	InventoryController::class,
+	'custom',
+])->name('inventory.customs');
+Route::get('/inventory/components', [
+	InventoryController::class,
+	'components',
+])->name('inventory.components');
 
 //Auth Routes
-Route::get( '/login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
-Route::post( '/login', 'App\Http\Controllers\Auth\LoginController@login');
-Route::post( '/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+Route::get(
+	'/login',
+	'App\Http\Controllers\Auth\LoginController@showLoginForm'
+)->name('login');
+Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::post(
+	'/logout',
+	'App\Http\Controllers\Auth\LoginController@logout'
+)->name('logout');
 
-// Auth::routes([
-//     'register' => false,
-//     'reset' => false,
-//     'verify' => false,
-// ]);
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [
+	App\Http\Controllers\HomeController::class,
+	'index',
+])->name('home');

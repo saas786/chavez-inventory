@@ -45,10 +45,6 @@
 								accept="image"
 							>
 							</v-file-input>
-							<div v-if="laravelErrorBag('image', 'components')">
-								<span color="red">{{
-									laravelErrorBag("image", "components")
-								}}</span>
 							</div>
 						</v-col>
 						<v-col>

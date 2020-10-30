@@ -11,15 +11,68 @@
 				<v-btn color="primary" text @click="showAdd">
 					Add
 				</v-btn>
-				<v-btn color="success" text>
-					Stock
-				</v-btn>
-				<v-btn color="red" text>
-					Delete
-				</v-btn>
+				<v-dialog max-width="600">
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn color="success" text v-bind="attrs" v-on="on">Stock</v-btn>
+					</template>
+					<v-card>
+						<v-card-title>How much stock do you want to add?</v-card-title>
+						<v-card-subtitle
+							>You are editing
+							{{ table.selected.length }} items.</v-card-subtitle
+						>
+						<v-card-text>
+							<v-slider
+								dense
+								v-model="stockAdd"
+								thumb-label
+								color="secondary"
+								min="-50"
+								max="50"
+							></v-slider>
+							<!-- {{ stockAdd }} -->
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn
+								color="success"
+								:disabled="!table.selected.length"
+								outlined
+								large
+								@click="updateStock"
+								>Update Stocks</v-btn
+							>
+							<v-spacer></v-spacer>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+				<v-dialog max-width="600">
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn color="error" text v-bind="attrs" v-on="on">Delete</v-btn>
+					</template>
+					<v-card>
+						<v-card-title>Are you sure?</v-card-title>
+						<v-card-subtitle
+							>You are about to delete
+							{{ table.selected.length }} items.</v-card-subtitle
+						>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn
+								color="error"
+								:disabled="!table.selected.length"
+								large
+								@click="deleteComponents"
+								>Delete Components</v-btn
+							>
+							<v-spacer></v-spacer>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
 			</v-toolbar-items>
 			<v-spacer></v-spacer>
-			{{ this.table.expanded.map(v => v.id) }}
+			<!-- {{ this.table.expanded.map(v => v.id) }} -->
+			{{ this.table.selected }}
 			<!-- <v-checkbox v-model="table.groupByType" hide-details class="mr-2" label="Group by Type"></v-checkbox> -->
 			<v-text-field
 				hide-details
@@ -31,7 +84,7 @@
 		<v-data-table
 			show-group-by
 			:headers="table.headers"
-			:items="components"
+			:items="items"
 			:search="table.search"
 			:expanded.sync="table.expanded"
 			@click:row="expandRow"
@@ -40,15 +93,18 @@
 			show-select
 		>
 			<template v-slot:expanded-item="{ headers, item }">
-				<td :colspan="headers.length">
-					<component-update :item="item"></component-update>
+				<td :colspan="headers.length" class="primary darken-3">
+					<component-update
+						:item="toUpdate(item)"
+						:comp_types="comp_types"
+						:layouts="layouts"
+					></component-update>
 				</td>
 			</template>
-			<template v-slot:item.name="{ item }">
-				<!-- <td @click="expandRow(item)"> -->
-				<v-tooltip bottom v-if="item.image_url === null">
+			<template v-slot:item.Name="{ item }">
+				<v-tooltip bottom v-if="item.url === null">
 					<template v-slot:activator="{ on, attrs }">
-						<span v-bind="attrs" v-on="on">{{ item.name }}</span>
+						<span v-bind="attrs" v-on="on">{{ item.Name }}</span>
 					</template>
 					No image
 				</v-tooltip>
@@ -57,7 +113,7 @@
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on: tooltip }">
 								<span v-bind="attrs" v-on="{ ...tooltip, ...dialog }"
-									>{{ item.name }} <v-icon>mdi-camera</v-icon></span
+									>{{ item.Name }} <v-icon>mdi-camera</v-icon></span
 								>
 							</template>
 							Click to see image.
@@ -69,20 +125,12 @@
 						lazy-src="https://via.placeholder.com/800"
 					></v-img>
 				</v-dialog>
-				<!-- </td> -->
 			</template>
 
-			<template v-slot:header.data-table-select>
-				<v-checkbox v-model="tableSelectAll"></v-checkbox>
-			</template>
+			<template v-slot:header.data-table-select> </template>
 			<template v-slot:item.data-table-select="{ item }">
-				<!-- <td> -->
-				<v-checkbox v-model="table.selected" :value="item.id"></v-checkbox>
-				<!-- </td> -->
+				<v-checkbox @click.stop="select(item.id)"></v-checkbox>
 			</template>
-			<!-- <template v-slot:item.keyboard_component_type_id="{ item }">
-                {{ getLayout(item.keyboard_component_type_id) }}
-            </template> -->
 		</v-data-table>
 	</v-container>
 </template>
@@ -92,6 +140,7 @@ import InventoryLayout from "./../../Shared/InventoryLayout";
 import Layout from "./../../Shared/Layout";
 import ComponentCreate from "./../../components/ComponentCreate";
 import ComponentUpdate from "./../../components/ComponentUpdate";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
 	components: {
@@ -101,70 +150,57 @@ export default {
 
 	props: ["components", "comp_types", "layouts"],
 
+	mounted() {
+		// this.table.expanded = [this.components[0]];
+	},
+
 	computed: {
-		// groupByTypeVal(){
-		//     return ( this.groupByType ) ? 'type' : ''
-		// },
-		tableSelectAll: {
-			get: function() {
-				return this.table.selected == this.components.map(c => c.id);
-			},
-			set: function(v) {
-				if (!v) {
-					this.table.selected = [];
-				} else {
-					this.table.selected = this.components.map(c => c.id);
-				}
-			}
+		items() {
+			return this.components.map(comp => {
+				return {
+					id: comp.id,
+					Name: comp.name,
+					layout_id: comp.layout_id,
+					Layout: !!comp.layout ? comp.layout.name : "",
+					keyboard_component_type_id: comp.keyboard_component_type_id,
+					Type: comp.keyboard_component_type.name,
+					Stock: comp.stock,
+					Price: comp.price
+				};
+			});
 		}
 	},
 
 	data() {
 		return {
+			stockAdd: 0,
 			table: {
 				selected: [],
 				search: "",
-				expanded: [],
-				// groupByType: false,
+				expanded: [1],
 				headers: [
-					// {
-					//     text: 'ID',
-					//     value: 'id',
-					// },
-					// {
-					// 	value: "data-table-expand",
-					// 	groupable: false
-					// },
-					// {
-					// 	value: "data-table-select",
-					// 	groupable: false
-					// },
 					{
 						text: "Name",
-						value: "name",
+						value: "Name",
 						groupable: false
 					},
 					{
 						text: "Type",
-						value: "type"
+						value: "Type"
 					},
 					{
 						text: "Layout",
-						value: "layoutName"
+						value: "Layout"
 					},
 					{
 						text: "Price",
-						value: "price",
+						value: "Price",
 						groupable: false
 					},
 					{
 						text: "Stock",
-						value: "stock",
+						value: "Stock",
 						groupable: false
-					},
-					{
-						text: "Status",
-						value: "status"
 					}
 				]
 			},
@@ -183,11 +219,31 @@ export default {
 	},
 
 	methods: {
+		toUpdate(item) {
+			return {
+				id: item.id,
+				name: item.Name,
+				layout_id: item.layout_id,
+				keyboard_component_type_id: item.keyboard_component_type_id,
+				stock: item.Stock,
+				price: item.Price,
+				image: []
+			};
+		},
 		expandRow(item) {
 			let { expanded } = this.table;
 			if (expanded.includes(item)) {
 				expanded.splice(expanded.indexOf(item), 1);
 			} else expanded.push(item);
+		},
+		select(id) {
+			// console.log("SELECTED");
+			let { selected } = this.table;
+			// console.log(selected);
+			if (selected.includes(id)) {
+				// console.log("SPLICING");
+				selected.splice(selected.indexOf(id), 1);
+			} else selected.push(id);
 		},
 		showAdd() {
 			// this.components = {},
@@ -195,6 +251,25 @@ export default {
 		},
 		amazonS3(id) {
 			console.log("HELLO WORLD!");
+		},
+		updateStock() {
+			Inertia.post("/inventory/components/stock", {
+				componentIds: this.table.selected,
+				stockAdd: this.stockAdd
+			});
+		},
+		deleteComponents() {
+			// axios.delete("/inventory/components/stock", {
+			// 	data: {
+			// 		componentIds: this.table.selected,
+			// 		_token: document.head.querySelector('meta[name="csrf-token"]').content
+			// 	}
+			// });
+			this.$inertia.post("/inventory/components/", {
+				componentIds: this.table.selected,
+				_method: "DELETE",
+				_token: document.head.querySelector('meta[name="csrf-token"]').content
+			});
 		}
 	}
 };

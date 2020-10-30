@@ -2,7 +2,7 @@
 	<v-container fill-height ma-0 class="align-start full-height">
 		<v-row class="full-height">
 			<v-col cols="2" fill-height>
-				<v-navigation-drawer permanent class="pink darken-4 full-height">
+				<v-navigation-drawer permanent class="primary full-height">
 					<v-list-item link @click="inertiaVisit('/inventory')">
 						<v-list-item-content>
 							<v-list-item-title class="title">
@@ -21,6 +21,7 @@
 							v-for="item in items"
 							:key="item.title"
 							link
+							text
 							@click="inertiaVisit(item.link)"
 						>
 							<v-list-item-content>
@@ -44,7 +45,6 @@
 							:width="10"
 							color="primary"
 						></v-progress-circular>
-						<!-- <h1 class="display-1 mt-2">Loading...</h1> -->
 					</v-container>
 					<slot v-if="!page_status" />
 				</v-container>
@@ -64,9 +64,6 @@ export default {
 		page_status: function() {
 			return this.$parent.$parent.$parent.page_status;
 		}
-		// flashMessage(){
-		//   return !!this.$page.props.flash.success;
-		// },
 	},
 
 	mounted() {},

@@ -11,7 +11,7 @@
 		</v-snackbar>
 		<v-snackbar
 			v-model="flash_error"
-			color="red"
+			color="error"
 			top
 			pa-4
 			vertical
@@ -33,6 +33,7 @@
 		<v-app-bar
 			dark
 			app
+			shrink-on-scroll
 			prominent
 			src="http://d1bn13w6l50iio.cloudfront.net/static/header.jpg"
 			v-bind:class="[page_status ? '' : 'mb-2']"
@@ -74,30 +75,23 @@
 						</v-btn>
 					</template>
 					<v-list>
-						<v-list-item>
-							<v-btn text @click="inertiaVisit('/inventory/components')">
-								<v-list-item-title>Components</v-list-item-title>
-							</v-btn>
+						<v-list-item link @click="inertiaVisit('/inventory/components')">
+							<v-list-item-title>Components</v-list-item-title>
 						</v-list-item>
-						<v-list-item>
-							<v-btn text @click="inertiaVisit('/inventory/cables')">
-								<v-list-item-title>Cables</v-list-item-title>
-							</v-btn>
+						<v-list-item link @click="inertiaVisit('/inventory/cables')">
+							<v-list-item-title>Cables</v-list-item-title>
 						</v-list-item>
-						<v-list-item>
-							<v-btn text @click="inertiaVisit('/inventory/prebuilt_orders')">
-								<v-list-item-title>Prebuilt Orders</v-list-item-title>
-							</v-btn>
+						<v-list-item
+							link
+							@click="inertiaVisit('/inventory/prebuilt_orders')"
+						>
+							<v-list-item-title>Prebuilt Orders</v-list-item-title>
 						</v-list-item>
-						<v-list-item>
-							<v-btn text @click="inertiaVisit('/inventory/custom_orders')">
-								<v-list-item-title>Custom Orders</v-list-item-title>
-							</v-btn>
+						<v-list-item link @click="inertiaVisit('/inventory/custom_orders')">
+							<v-list-item-title>Custom Orders</v-list-item-title>
 						</v-list-item>
-						<v-list-item>
-							<v-btn text @click="logoutUser">
-								<v-list-item-title>Logout</v-list-item-title>
-							</v-btn>
+						<v-list-item link @click="logoutUser">
+							<v-list-item-title>Logout</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
