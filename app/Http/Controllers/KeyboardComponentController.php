@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
 use App\Models\KeyboardComponent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -118,5 +119,34 @@ class KeyboardComponentController extends Controller
 			return Storage::disk('s3')->url($comp->image_url);
 		}
 		return null;
+	}
+
+	public function colors()
+	{
+		return Color::all();
+	}
+
+	public function colorsUpdate(Request $request)
+	{
+		foreach (Color::all() as $color) {
+			$color->delete();
+		}
+
+		foreach ($request->all() as $color) {
+			$color_model = Color::withTrashed()->firstOrNew([
+				'name' => $color['name'],
+			]);
+			if ($color_model->trashed()) {
+				$color_model->restore();
+			}
+
+			$color_model->name = $color['name'];
+			$color_model->hex_code = $color['hexCode'];
+			$color_model->primary = $color['primary'];
+			$color_model->double_sleeved = $color['double'];
+			$color_model->save();
+		}
+
+		return Color::all();
 	}
 }

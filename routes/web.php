@@ -20,6 +20,14 @@ Route::post('/inventory/components/stock', [
 	KeyboardComponentController::class,
 	'stock',
 ])->name('components.stock');
+Route::post('/inventory/components/colors', [
+	KeyboardComponentController::class,
+	'colorsUpdate',
+])->name('components.colors.update');
+Route::get('/inventory/components/colors', [
+	KeyboardComponentController::class,
+	'colors',
+])->name('components.colors');
 Route::post('/inventory/components/{component}', [
 	KeyboardComponentController::class,
 	'update',

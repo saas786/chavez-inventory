@@ -69,6 +69,14 @@
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
+				<v-dialog max-width="600">
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn color="secondary" text v-bind="attrs" v-on="on"
+							>Cable Colors</v-btn
+						>
+					</template>
+					<color-edit></color-edit>
+				</v-dialog>
 			</v-toolbar-items>
 			<v-spacer></v-spacer>
 			<!-- {{ this.table.expanded.map(v => v.id) }} -->
@@ -140,12 +148,14 @@ import InventoryLayout from "./../../Shared/InventoryLayout";
 import Layout from "./../../Shared/Layout";
 import ComponentCreate from "./../../components/ComponentCreate";
 import ComponentUpdate from "./../../components/ComponentUpdate";
+import ColorEdit from "./../../components/ColorEdit";
 import { Inertia } from "@inertiajs/inertia";
 
 export default {
 	components: {
 		ComponentCreate,
-		ComponentUpdate
+		ComponentUpdate,
+		ColorEdit
 	},
 
 	props: ["components", "comp_types", "layouts"],
@@ -165,7 +175,8 @@ export default {
 					keyboard_component_type_id: comp.keyboard_component_type_id,
 					Type: comp.keyboard_component_type.name,
 					Stock: comp.stock,
-					Price: comp.price
+					Price: comp.price,
+					url: comp.url
 				};
 			});
 		}

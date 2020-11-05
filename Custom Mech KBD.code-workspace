@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\..\\VS Code Things"
+		}
+	],
+    "settings": {
+        "maven.view": "flat"
+    }
+}

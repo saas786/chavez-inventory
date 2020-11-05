@@ -1,22 +1,23 @@
 <template>
-  <v-btn color="primary">Shop!</v-btn>
+	<keyboard-customize :components="components"></keyboard-customize>
 </template>
 
 <script>
-import Layout from './../../Shared/Layout'
-import ShopLayout from './../../Shared/ShopLayout'
+import Layout from "./../../Shared/Layout";
+import ShopLayout from "./../../Shared/ShopLayout";
+import KeyboardCustomize from "./../../components/KeyboardCustomize";
 
 export default {
+	props: ["components"],
 
-    layout: (h, page) => {
-        return h( Layout, [
-            h( ShopLayout, [page] )
-        ])
-    },
+	components: {
+		KeyboardCustomize
+	},
 
-    mounted(){
-        
-    }
-    
-}
+	layout: (h, page) => {
+		return h(Layout, [h(ShopLayout, [page])]);
+	},
+
+	mounted() {}
+};
 </script>

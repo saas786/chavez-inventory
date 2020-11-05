@@ -1938,8 +1938,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Shared_Layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/Layout */ "./resources/js/Shared/Layout.vue");
 /* harmony import */ var _components_ComponentCreate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../components/ComponentCreate */ "./resources/js/components/ComponentCreate.vue");
 /* harmony import */ var _components_ComponentUpdate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../../components/ComponentUpdate */ "./resources/js/components/ComponentUpdate.vue");
-/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
-/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_ColorEdit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../../components/ColorEdit */ "./resources/js/components/ColorEdit.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_5__);
 //
 //
 //
@@ -2077,6 +2078,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2085,7 +2095,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     ComponentCreate: _components_ComponentCreate__WEBPACK_IMPORTED_MODULE_2__["default"],
-    ComponentUpdate: _components_ComponentUpdate__WEBPACK_IMPORTED_MODULE_3__["default"]
+    ComponentUpdate: _components_ComponentUpdate__WEBPACK_IMPORTED_MODULE_3__["default"],
+    ColorEdit: _components_ColorEdit__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: ["components", "comp_types", "layouts"],
   mounted: function mounted() {// this.table.expanded = [this.components[0]];
@@ -2101,7 +2112,8 @@ __webpack_require__.r(__webpack_exports__);
           keyboard_component_type_id: comp.keyboard_component_type_id,
           Type: comp.keyboard_component_type.name,
           Stock: comp.stock,
-          Price: comp.price
+          Price: comp.price,
+          url: comp.url
         };
       });
     }
@@ -2180,7 +2192,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log("HELLO WORLD!");
     },
     updateStock: function updateStock() {
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__["Inertia"].post("/inventory/components/stock", {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_5__["Inertia"].post("/inventory/components/stock", {
         componentIds: this.table.selected,
         stockAdd: this.stockAdd
       });
@@ -2568,13 +2580,19 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Shared_Layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../Shared/Layout */ "./resources/js/Shared/Layout.vue");
 /* harmony import */ var _Shared_ShopLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../Shared/ShopLayout */ "./resources/js/Shared/ShopLayout.vue");
+/* harmony import */ var _components_KeyboardCustomize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../components/KeyboardCustomize */ "./resources/js/components/KeyboardCustomize.vue");
 //
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["components"],
+  components: {
+    KeyboardCustomize: _components_KeyboardCustomize__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   layout: function layout(h, page) {
     return h(_Shared_Layout__WEBPACK_IMPORTED_MODULE_0__["default"], [h(_Shared_ShopLayout__WEBPACK_IMPORTED_MODULE_1__["default"], [page])]);
   },
@@ -2875,6 +2893,377 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     page_status: function page_status() {
       return this.$parent.$parent.$parent.page_status;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CableCustomizePanel.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CableCustomizePanel.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["colors", "price"],
+  computed: {
+    valid: function valid() {
+      return this.cable.color_id != "" && (!this.cable.double_sleeved || this.cable.double_sleeved && this.cable.double_sleeve_color_id != "");
+    },
+    primaryColor: function primaryColor() {
+      var _this = this;
+
+      var color = this.colors.filter(function (c) {
+        return c.id == _this.cable.color_id;
+      })[0]; // console.log("COLOR: ", color);
+
+      if (!!color) return color;
+      return {
+        name: "No color",
+        hex_code: "#FFF"
+      };
+    },
+    sleeveColor: function sleeveColor() {
+      var _this2 = this;
+
+      var color = this.colors.filter(function (c) {
+        return c.id == _this2.cable.double_sleeve_color_id;
+      })[0]; // console.log("COLOR: ", color);
+
+      if (!!color) return color;
+      return this.primaryColor;
+    },
+    cableGradient: function cableGradient() {
+      if (!this.cable.double_sleeved) this.cable.double_sleeve_color_id = "";
+      return [this.primaryColor.hex_code, this.sleeveColor.hex_code, this.sleeveColor.hex_code, this.sleeveColor.hex_code, this.primaryColor.hex_code];
+    },
+    primaryColors: function primaryColors() {
+      return this.colors.filter(function (color) {
+        return color.primary == true;
+      });
+    },
+    sleeveColors: function sleeveColors() {
+      return this.colors.filter(function (color) {
+        return color.double_sleeved == true;
+      });
+    },
+    cableLine: function cableLine() {
+      // return [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0];
+      var values = [1, 1, 1];
+
+      for (var x = 1; x <= this.cable.coil_length; x++) {
+        // const add = x % 2 == 0 ? 2 : 0;
+        values.push(2);
+        values.push(0);
+        values.push(1);
+      }
+
+      for (var _x = 0; _x < this.cable.cable_length - this.cable.coil_length; _x++) {
+        for (var y = 0; y < 3; y++) {
+          values.push(1);
+        }
+      }
+
+      values.push(1);
+      values.push(1);
+      values.push(1);
+      return values;
+    }
+  },
+  data: function data() {
+    return {
+      cable: {
+        cable_length: 5,
+        coil_length: 0,
+        color_id: "",
+        double_sleeved: false,
+        double_sleeve_color_id: "",
+        detachable: false
+      }
+    };
+  },
+  methods: {
+    nextStep: function nextStep() {
+      this.$emit("step-forward");
+      this.$emit("select-update", this.cable);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ColorEdit.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ColorEdit.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    this.loading = true;
+    axios.get("/inventory/components/colors").then(function (res) {
+      _this.loading = false;
+      _this.color_edit = res.data.map(function (color) {
+        return {
+          name: color.name,
+          hexCode: color.hex_code,
+          primary: color.primary,
+          "double": color.double_sleeved
+        };
+      });
+    });
+  },
+  computed: {
+    canAdd: function canAdd() {
+      return !(!!this.newColor.name && !!this.newColor.hexCode);
+    }
+  },
+  data: function data() {
+    return {
+      loading: false,
+      color_edit: [],
+      headers: [{
+        text: "Name",
+        value: "name"
+      }, {
+        text: "Hex Code",
+        value: "hexCode"
+      }, {
+        text: "Single Sleeved",
+        value: "primary"
+      }, {
+        text: "Double Sleeved",
+        value: "double"
+      }, {
+        text: "",
+        value: "actions"
+      }],
+      newColor: {
+        name: "",
+        hexCode: "",
+        primary: false,
+        "double": false
+      },
+      rules: {
+        required: function required(value) {
+          return !!value || "Required";
+        }
+      }
+    };
+  },
+  methods: {
+    addColor: function addColor() {
+      this.color_edit.push(this.newColor);
+      this.newColor = {
+        name: "",
+        hexCode: "",
+        primary: false,
+        "double": false
+      };
+    },
+    removeColor: function removeColor(ind) {
+      this.color_edit.splice(ind, 1);
+    },
+    updateColors: function updateColors() {
+      var _this2 = this;
+
+      console.log(this.color_edit);
+      var token = document.querySelector('meta[name="csrf-token"]');
+      axios.post("/inventory/components/colors", this.color_edit).then(function (res) {
+        _this2.$page.props.flash.success = "Colors updated!";
+        _this2.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.flash_success = true;
+      }); // Inertia.post("/inventory/components/colors", this.color_edit);
     }
   }
 });
@@ -3250,6 +3639,546 @@ __webpack_require__.r(__webpack_exports__);
       var url = "/inventory/components/".concat(this.item.id); // this.$inertia.put(url, data);
 
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"].post("/inventory/components/".concat(this.item.id), data);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomize.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _KeyboardCustomizePanel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyboardCustomizePanel */ "./resources/js/components/KeyboardCustomizePanel.vue");
+/* harmony import */ var _CableCustomizePanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CableCustomizePanel */ "./resources/js/components/CableCustomizePanel.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    CustomizePanel: _KeyboardCustomizePanel__WEBPACK_IMPORTED_MODULE_0__["default"],
+    CablePanel: _CableCustomizePanel__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/inventory/components/colors").then(function (res) {
+      _this.colors = res.data;
+    });
+  },
+  props: ["components"],
+  computed: {
+    total: function total() {
+      var _this2 = this;
+
+      var types = ["switch", "keycap", "plate", "case"];
+      var keyboardPrice = 0;
+      if (this.components.length < 4) return 0;
+      types.forEach(function (value, index) {
+        // console.log(value, index);
+        var comp = _this2.components[index].filter(function (item) {
+          return item.id == _this2.keyboard[value];
+        });
+
+        if (!!comp[0]) keyboardPrice += parseFloat(comp[0].price);
+      });
+      return keyboardPrice;
+    },
+    caseOptions: function caseOptions() {
+      var _this3 = this;
+
+      if (this.components.length < 4) return [];
+      return this.components[3].filter(function (c) {
+        return c.layout_id == _this3.keyboard.layout;
+      });
+    },
+    plateOptions: function plateOptions() {
+      var _this4 = this;
+
+      if (this.components.length < 4) return [];
+      return this.components[2].filter(function (c) {
+        return c.layout_id == _this4.keyboard.layout;
+      });
+    },
+    customerValid: function customerValid() {
+      return this.customer.name != "" && this.customer.messenger != "" && this.customer.remarks != "";
+    }
+  },
+  data: function data() {
+    return {
+      colors: [],
+      ordering: false,
+      step: 1,
+      keyboard: {
+        layout: 1,
+        "switch": 0,
+        keycap: 0,
+        cable: {},
+        plate: 0,
+        "case": 0
+      },
+      customer: {
+        name: "",
+        messenger: "",
+        remarks: ""
+      }
+    };
+  },
+  methods: {
+    layoutSelect: function layoutSelect(id) {
+      this.keyboard.layout = id;
+      this.step++;
+    },
+    layoutDisable: function layoutDisable(id) {
+      if (this.components.length < 4) return true;
+      var cases = this.components[3].filter(function (c) {
+        return c.layout_id == id;
+      });
+      var plates = this.components[2].filter(function (c) {
+        return c.layout_id == id;
+      });
+      return cases.length <= 0 || plates.length <= 0;
+    },
+    findComponent: function findComponent(id) {
+      this.components.forEach(function (type) {
+        type.forEach(function (c) {
+          if (c.id == id) return c;
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["items", "layout", "price", "select_id"],
+  data: function data() {
+    return {
+      image_url: ""
+    };
+  },
+  computed: {
+    selectId: {
+      get: function get() {
+        return this.select_id;
+      },
+      set: function set(v) {
+        this.image_url = this.items.filter(function (i) {
+          return i.id == v;
+        })[0].url;
+        this.$emit("select-update", v);
+      }
+    },
+    selectItems: function selectItems() {
+      return this.items.map(function (item) {
+        return {
+          text: "".concat(item.name, " - \u20B1").concat(item.price),
+          value: item.id
+        };
+      });
+    },
+    imageDim: function imageDim() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return 200;
+
+        case "sm":
+          return 200;
+
+        case "md":
+          return 400;
+
+        case "lg":
+          return 400;
+
+        case "xl":
+          return 400;
+      }
+
+      return 200;
     }
   }
 });
@@ -7716,6 +8645,44 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.border-radius-0 {\r\n\tborder-radius: 0;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.full {\r\n\tbackground: url(\"https://custom-mech-kbd.s3-ap-northeast-1.amazonaws.com/static/header.jpg\");\r\n\tbackground-size: cover;\r\n\tbackground-attachment: scroll;\n}\n.full-height {\r\n\theight: 100% !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.full-height {\r\n\theight: 100% !important;\n}\r\n", ""]);
 
 // exports
 
@@ -38911,6 +39878,66 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomize.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -39709,6 +40736,39 @@ var render = function() {
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-dialog",
+                {
+                  attrs: { "max-width": "600" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function(ref) {
+                        var on = ref.on
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._g(
+                              _vm._b(
+                                { attrs: { color: "secondary", text: "" } },
+                                "v-btn",
+                                attrs,
+                                false
+                              ),
+                              on
+                            ),
+                            [_vm._v("Cable Colors")]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                },
+                [_vm._v(" "), _c("color-edit")],
+                1
               )
             ],
             1
@@ -40374,7 +41434,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-btn", { attrs: { color: "primary" } }, [_vm._v("Shop!")])
+  return _c("keyboard-customize", { attrs: { components: _vm.components } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40933,6 +41993,569 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CableCustomizePanel.vue?vue&type=template&id=24f02803&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CableCustomizePanel.vue?vue&type=template&id=24f02803& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", [_vm._v("Total Price: ₱" + _vm._s(_vm.price))]),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "1" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "full-height",
+                          on: {
+                            click: function($event) {
+                              return _vm.$emit("step-back")
+                            }
+                          }
+                        },
+                        [_c("v-icon", [_vm._v("mdi-arrow-left")])],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c(
+                        "v-sheet",
+                        { staticClass: "pa-12 mx-12" },
+                        [
+                          _c("v-sparkline", {
+                            attrs: {
+                              gradient: _vm.cableGradient,
+                              "gradient-direction": "left",
+                              type: "trend",
+                              "auto-draw": "",
+                              padding: "10",
+                              height: "50",
+                              smooth: "",
+                              "line-width": "2",
+                              "stroke-linecap": "round",
+                              value: _vm.cableLine
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-slider", {
+                                    attrs: {
+                                      min: "1",
+                                      max: "10",
+                                      "thumb-label": "",
+                                      label:
+                                        "Cable Length " +
+                                        _vm.cable.cable_length +
+                                        " feet"
+                                    },
+                                    model: {
+                                      value: _vm.cable.cable_length,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.cable, "cable_length", $$v)
+                                      },
+                                      expression: "cable.cable_length"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-slider", {
+                                    attrs: {
+                                      min: "0",
+                                      max: _vm.cable.cable_length,
+                                      hint: "Coil length",
+                                      "thumb-label": "",
+                                      label:
+                                        "Coil Length " +
+                                        _vm.cable.coil_length +
+                                        " inches"
+                                    },
+                                    model: {
+                                      value: _vm.cable.coil_length,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.cable, "coil_length", $$v)
+                                      },
+                                      expression: "cable.coil_length"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "3" } },
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-checkbox", {
+                                    attrs: { label: "Detachable?" },
+                                    model: {
+                                      value: _vm.cable.detachable,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.cable, "detachable", $$v)
+                                      },
+                                      expression: "cable.detachable"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-checkbox", {
+                                    attrs: { label: "Double Sleeved?" },
+                                    model: {
+                                      value: _vm.cable.double_sleeved,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.cable,
+                                          "double_sleeved",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "cable.double_sleeved"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      label: "Cable Color",
+                                      items: _vm.primaryColors,
+                                      "item-text": "name",
+                                      "item-value": "id"
+                                    },
+                                    model: {
+                                      value: _vm.cable.color_id,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.cable, "color_id", $$v)
+                                      },
+                                      expression: "cable.color_id"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _vm.cable.double_sleeved
+                                ? _c(
+                                    "v-row",
+                                    [
+                                      _c("v-select", {
+                                        attrs: {
+                                          label: "Sleeve Color",
+                                          items: _vm.sleeveColors,
+                                          "item-text": "name",
+                                          "item-value": "id"
+                                        },
+                                        model: {
+                                          value:
+                                            _vm.cable.double_sleeve_color_id,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.cable,
+                                              "double_sleeve_color_id",
+                                              $$v
+                                            )
+                                          },
+                                          expression:
+                                            "cable.double_sleeve_color_id"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "1" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "full-height",
+                          attrs: { color: "priamry", disabled: !_vm.valid },
+                          on: { click: _vm.nextStep }
+                        },
+                        [_c("v-icon", [_vm._v("mdi-arrow-right")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ColorEdit.vue?vue&type=template&id=32dcf89c&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ColorEdit.vue?vue&type=template&id=32dcf89c& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    [
+      _c("v-card-title", [_vm._v("Edit Cable Colors")]),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        [
+          _c("v-data-table", {
+            attrs: {
+              items: _vm.color_edit,
+              headers: _vm.headers,
+              loading: _vm.loading
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "item.primary",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _c("v-simple-checkbox", {
+                      model: {
+                        value: item.primary,
+                        callback: function($$v) {
+                          _vm.$set(item, "primary", $$v)
+                        },
+                        expression: "item.primary"
+                      }
+                    })
+                  ]
+                }
+              },
+              {
+                key: "item.double",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _c("v-simple-checkbox", {
+                      model: {
+                        value: item.double,
+                        callback: function($$v) {
+                          _vm.$set(item, "double", $$v)
+                        },
+                        expression: "item.double"
+                      }
+                    })
+                  ]
+                }
+              },
+              {
+                key: "body.append",
+                fn: function() {
+                  return [
+                    _c("tr", [
+                      _c(
+                        "td",
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "Name",
+                              rules: [_vm.rules.required],
+                              "single-line": ""
+                            },
+                            model: {
+                              value: _vm.newColor.name,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newColor, "name", $$v)
+                              },
+                              expression: "newColor.name"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              readonly: "",
+                              label: "Hex Code",
+                              "single-line": ""
+                            },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "append-outer",
+                                fn: function() {
+                                  return [
+                                    _c(
+                                      "v-dialog",
+                                      {
+                                        attrs: { "max-width": "300" },
+                                        scopedSlots: _vm._u([
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-btn",
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {},
+                                                          "v-icon",
+                                                          attrs,
+                                                          false
+                                                        ),
+                                                        on
+                                                      ),
+                                                      [
+                                                        _vm._v(
+                                                          "mdi-select-color"
+                                                        )
+                                                      ]
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ])
+                                      },
+                                      [
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-card",
+                                          [
+                                            _c(
+                                              "v-card-text",
+                                              [
+                                                _c("v-color-picker", {
+                                                  staticClass: "my-4",
+                                                  attrs: {
+                                                    "hide-mode-switch": "",
+                                                    mode: "hexa"
+                                                  },
+                                                  model: {
+                                                    value: _vm.newColor.hexCode,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.newColor,
+                                                        "hexCode",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "newColor.hexCode"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ]
+                                },
+                                proxy: true
+                              }
+                            ]),
+                            model: {
+                              value: _vm.newColor.hexCode,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newColor, "hexCode", $$v)
+                              },
+                              expression: "newColor.hexCode"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("v-simple-checkbox", {
+                            model: {
+                              value: _vm.newColor.primary,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newColor, "primary", $$v)
+                              },
+                              expression: "newColor.primary"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("v-simple-checkbox", {
+                            model: {
+                              value: _vm.newColor.double,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newColor, "double", $$v)
+                              },
+                              expression: "newColor.double"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { disabled: _vm.canAdd, color: "primary" },
+                              on: { click: _vm.addColor }
+                            },
+                            [_c("v-icon", [_vm._v("mdi-plus")])],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                },
+                proxy: true
+              }
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card-actions",
+        [
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { color: "success" }, on: { click: _vm.updateColors } },
+            [_vm._v("Save")]
+          ),
+          _vm._v(" "),
+          _c("v-spacer")
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ComponentCreate.vue?vue&type=template&id=2743703e&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ComponentCreate.vue?vue&type=template&id=2743703e& ***!
@@ -41404,6 +43027,1051 @@ var render = function() {
                   }
                 },
                 [_vm._v("Update")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=template&id=41520b41&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomize.vue?vue&type=template&id=41520b41& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-stepper",
+        {
+          model: {
+            value: _vm.step,
+            callback: function($$v) {
+              _vm.step = $$v
+            },
+            expression: "step"
+          }
+        },
+        [
+          _c(
+            "v-stepper-header",
+            [
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 1, step: "1" } },
+                [_vm._v("Layout")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 2, step: "2" } },
+                [_vm._v("Switches")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 3, step: "3" } },
+                [_vm._v("Keycaps")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 4, step: "4" } },
+                [_vm._v("Cable")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 5, step: "5" } },
+                [_vm._v("Plate")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 6, step: "6" } },
+                [_vm._v("Case")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 7, step: "7" } },
+                [_vm._v("Customer Details")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 8, step: "8" } },
+                [_vm._v("Review")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.step > 9, step: "9" } },
+                [_vm._v("Done!")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.ordering ? _c("v-progress-linear") : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "1" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [_vm._v("Layout")]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-row",
+                            { staticClass: "px-3 pb-2" },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "full",
+                                  attrs: {
+                                    block: "",
+                                    height: "150px",
+                                    disabled: _vm.layoutDisable(1)
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.layoutSelect(1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "d-flex flex-column" },
+                                    [
+                                      _c("span", { staticClass: "text-h4" }, [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t\t\tFull-size\n\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm.layoutDisable(1)
+                                        ? _c(
+                                            "span",
+                                            { staticClass: "error--text" },
+                                            [_vm._v("Components Out of Stock")]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            [
+                              _c(
+                                "v-col",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        block: "",
+                                        height: "150px",
+                                        disabled: _vm.layoutDisable(2)
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.layoutSelect(2)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "d-flex flex-column" },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-h4" },
+                                            [
+                                              _vm._v(
+                                                "\n\t\t\t\t\t\t\t\t\t\t\t1800-compact\n\t\t\t\t\t\t\t\t\t\t"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.layoutDisable(2)
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "error--text" },
+                                                [
+                                                  _vm._v(
+                                                    "Components Out of Stock"
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        block: "",
+                                        height: "150px",
+                                        disabled: _vm.layoutDisable(3)
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.layoutSelect(3)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "d-flex flex-column" },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-h4" },
+                                            [
+                                              _vm._v(
+                                                "\n\t\t\t\t\t\t\t\t\t\t\tTenkeyless\n\t\t\t\t\t\t\t\t\t\t"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.layoutDisable(3)
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "error--text" },
+                                                [
+                                                  _vm._v(
+                                                    "Components Out of Stock"
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        block: "",
+                                        height: "150px",
+                                        disabled: _vm.layoutDisable(4)
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.layoutSelect(4)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "d-flex flex-column" },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-h4" },
+                                            [
+                                              _vm._v(
+                                                "\n\t\t\t\t\t\t\t\t\t\t\t75%\n\t\t\t\t\t\t\t\t\t\t"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.layoutDisable(4)
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "error--text" },
+                                                [
+                                                  _vm._v(
+                                                    "Components Out of Stock"
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            [
+                              _c(
+                                "v-col",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        block: "",
+                                        height: "150px",
+                                        disabled: _vm.layoutDisable(5)
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.layoutSelect(5)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "d-flex flex-column" },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-h4" },
+                                            [
+                                              _vm._v(
+                                                "\n\t\t\t\t\t\t\t\t\t\t\t60%\n\t\t\t\t\t\t\t\t\t\t"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.layoutDisable(5)
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "error--text" },
+                                                [
+                                                  _vm._v(
+                                                    "Components Out of Stock"
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        block: "",
+                                        height: "150px",
+                                        disabled: _vm.layoutDisable(6)
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.layoutSelect(6)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "d-flex flex-column" },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-h4" },
+                                            [
+                                              _vm._v(
+                                                "\n\t\t\t\t\t\t\t\t\t\t\t40%\n\t\t\t\t\t\t\t\t\t\t"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.layoutDisable(6)
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "error--text" },
+                                                [
+                                                  _vm._v(
+                                                    "Components Out of Stock"
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        block: "",
+                                        height: "150px",
+                                        disabled: _vm.layoutDisable(7)
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.layoutSelect(7)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "d-flex flex-column" },
+                                        [
+                                          _c(
+                                            "span",
+                                            { staticClass: "text-h4" },
+                                            [
+                                              _vm._v(
+                                                "\n\t\t\t\t\t\t\t\t\t\t\t20%\n\t\t\t\t\t\t\t\t\t\t"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.layoutDisable(7)
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "error--text" },
+                                                [
+                                                  _vm._v(
+                                                    "Components Out of Stock"
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-card-actions")
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "2" } },
+                [
+                  _c("customize-panel", {
+                    attrs: {
+                      layout: _vm.keyboard.layout,
+                      items: _vm.components[0],
+                      price: _vm.total,
+                      select_id: _vm.keyboard.switch
+                    },
+                    on: {
+                      "step-back": function($event) {
+                        _vm.step--
+                      },
+                      "step-forward": function($event) {
+                        _vm.step++
+                      },
+                      "select-update": function($event) {
+                        _vm.keyboard.switch = $event
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "3" } },
+                [
+                  _c("customize-panel", {
+                    attrs: {
+                      layout: _vm.keyboard.layout,
+                      items: _vm.components[1],
+                      price: _vm.total,
+                      select_id: _vm.keyboard.keycap
+                    },
+                    on: {
+                      "step-back": function($event) {
+                        _vm.step--
+                      },
+                      "step-forward": function($event) {
+                        _vm.step++
+                      },
+                      "select-update": function($event) {
+                        _vm.keyboard.keycap = $event
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "4" } },
+                [
+                  _c("cable-panel", {
+                    attrs: { price: _vm.total, colors: _vm.colors },
+                    on: {
+                      "step-back": function($event) {
+                        _vm.step--
+                      },
+                      "step-forward": function($event) {
+                        _vm.step++
+                      },
+                      "select-update": function($event) {
+                        _vm.keyboard.cable = $event
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "5" } },
+                [
+                  _c("customize-panel", {
+                    attrs: {
+                      layout: _vm.keyboard.layout,
+                      items: _vm.plateOptions,
+                      price: _vm.total,
+                      select_id: _vm.keyboard.plate
+                    },
+                    on: {
+                      "step-back": function($event) {
+                        _vm.step--
+                      },
+                      "step-forward": function($event) {
+                        _vm.step++
+                      },
+                      "select-update": function($event) {
+                        _vm.keyboard.plate = $event
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "6" } },
+                [
+                  _c("customize-panel", {
+                    attrs: {
+                      layout: _vm.keyboard.layout,
+                      items: _vm.caseOptions,
+                      price: _vm.total,
+                      select_id: _vm.keyboard.case
+                    },
+                    on: {
+                      "step-back": function($event) {
+                        _vm.step--
+                      },
+                      "step-forward": function($event) {
+                        _vm.step++
+                      },
+                      "select-update": function($event) {
+                        _vm.keyboard.case = $event
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "7" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [_vm._v("Customer Details")]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        { staticClass: "text-center" },
+                        [
+                          _c(
+                            "v-row",
+                            [
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "1" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "full-height",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.step--
+                                        }
+                                      }
+                                    },
+                                    [_c("v-icon", [_vm._v("mdi-arrow-left")])],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "10" } },
+                                [
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: { label: "Customer Name" },
+                                        model: {
+                                          value: _vm.customer.name,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.customer, "name", $$v)
+                                          },
+                                          expression: "customer.name"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Messenger ID",
+                                          "persistent-hint": "",
+                                          hint: "Your messenger username"
+                                        },
+                                        model: {
+                                          value: _vm.customer.messenger,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.customer,
+                                              "messenger",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "customer.messenger"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c("v-textarea", {
+                                        attrs: { label: "Additional Requests" },
+                                        model: {
+                                          value: _vm.customer.remarks,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.customer,
+                                              "remarks",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "customer.remarks"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "1" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "full-height",
+                                      attrs: {
+                                        disabled: !_vm.customerValid,
+                                        color: "primary"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.step++
+                                        }
+                                      }
+                                    },
+                                    [_c("v-icon", [_vm._v("mdi-arrow-right")])],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "8" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [_vm._v("Review")]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        [
+                          _c("v-row", [
+                            _vm._v("Total Price: " + _vm._s(_vm.total))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            [
+                              _c("v-simple-table", [
+                                _c("thead", [
+                                  _c("tr", [
+                                    _c("th", { attrs: { colspan: "2" } }, [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t\tCustomer Details\n\t\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("tbody", [
+                                  _c("tr", [
+                                    _c("td", [_vm._v("Name")]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(_vm.customer.name))
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("tr", [
+                                    _c("td", [_vm._v("Messenger ID")]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(_vm.customer.messenger))
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("tr", [
+                                    _c("td", [_vm._v("Remarks")]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(_vm.customer.remarks))
+                                    ])
+                                  ])
+                                ])
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            [
+                              _c("v-simple-table", [
+                                _c("tbody", [
+                                  _c("tr", [_c("td"), _vm._v(" "), _c("td")])
+                                ])
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-card-actions")
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-stepper-items",
+            [_c("v-stepper-content", { attrs: { step: "9" } })],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    [
+      _c("v-card-title", [_vm._v("Total Price: ₱" + _vm._s(_vm.price))]),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        { staticClass: "text-center" },
+        [
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "1" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "full-height",
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("step-back")
+                        }
+                      }
+                    },
+                    [_c("v-icon", [_vm._v("mdi-arrow-left")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "10" } },
+                [
+                  _c(
+                    "v-container",
+                    { attrs: { fluid: "" } },
+                    [
+                      _c(
+                        "v-row",
+                        { attrs: { align: "center", justify: "center" } },
+                        [
+                          _c("v-img", {
+                            attrs: {
+                              "lazy-src": "https://via.placeholder.com/400",
+                              src: _vm.image_url,
+                              "max-height": _vm.imageDim,
+                              "max-width": _vm.imageDim
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: { items: _vm.selectItems },
+                    model: {
+                      value: _vm.selectId,
+                      callback: function($$v) {
+                        _vm.selectId = $$v
+                      },
+                      expression: "selectId"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "1" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "full-height",
+                      attrs: { color: "primary", disabled: !this.select_id },
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("step-forward")
+                        }
+                      }
+                    },
+                    [_c("v-icon", [_vm._v("mdi-arrow-right")])],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1
@@ -98515,6 +101183,144 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/CableCustomizePanel.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/CableCustomizePanel.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CableCustomizePanel_vue_vue_type_template_id_24f02803___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CableCustomizePanel.vue?vue&type=template&id=24f02803& */ "./resources/js/components/CableCustomizePanel.vue?vue&type=template&id=24f02803&");
+/* harmony import */ var _CableCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CableCustomizePanel.vue?vue&type=script&lang=js& */ "./resources/js/components/CableCustomizePanel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CableCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CableCustomizePanel_vue_vue_type_template_id_24f02803___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CableCustomizePanel_vue_vue_type_template_id_24f02803___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CableCustomizePanel.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CableCustomizePanel.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/CableCustomizePanel.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CableCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CableCustomizePanel.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CableCustomizePanel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CableCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CableCustomizePanel.vue?vue&type=template&id=24f02803&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/CableCustomizePanel.vue?vue&type=template&id=24f02803& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CableCustomizePanel_vue_vue_type_template_id_24f02803___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CableCustomizePanel.vue?vue&type=template&id=24f02803& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CableCustomizePanel.vue?vue&type=template&id=24f02803&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CableCustomizePanel_vue_vue_type_template_id_24f02803___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CableCustomizePanel_vue_vue_type_template_id_24f02803___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ColorEdit.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ColorEdit.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ColorEdit_vue_vue_type_template_id_32dcf89c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ColorEdit.vue?vue&type=template&id=32dcf89c& */ "./resources/js/components/ColorEdit.vue?vue&type=template&id=32dcf89c&");
+/* harmony import */ var _ColorEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ColorEdit.vue?vue&type=script&lang=js& */ "./resources/js/components/ColorEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ColorEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ColorEdit_vue_vue_type_template_id_32dcf89c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ColorEdit_vue_vue_type_template_id_32dcf89c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ColorEdit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ColorEdit.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/ColorEdit.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ColorEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ColorEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ColorEdit.vue?vue&type=template&id=32dcf89c&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/ColorEdit.vue?vue&type=template&id=32dcf89c& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorEdit_vue_vue_type_template_id_32dcf89c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ColorEdit.vue?vue&type=template&id=32dcf89c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ColorEdit.vue?vue&type=template&id=32dcf89c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorEdit_vue_vue_type_template_id_32dcf89c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorEdit_vue_vue_type_template_id_32dcf89c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ComponentCreate.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/ComponentCreate.vue ***!
@@ -98666,6 +101472,180 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ComponentUpdate_vue_vue_type_template_id_77f94cea___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ComponentUpdate_vue_vue_type_template_id_77f94cea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomize.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomize.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _KeyboardCustomize_vue_vue_type_template_id_41520b41___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyboardCustomize.vue?vue&type=template&id=41520b41& */ "./resources/js/components/KeyboardCustomize.vue?vue&type=template&id=41520b41&");
+/* harmony import */ var _KeyboardCustomize_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./KeyboardCustomize.vue?vue&type=script&lang=js& */ "./resources/js/components/KeyboardCustomize.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _KeyboardCustomize_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./KeyboardCustomize.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _KeyboardCustomize_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _KeyboardCustomize_vue_vue_type_template_id_41520b41___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _KeyboardCustomize_vue_vue_type_template_id_41520b41___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/KeyboardCustomize.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomize.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomize.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomize.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomize.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomize.vue?vue&type=template&id=41520b41&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomize.vue?vue&type=template&id=41520b41& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_template_id_41520b41___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomize.vue?vue&type=template&id=41520b41& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomize.vue?vue&type=template&id=41520b41&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_template_id_41520b41___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomize_vue_vue_type_template_id_41520b41___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomizePanel.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomizePanel.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _KeyboardCustomizePanel_vue_vue_type_template_id_94fa391a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a& */ "./resources/js/components/KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a&");
+/* harmony import */ var _KeyboardCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./KeyboardCustomizePanel.vue?vue&type=script&lang=js& */ "./resources/js/components/KeyboardCustomizePanel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _KeyboardCustomizePanel_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _KeyboardCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _KeyboardCustomizePanel_vue_vue_type_template_id_94fa391a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _KeyboardCustomizePanel_vue_vue_type_template_id_94fa391a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/KeyboardCustomizePanel.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomizePanel.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomizePanel.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomizePanel.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_template_id_94fa391a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KeyboardCustomizePanel.vue?vue&type=template&id=94fa391a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_template_id_94fa391a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KeyboardCustomizePanel_vue_vue_type_template_id_94fa391a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
