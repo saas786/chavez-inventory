@@ -1,12 +1,9 @@
 {
 	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "..\\..\\VS Code Things"
-		}
-	],
+        {
+            "path": "."
+        }
+    ],
     "settings": {
         "maven.view": "flat"
     }

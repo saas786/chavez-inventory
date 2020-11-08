@@ -2079,13 +2079,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3013,6 +3006,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["colors", "price"],
   computed: {
@@ -3186,6 +3183,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -3215,19 +3243,24 @@ __webpack_require__.r(__webpack_exports__);
       color_edit: [],
       headers: [{
         text: "Name",
-        value: "name"
+        value: "name",
+        width: 100
       }, {
         text: "Hex Code",
-        value: "hexCode"
+        value: "hexCode",
+        width: 100
       }, {
         text: "Single Sleeved",
-        value: "primary"
+        value: "primary",
+        width: 1
       }, {
         text: "Double Sleeved",
-        value: "double"
+        value: "double",
+        width: 1
       }, {
         text: "",
-        value: "actions"
+        value: "actions",
+        width: 1
       }],
       newColor: {
         name: "",
@@ -3656,6 +3689,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _KeyboardCustomizePanel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyboardCustomizePanel */ "./resources/js/components/KeyboardCustomizePanel.vue");
 /* harmony import */ var _CableCustomizePanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CableCustomizePanel */ "./resources/js/components/CableCustomizePanel.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -3979,6 +4014,102 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4028,7 +4159,43 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     customerValid: function customerValid() {
-      return this.customer.name != "" && this.customer.messenger != "" && this.customer.remarks != "";
+      var validComp = this.keyboard["switch"] != "" && this.keyboard.keycap != "" && this.keyboard["case"] != "" && this.keyboard.plate != "";
+      return this.customer.name != "" && this.customer.messenger != "" && validComp;
+    },
+    layoutName: function layoutName() {
+      switch (this.keyboard.layout) {
+        case 1:
+          return "Full-size";
+          break;
+
+        case 2:
+          return "1800-compact";
+          break;
+
+        case 3:
+          return "Tenkeyless";
+          break;
+
+        case 4:
+          return "75%";
+          break;
+
+        case 5:
+          return "60%";
+          break;
+
+        case 6:
+          return "40%";
+          break;
+
+        case 7:
+          return "20%";
+          break;
+
+        default:
+          return "Error";
+          break;
+      }
     }
   },
   data: function data() {
@@ -4052,6 +4219,31 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    order: function order() {
+      this.ordering = true;
+      axios.post("/custom", {
+        keyboard: this.keyboard,
+        customer: this.customer
+      }).then(function (res) {
+        console.log(res);
+      }); // Inertia.post("/custom", {
+      // 	keyboard: this.keyboard,
+      // 	customer: this.customer
+      // }).then(res => {
+      // 	console.log(res);
+      // });
+    },
+    reset: function reset() {
+      this.step = 1;
+      this.keyboard = {
+        layout: 1,
+        "switch": 0,
+        keycap: 0,
+        cable: {},
+        plate: 0,
+        "case": 0
+      };
+    },
     layoutSelect: function layoutSelect(id) {
       this.keyboard.layout = id;
       this.step++;
@@ -4067,11 +4259,23 @@ __webpack_require__.r(__webpack_exports__);
       return cases.length <= 0 || plates.length <= 0;
     },
     findComponent: function findComponent(id) {
+      // console.log(id);
+      var comp = 0;
       this.components.forEach(function (type) {
+        // console.log(type);
         type.forEach(function (c) {
-          if (c.id == id) return c;
+          // console.log(c);
+          if (c.id == id) {
+            // console.log(c);
+            comp = c;
+          }
         });
       });
+      if (comp == 0) return {
+        name: "Error",
+        price: 0
+      };
+      return comp;
     }
   }
 });
@@ -4087,6 +4291,25 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40738,38 +40961,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c(
-                "v-dialog",
-                {
-                  attrs: { "max-width": "600" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "activator",
-                      fn: function(ref) {
-                        var on = ref.on
-                        var attrs = ref.attrs
-                        return [
-                          _c(
-                            "v-btn",
-                            _vm._g(
-                              _vm._b(
-                                { attrs: { color: "secondary", text: "" } },
-                                "v-btn",
-                                attrs,
-                                false
-                              ),
-                              on
-                            ),
-                            [_vm._v("Cable Colors")]
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                },
-                [_vm._v(" "), _c("color-edit")],
-                1
-              )
+              _c("color-edit")
             ],
             1
           ),
@@ -42014,7 +42206,12 @@ var render = function() {
       _c(
         "v-card",
         [
-          _c("v-card-title", [_vm._v("Total Price: ₱" + _vm._s(_vm.price))]),
+          _c("v-card-title", [
+            _vm._v(
+              "Total Price: ₱" +
+                _vm._s(Math.round((_vm.price + Number.EPSILON) * 100) / 100)
+            )
+          ]),
           _vm._v(" "),
           _c(
             "v-card-text",
@@ -42247,7 +42444,7 @@ var render = function() {
                         "v-btn",
                         {
                           staticClass: "full-height",
-                          attrs: { color: "priamry", disabled: !_vm.valid },
+                          attrs: { color: "primary", disabled: !_vm.valid },
                           on: { click: _vm.nextStep }
                         },
                         [_c("v-icon", [_vm._v("mdi-arrow-right")])],
@@ -42292,256 +42489,384 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "v-dialog",
+    {
+      attrs: { "max-width": "800" },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            var attrs = ref.attrs
+            return [
+              _c(
+                "v-btn",
+                _vm._g(
+                  _vm._b(
+                    { attrs: { color: "secondary", text: "" } },
+                    "v-btn",
+                    attrs,
+                    false
+                  ),
+                  on
+                ),
+                [_vm._v("Cable Colors")]
+              )
+            ]
+          }
+        }
+      ])
+    },
     [
-      _c("v-card-title", [_vm._v("Edit Cable Colors")]),
       _vm._v(" "),
       _c(
-        "v-card-text",
+        "v-card",
         [
-          _c("v-data-table", {
-            attrs: {
-              items: _vm.color_edit,
-              headers: _vm.headers,
-              loading: _vm.loading
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.primary",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c("v-simple-checkbox", {
-                      model: {
-                        value: item.primary,
-                        callback: function($$v) {
-                          _vm.$set(item, "primary", $$v)
-                        },
-                        expression: "item.primary"
-                      }
-                    })
-                  ]
-                }
-              },
-              {
-                key: "item.double",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c("v-simple-checkbox", {
-                      model: {
-                        value: item.double,
-                        callback: function($$v) {
-                          _vm.$set(item, "double", $$v)
-                        },
-                        expression: "item.double"
-                      }
-                    })
-                  ]
-                }
-              },
-              {
-                key: "body.append",
-                fn: function() {
-                  return [
-                    _c("tr", [
-                      _c(
-                        "td",
-                        [
-                          _c("v-text-field", {
-                            attrs: {
-                              label: "Name",
-                              rules: [_vm.rules.required],
-                              "single-line": ""
+          _c("v-card-title", [_vm._v("Edit Cable Colors")]),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c("v-data-table", {
+                attrs: {
+                  items: _vm.color_edit,
+                  headers: _vm.headers,
+                  loading: _vm.loading
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.primary",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("v-simple-checkbox", {
+                          model: {
+                            value: item.primary,
+                            callback: function($$v) {
+                              _vm.$set(item, "primary", $$v)
                             },
-                            model: {
-                              value: _vm.newColor.name,
-                              callback: function($$v) {
-                                _vm.$set(_vm.newColor, "name", $$v)
-                              },
-                              expression: "newColor.name"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("v-text-field", {
-                            attrs: {
-                              readonly: "",
-                              label: "Hex Code",
-                              "single-line": ""
+                            expression: "item.primary"
+                          }
+                        })
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.double",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("v-simple-checkbox", {
+                          model: {
+                            value: item.double,
+                            callback: function($$v) {
+                              _vm.$set(item, "double", $$v)
                             },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "append-outer",
-                                fn: function() {
-                                  return [
-                                    _c(
-                                      "v-dialog",
-                                      {
-                                        attrs: { "max-width": "300" },
-                                        scopedSlots: _vm._u([
-                                          {
-                                            key: "activator",
-                                            fn: function(ref) {
-                                              var on = ref.on
-                                              var attrs = ref.attrs
-                                              return [
-                                                _c(
-                                                  "v-btn",
-                                                  [
-                                                    _c(
-                                                      "v-icon",
-                                                      _vm._g(
-                                                        _vm._b(
-                                                          {},
-                                                          "v-icon",
-                                                          attrs,
-                                                          false
-                                                        ),
-                                                        on
-                                                      ),
-                                                      [
-                                                        _vm._v(
-                                                          "mdi-select-color"
-                                                        )
-                                                      ]
-                                                    )
-                                                  ],
-                                                  1
-                                                )
-                                              ]
-                                            }
-                                          }
-                                        ])
-                                      },
+                            expression: "item.double"
+                          }
+                        })
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.hexCode",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-row",
+                          [
+                            _c("v-col", { attrs: { cols: "9" } }, [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t" +
+                                  _vm._s(item.hexCode) +
+                                  "\n\t\t\t\t\t\t"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "3" } },
+                              [
+                                _c(
+                                  "v-dialog",
+                                  {
+                                    attrs: { "max-width": "300" },
+                                    scopedSlots: _vm._u(
                                       [
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-card",
-                                          [
-                                            _c(
-                                              "v-card-text",
-                                              [
-                                                _c("v-color-picker", {
-                                                  staticClass: "my-4",
-                                                  attrs: {
-                                                    "hide-mode-switch": "",
-                                                    mode: "hexa"
-                                                  },
-                                                  model: {
-                                                    value: _vm.newColor.hexCode,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.newColor,
-                                                        "hexCode",
-                                                        $$v
-                                                      )
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              _c(
+                                                "v-icon",
+                                                _vm._g(
+                                                  _vm._b(
+                                                    {
+                                                      attrs: {
+                                                        color: item.hexCode
+                                                      }
                                                     },
-                                                    expression:
-                                                      "newColor.hexCode"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
+                                                    "v-icon",
+                                                    attrs,
+                                                    false
+                                                  ),
+                                                  on
+                                                ),
+                                                [_vm._v("mdi-circle")]
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-card",
+                                      [
+                                        _c(
+                                          "v-card-text",
+                                          [
+                                            _c("v-color-picker", {
+                                              staticClass: "my-4",
+                                              attrs: {
+                                                "hide-mode-switch": "",
+                                                mode: "hexa"
+                                              },
+                                              model: {
+                                                value: item.hexCode,
+                                                callback: function($$v) {
+                                                  _vm.$set(item, "hexCode", $$v)
+                                                },
+                                                expression: "item.hexCode"
+                                              }
+                                            })
                                           ],
                                           1
                                         )
                                       ],
                                       1
                                     )
-                                  ]
-                                },
-                                proxy: true
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "error" },
+                            on: {
+                              click: function($event) {
+                                return _vm.removeColor(item.index)
                               }
-                            ]),
-                            model: {
-                              value: _vm.newColor.hexCode,
-                              callback: function($$v) {
-                                _vm.$set(_vm.newColor, "hexCode", $$v)
-                              },
-                              expression: "newColor.hexCode"
                             }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("v-simple-checkbox", {
-                            model: {
-                              value: _vm.newColor.primary,
-                              callback: function($$v) {
-                                _vm.$set(_vm.newColor, "primary", $$v)
-                              },
-                              expression: "newColor.primary"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("v-simple-checkbox", {
-                            model: {
-                              value: _vm.newColor.double,
-                              callback: function($$v) {
-                                _vm.$set(_vm.newColor, "double", $$v)
-                              },
-                              expression: "newColor.double"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
+                          },
+                          [_c("v-icon", [_vm._v("mdi-delete")])],
+                          1
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "body.append",
+                    fn: function() {
+                      return [
+                        _c("tr", [
                           _c(
-                            "v-btn",
-                            {
-                              attrs: { disabled: _vm.canAdd, color: "primary" },
-                              on: { click: _vm.addColor }
-                            },
-                            [_c("v-icon", [_vm._v("mdi-plus")])],
+                            "td",
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Name",
+                                  rules: [_vm.rules.required],
+                                  "single-line": ""
+                                },
+                                model: {
+                                  value: _vm.newColor.name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newColor, "name", $$v)
+                                  },
+                                  expression: "newColor.name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "pl-12" },
+                            [
+                              _c(
+                                "v-dialog",
+                                {
+                                  attrs: { "max-width": "300" },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        var attrs = ref.attrs
+                                        return [
+                                          _c(
+                                            "v-icon",
+                                            _vm._g(
+                                              _vm._b(
+                                                {
+                                                  attrs: {
+                                                    color: _vm.newColor.hexCode
+                                                  }
+                                                },
+                                                "v-icon",
+                                                attrs,
+                                                false
+                                              ),
+                                              on
+                                            ),
+                                            [_vm._v("mdi-circle")]
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ])
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card",
+                                    [
+                                      _c(
+                                        "v-card-text",
+                                        [
+                                          _c("v-color-picker", {
+                                            staticClass: "my-4",
+                                            attrs: {
+                                              "hide-mode-switch": "",
+                                              mode: "hexa"
+                                            },
+                                            model: {
+                                              value: _vm.newColor.hexCode,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.newColor,
+                                                  "hexCode",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "newColor.hexCode"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c("v-simple-checkbox", {
+                                model: {
+                                  value: _vm.newColor.primary,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newColor, "primary", $$v)
+                                  },
+                                  expression: "newColor.primary"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c("v-simple-checkbox", {
+                                model: {
+                                  value: _vm.newColor.double,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newColor, "double", $$v)
+                                  },
+                                  expression: "newColor.double"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    disabled: _vm.canAdd,
+                                    color: "primary"
+                                  },
+                                  on: { click: _vm.addColor }
+                                },
+                                [_c("v-icon", [_vm._v("mdi-plus")])],
+                                1
+                              )
+                            ],
                             1
                           )
-                        ],
-                        1
-                      )
-                    ])
-                  ]
-                },
-                proxy: true
-              }
-            ])
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-card-actions",
-        [
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { color: "success" }, on: { click: _vm.updateColors } },
-            [_vm._v("Save")]
+                        ])
+                      ]
+                    },
+                    proxy: true
+                  }
+                ])
+              })
+            ],
+            1
           ),
           _vm._v(" "),
-          _c("v-spacer")
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "success" },
+                  on: { click: _vm.updateColors }
+                },
+                [_vm._v("Save")]
+              ),
+              _vm._v(" "),
+              _c("v-spacer")
+            ],
+            1
+          )
         ],
         1
       )
@@ -43081,30 +43406,74 @@ var render = function() {
               _c(
                 "v-stepper-step",
                 { attrs: { complete: _vm.step > 1, step: "1" } },
-                [_vm._v("Layout")]
+                [
+                  _vm._v(
+                    "\n\t\t\t\t" +
+                      _vm._s(_vm.step > 1 ? _vm.layoutName : "Layout") +
+                      "\n\t\t\t"
+                  )
+                ]
               ),
               _vm._v(" "),
               _c("v-divider"),
               _vm._v(" "),
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.step > 2, step: "2" } },
-                [_vm._v("Switches")]
+                {
+                  attrs: {
+                    complete: _vm.step > 2,
+                    editable: _vm.keyboard.switch != "",
+                    step: "2"
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n\t\t\t\t" +
+                      _vm._s(
+                        _vm.keyboard.switch != ""
+                          ? _vm.findComponent(_vm.keyboard.switch).name
+                          : "Switches"
+                      ) +
+                      "\n\t\t\t"
+                  )
+                ]
               ),
               _vm._v(" "),
               _c("v-divider"),
               _vm._v(" "),
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.step > 3, step: "3" } },
-                [_vm._v("Keycaps")]
+                {
+                  attrs: {
+                    complete: _vm.step > 3,
+                    editable: _vm.keyboard.keycap != "",
+                    step: "3"
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n\t\t\t\t" +
+                      _vm._s(
+                        _vm.keyboard.keycap != ""
+                          ? _vm.findComponent(_vm.keyboard.keycap).name
+                          : "Keycaps"
+                      ) +
+                      "\n\t\t\t"
+                  )
+                ]
               ),
               _vm._v(" "),
               _c("v-divider"),
               _vm._v(" "),
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.step > 4, step: "4" } },
+                {
+                  attrs: {
+                    complete: _vm.step > 4,
+                    step: "4",
+                    editable: !!_vm.keyboard.cable.color_id
+                  }
+                },
                 [_vm._v("Cable")]
               ),
               _vm._v(" "),
@@ -43112,16 +43481,48 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.step > 5, step: "5" } },
-                [_vm._v("Plate")]
+                {
+                  attrs: {
+                    complete: _vm.step > 5,
+                    step: "5",
+                    editable: _vm.keyboard.plate != ""
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n\t\t\t\t" +
+                      _vm._s(
+                        _vm.keyboard.plate != ""
+                          ? _vm.findComponent(_vm.keyboard.plate).name
+                          : "Plates"
+                      ) +
+                      "\n\t\t\t"
+                  )
+                ]
               ),
               _vm._v(" "),
               _c("v-divider"),
               _vm._v(" "),
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.step > 6, step: "6" } },
-                [_vm._v("Case")]
+                {
+                  attrs: {
+                    complete: _vm.step > 6,
+                    step: "6",
+                    editable: _vm.keyboard.case != ""
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n\t\t\t\t" +
+                      _vm._s(
+                        _vm.keyboard.case != ""
+                          ? _vm.findComponent(_vm.keyboard.case).name
+                          : "Cases"
+                      ) +
+                      "\n\t\t\t"
+                  )
+                ]
               ),
               _vm._v(" "),
               _c("v-divider"),
@@ -43201,7 +43602,7 @@ var render = function() {
                                       _vm.layoutDisable(1)
                                         ? _c(
                                             "span",
-                                            { staticClass: "error--text" },
+                                            { staticClass: "error--text h6" },
                                             [_vm._v("Components Out of Stock")]
                                           )
                                         : _vm._e()
@@ -43251,7 +43652,9 @@ var render = function() {
                                           _vm.layoutDisable(2)
                                             ? _c(
                                                 "span",
-                                                { staticClass: "error--text" },
+                                                {
+                                                  staticClass: "error--text h6"
+                                                },
                                                 [
                                                   _vm._v(
                                                     "Components Out of Stock"
@@ -43302,7 +43705,9 @@ var render = function() {
                                           _vm.layoutDisable(3)
                                             ? _c(
                                                 "span",
-                                                { staticClass: "error--text" },
+                                                {
+                                                  staticClass: "error--text h6"
+                                                },
                                                 [
                                                   _vm._v(
                                                     "Components Out of Stock"
@@ -43353,7 +43758,9 @@ var render = function() {
                                           _vm.layoutDisable(4)
                                             ? _c(
                                                 "span",
-                                                { staticClass: "error--text" },
+                                                {
+                                                  staticClass: "error--text h6"
+                                                },
                                                 [
                                                   _vm._v(
                                                     "Components Out of Stock"
@@ -43410,7 +43817,9 @@ var render = function() {
                                           _vm.layoutDisable(5)
                                             ? _c(
                                                 "span",
-                                                { staticClass: "error--text" },
+                                                {
+                                                  staticClass: "error--text h6"
+                                                },
                                                 [
                                                   _vm._v(
                                                     "Components Out of Stock"
@@ -43461,7 +43870,9 @@ var render = function() {
                                           _vm.layoutDisable(6)
                                             ? _c(
                                                 "span",
-                                                { staticClass: "error--text" },
+                                                {
+                                                  staticClass: "error--text h6"
+                                                },
                                                 [
                                                   _vm._v(
                                                     "Components Out of Stock"
@@ -43512,7 +43923,9 @@ var render = function() {
                                           _vm.layoutDisable(7)
                                             ? _c(
                                                 "span",
-                                                { staticClass: "error--text" },
+                                                {
+                                                  staticClass: "error--text h6"
+                                                },
                                                 [
                                                   _vm._v(
                                                     "Components Out of Stock"
@@ -43540,14 +43953,8 @@ var render = function() {
                   )
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
+              ),
+              _vm._v(" "),
               _c(
                 "v-stepper-content",
                 { attrs: { step: "2" } },
@@ -43573,14 +43980,8 @@ var render = function() {
                   })
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
+              ),
+              _vm._v(" "),
               _c(
                 "v-stepper-content",
                 { attrs: { step: "3" } },
@@ -43606,14 +44007,8 @@ var render = function() {
                   })
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
+              ),
+              _vm._v(" "),
               _c(
                 "v-stepper-content",
                 { attrs: { step: "4" } },
@@ -43634,14 +44029,8 @@ var render = function() {
                   })
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
+              ),
+              _vm._v(" "),
               _c(
                 "v-stepper-content",
                 { attrs: { step: "5" } },
@@ -43667,14 +44056,8 @@ var render = function() {
                   })
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
+              ),
+              _vm._v(" "),
               _c(
                 "v-stepper-content",
                 { attrs: { step: "6" } },
@@ -43700,14 +44083,8 @@ var render = function() {
                   })
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
+              ),
+              _vm._v(" "),
               _c(
                 "v-stepper-content",
                 { attrs: { step: "7" } },
@@ -43850,14 +44227,8 @@ var render = function() {
                   )
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
+              ),
+              _vm._v(" "),
               _c(
                 "v-stepper-content",
                 { attrs: { step: "8" } },
@@ -43871,61 +44242,263 @@ var render = function() {
                         "v-card-text",
                         [
                           _c("v-row", [
-                            _vm._v("Total Price: " + _vm._s(_vm.total))
+                            _c("span", { staticClass: "h3 mx-auto" }, [
+                              _vm._v("Total Price:\n\t\t\t\t\t\t\t\t"),
+                              _c("span", { staticClass: "primary--text" }, [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t₱" +
+                                    _vm._s(
+                                      Math.round(
+                                        (_vm.total + Number.EPSILON) * 100
+                                      ) / 100
+                                    ) +
+                                    "\n\t\t\t\t\t\t\t\t"
+                                )
+                              ])
+                            ])
                           ]),
                           _vm._v(" "),
                           _c(
                             "v-row",
                             [
-                              _c("v-simple-table", [
-                                _c("thead", [
-                                  _c("tr", [
-                                    _c("th", { attrs: { colspan: "2" } }, [
-                                      _vm._v(
-                                        "\n\t\t\t\t\t\t\t\t\t\t\tCustomer Details\n\t\t\t\t\t\t\t\t\t\t"
+                              _c(
+                                "v-col",
+                                [
+                                  _c("v-simple-table", [
+                                    _c("thead", [
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "2" } }, [
+                                          _vm._v(
+                                            "\n\t\t\t\t\t\t\t\t\t\t\t\tCustomer Details\n\t\t\t\t\t\t\t\t\t\t\t"
+                                          )
+                                        ])
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tbody", [
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Name")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(_vm.customer.name))
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Messenger ID")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(_vm.customer.messenger))
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Remarks")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(_vm.customer.remarks))
+                                        ])
+                                      ])
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-container",
+                                    { staticClass: "mt-4" },
+                                    [
+                                      _c(
+                                        "v-row",
+                                        [
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              staticClass: "mx-auto",
+                                              attrs: {
+                                                "x-large": "",
+                                                color: "primary"
+                                              },
+                                              on: { click: _vm.order }
+                                            },
+                                            [_vm._v("Order")]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-row",
+                                        { staticClass: "mt-4" },
+                                        [
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              staticClass: "mx-auto",
+                                              attrs: {
+                                                small: "",
+                                                color: "secondary",
+                                                outlined: ""
+                                              },
+                                              on: { click: _vm.reset }
+                                            },
+                                            [_vm._v("Restart")]
+                                          )
+                                        ],
+                                        1
                                       )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                [
+                                  _c("v-simple-table", [
+                                    _c("thead", [
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "2" } }, [
+                                          _vm._v("Components")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [_vm._v("Price")])
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tbody", [
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Layout")]),
+                                        _vm._v(" "),
+                                        _c("td", { attrs: { colspan: "2" } }, [
+                                          _vm._v(_vm._s(_vm.layoutName))
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Switch")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.switch
+                                              ).name
+                                            )
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.switch
+                                              ).price
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Keycap")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.keycap
+                                              ).name
+                                            )
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.keycap
+                                              ).price
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Cable")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.switch
+                                              ).name
+                                            )
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.switch
+                                              ).price
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Plate")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.plate
+                                              ).name
+                                            )
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.plate
+                                              ).price
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("td", [_vm._v("Case")]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.case
+                                              ).name
+                                            )
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.findComponent(
+                                                _vm.keyboard.case
+                                              ).price
+                                            )
+                                          )
+                                        ])
+                                      ])
                                     ])
                                   ])
-                                ]),
-                                _vm._v(" "),
-                                _c("tbody", [
-                                  _c("tr", [
-                                    _c("td", [_vm._v("Name")]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(_vm.customer.name))
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("tr", [
-                                    _c("td", [_vm._v("Messenger ID")]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(_vm.customer.messenger))
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("tr", [
-                                    _c("td", [_vm._v("Remarks")]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(_vm.customer.remarks))
-                                    ])
-                                  ])
-                                ])
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c("v-simple-table", [
-                                _c("tbody", [
-                                  _c("tr", [_c("td"), _vm._v(" "), _c("td")])
-                                ])
-                              ])
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
@@ -43939,14 +44512,10 @@ var render = function() {
                   )
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("v-stepper-content", { attrs: { step: "9" } })
             ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [_c("v-stepper-content", { attrs: { step: "9" } })],
             1
           )
         ],
@@ -43981,7 +44550,12 @@ var render = function() {
   return _c(
     "v-card",
     [
-      _c("v-card-title", [_vm._v("Total Price: ₱" + _vm._s(_vm.price))]),
+      _c("v-card-title", [
+        _vm._v(
+          "Total Price: ₱" +
+            _vm._s(Math.round((_vm.price + Number.EPSILON) * 100) / 100)
+        )
+      ]),
       _vm._v(" "),
       _c(
         "v-card-text",
@@ -44027,9 +44601,40 @@ var render = function() {
                             attrs: {
                               "lazy-src": "https://via.placeholder.com/400",
                               src: _vm.image_url,
+                              contain: "",
+                              "aspect-ratio": 1 / 1,
                               "max-height": _vm.imageDim,
                               "max-width": _vm.imageDim
-                            }
+                            },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "placeholder",
+                                fn: function() {
+                                  return [
+                                    _c(
+                                      "v-row",
+                                      {
+                                        staticClass: "fill-height ma-0",
+                                        attrs: {
+                                          align: "center",
+                                          justify: "center"
+                                        }
+                                      },
+                                      [
+                                        _c("v-progress-circular", {
+                                          attrs: {
+                                            indeterminate: "",
+                                            color: "grey lighten-5"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ]
+                                },
+                                proxy: true
+                              }
+                            ])
                           })
                         ],
                         1

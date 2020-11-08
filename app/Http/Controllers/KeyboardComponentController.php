@@ -31,12 +31,12 @@ class KeyboardComponentController extends Controller
 			$image_url = $request->file('image')->store('images', 's3');
 		}
 
-		$comp = KeyboardComponent::create([
+		KeyboardComponent::create([
 			'name' => $valid['name'],
 			'layout_id' => Arr::get($valid, 'layout_id', null),
 			'keyboard_component_type_id' => $valid['keyboard_component_type_id'],
-			'price' => $valid['price'] || 0,
-			'stock' => $valid['stock'] || 0,
+			'price' => $valid['price'],
+			'stock' => $valid['stock'],
 			'image_url' => $image_url,
 		]);
 
@@ -123,7 +123,9 @@ class KeyboardComponentController extends Controller
 
 	public function colors()
 	{
-		return Color::all();
+		return Color::all()
+			->sortBy('id')
+			->values();
 	}
 
 	public function colorsUpdate(Request $request)

@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cable;
+use App\Models\Keyboard;
+use App\Models\KeyboardComponent;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -44,11 +47,40 @@ class DatabaseSeeder extends Seeder
 			'password' => bcrypt('admin'),
 		]);
 
-		// \App\Models\KeyboardComponent::factory()
-		// 	->count(100)
-		// 	->create();
+		\App\Models\KeyboardComponent::factory()
+			->count(100)
+			->create();
+
 		\App\Models\Color::factory()
 			->count(20)
 			->create();
+
+		Cable::create([
+			'cable_length' => 10,
+			'coil_length' => 5,
+			'color_id' => 1,
+			'double_sleeved' => false,
+		]);
+
+		Keyboard::create([
+			'layout_id' => 1,
+			'switch_id' => KeyboardComponent::where(
+				'keyboard_component_type_id',
+				1
+			)->first()->id,
+			'keycap_id' => KeyboardComponent::where(
+				'keyboard_component_type_id',
+				2
+			)->first()->id,
+			'cable_id' => 1,
+			'plate_id' => KeyboardComponent::where(
+				'keyboard_component_type_id',
+				3
+			)->first()->id,
+			'case_id' => KeyboardComponent::where(
+				'keyboard_component_type_id',
+				4
+			)->first()->id,
+		]);
 	}
 }

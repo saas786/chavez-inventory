@@ -1,6 +1,10 @@
 <template>
 	<v-card>
-		<v-card-title>Total Price: ₱{{ price }}</v-card-title>
+		<v-card-title
+			>Total Price: &#8369;{{
+				Math.round((price + Number.EPSILON) * 100) / 100
+			}}</v-card-title
+		>
 		<v-card-text class="text-center">
 			<v-row>
 				<v-col cols="1">
@@ -14,9 +18,24 @@
 							<v-img
 								lazy-src="https://via.placeholder.com/400"
 								:src="image_url"
+								contain
+								:aspect-ratio="1 / 1"
 								:max-height="imageDim"
 								:max-width="imageDim"
-							></v-img>
+							>
+								<template v-slot:placeholder>
+									<v-row
+										class="fill-height ma-0"
+										align="center"
+										justify="center"
+									>
+										<v-progress-circular
+											indeterminate
+											color="grey lighten-5"
+										></v-progress-circular>
+									</v-row>
+								</template>
+							</v-img>
 						</v-row>
 					</v-container>
 					<v-select v-model="selectId" :items="selectItems"></v-select>

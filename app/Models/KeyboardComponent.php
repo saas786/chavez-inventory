@@ -40,6 +40,31 @@ class KeyboardComponent extends Model
 		return $this->belongsTo(Layout::class);
 	}
 
+	public function keyboard()
+	{
+		switch ($this->keyboard_component_type_id) {
+			case 1:
+				return $this->hasOne(Keyboard::class, 'switch_id');
+				break;
+
+			case 2:
+				return $this->hasOne(Keyboard::class, 'keycap_id');
+				break;
+
+			case 3:
+				return $this->hasOne(Keyboard::class, 'plate_id');
+				break;
+
+			case 4:
+				return $this->hasOne(Keyboard::class, 'case_id');
+				break;
+
+			default:
+				return null;
+				break;
+		}
+	}
+
 	//Static Functions
 	public static function available()
 	{

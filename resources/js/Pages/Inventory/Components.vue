@@ -69,14 +69,7 @@
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
-				<v-dialog max-width="600">
-					<template v-slot:activator="{ on, attrs }">
-						<v-btn color="secondary" text v-bind="attrs" v-on="on"
-							>Cable Colors</v-btn
-						>
-					</template>
-					<color-edit></color-edit>
-				</v-dialog>
+				<color-edit></color-edit>
 			</v-toolbar-items>
 			<v-spacer></v-spacer>
 			<!-- {{ this.table.expanded.map(v => v.id) }} -->

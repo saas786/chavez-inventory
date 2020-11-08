@@ -6,8 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 
+//Shop Routes
 Route::get('/', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop', [ShopController::class, 'shop'])->name('shop.prebuilt');
+Route::post('/custom', [ShopController::class, 'custom_order'])->name(
+	'shop.custom_order'
+);
 Route::get('/custom', [ShopController::class, 'custom'])->name('shop.custom');
 Route::get('/about', [ShopController::class, 'about'])->name('shop.about');
 Route::get('/faq', [ShopController::class, 'faq'])->name('shop.faq');

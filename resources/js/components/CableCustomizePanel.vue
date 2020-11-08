@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<v-card>
-			<v-card-title>Total Price: ₱{{ price }}</v-card-title>
+			<v-card-title
+				>Total Price: &#8369;{{
+					Math.round((price + Number.EPSILON) * 100) / 100
+				}}</v-card-title
+			>
 			<v-card-text>
 				<v-row>
 					<v-col cols="1">
@@ -86,7 +90,7 @@
 						<v-btn
 							class="full-height"
 							@click="nextStep"
-							color="priamry"
+							color="primary"
 							:disabled="!valid"
 							><v-icon>mdi-arrow-right</v-icon></v-btn
 						>

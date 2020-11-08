@@ -3,17 +3,60 @@
 		<!-- <cable-panel :price="total" :colors="colors"></cable-panel> -->
 		<v-stepper v-model="step">
 			<v-stepper-header>
-				<v-stepper-step :complete="step > 1" step="1">Layout</v-stepper-step>
+				<v-stepper-step :complete="step > 1" step="1">
+					{{ step > 1 ? layoutName : "Layout" }}
+				</v-stepper-step>
 				<v-divider></v-divider>
-				<v-stepper-step :complete="step > 2" step="2">Switches</v-stepper-step>
+				<v-stepper-step
+					:complete="step > 2"
+					:editable="keyboard.switch != ''"
+					step="2"
+				>
+					{{
+						keyboard.switch != ""
+							? findComponent(keyboard.switch).name
+							: "Switches"
+					}}
+				</v-stepper-step>
 				<v-divider></v-divider>
-				<v-stepper-step :complete="step > 3" step="3">Keycaps</v-stepper-step>
+				<v-stepper-step
+					:complete="step > 3"
+					:editable="keyboard.keycap != ''"
+					step="3"
+				>
+					{{
+						keyboard.keycap != ""
+							? findComponent(keyboard.keycap).name
+							: "Keycaps"
+					}}
+				</v-stepper-step>
 				<v-divider></v-divider>
-				<v-stepper-step :complete="step > 4" step="4">Cable</v-stepper-step>
+				<v-stepper-step
+					:complete="step > 4"
+					step="4"
+					:editable="!!keyboard.cable.color_id"
+					>Cable</v-stepper-step
+				>
 				<v-divider></v-divider>
-				<v-stepper-step :complete="step > 5" step="5">Plate</v-stepper-step>
+				<v-stepper-step
+					:complete="step > 5"
+					step="5"
+					:editable="keyboard.plate != ''"
+				>
+					{{
+						keyboard.plate != "" ? findComponent(keyboard.plate).name : "Plates"
+					}}
+				</v-stepper-step>
 				<v-divider></v-divider>
-				<v-stepper-step :complete="step > 6" step="6">Case</v-stepper-step>
+				<v-stepper-step
+					:complete="step > 6"
+					step="6"
+					:editable="keyboard.case != ''"
+				>
+					{{
+						keyboard.case != "" ? findComponent(keyboard.case).name : "Cases"
+					}}
+				</v-stepper-step>
 				<v-divider></v-divider>
 				<v-stepper-step :complete="step > 7" step="7"
 					>Customer Details</v-stepper-step
@@ -41,7 +84,7 @@
 										<span class="text-h4">
 											Full-size
 										</span>
-										<span v-if="layoutDisable(1)" class="error--text"
+										<span v-if="layoutDisable(1)" class="error--text h6"
 											>Components Out of Stock</span
 										>
 									</div>
@@ -59,7 +102,7 @@
 											<span class="text-h4">
 												1800-compact
 											</span>
-											<span v-if="layoutDisable(2)" class="error--text"
+											<span v-if="layoutDisable(2)" class="error--text h6"
 												>Components Out of Stock</span
 											>
 										</div>
@@ -75,7 +118,7 @@
 											<span class="text-h4">
 												Tenkeyless
 											</span>
-											<span v-if="layoutDisable(3)" class="error--text"
+											<span v-if="layoutDisable(3)" class="error--text h6"
 												>Components Out of Stock</span
 											>
 										</div></v-btn
@@ -91,7 +134,7 @@
 											<span class="text-h4">
 												75%
 											</span>
-											<span v-if="layoutDisable(4)" class="error--text"
+											<span v-if="layoutDisable(4)" class="error--text h6"
 												>Components Out of Stock</span
 											>
 										</div></v-btn
@@ -109,7 +152,7 @@
 											<span class="text-h4">
 												60%
 											</span>
-											<span v-if="layoutDisable(5)" class="error--text"
+											<span v-if="layoutDisable(5)" class="error--text h6"
 												>Components Out of Stock</span
 											>
 										</div></v-btn
@@ -125,7 +168,7 @@
 											<span class="text-h4">
 												40%
 											</span>
-											<span v-if="layoutDisable(6)" class="error--text"
+											<span v-if="layoutDisable(6)" class="error--text h6"
 												>Components Out of Stock</span
 											>
 										</div></v-btn
@@ -141,7 +184,7 @@
 											<span class="text-h4">
 												20%
 											</span>
-											<span v-if="layoutDisable(7)" class="error--text"
+											<span v-if="layoutDisable(7)" class="error--text h6"
 												>Components Out of Stock</span
 											>
 										</div></v-btn
@@ -152,8 +195,7 @@
 						<v-card-actions></v-card-actions>
 					</v-card>
 				</v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="2">
 					<customize-panel
 						:layout="keyboard.layout"
@@ -165,8 +207,7 @@
 						@select-update="keyboard.switch = $event"
 					></customize-panel>
 				</v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="3"
 					><customize-panel
 						:layout="keyboard.layout"
@@ -178,8 +219,7 @@
 						@select-update="keyboard.keycap = $event"
 					></customize-panel
 				></v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="4">
 					<cable-panel
 						:price="total"
@@ -189,8 +229,7 @@
 						@select-update="keyboard.cable = $event"
 					></cable-panel>
 				</v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="5">
 					<customize-panel
 						:layout="keyboard.layout"
@@ -202,8 +241,7 @@
 						@select-update="keyboard.plate = $event"
 					></customize-panel>
 				</v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="6">
 					<customize-panel
 						:layout="keyboard.layout"
@@ -215,8 +253,7 @@
 						@select-update="keyboard.case = $event"
 					></customize-panel>
 				</v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="7">
 					<v-card>
 						<v-card-title>Customer Details</v-card-title>
@@ -262,68 +299,127 @@
 						</v-card-text>
 					</v-card>
 				</v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="8">
 					<v-card>
 						<v-card-title>Review</v-card-title>
 						<v-card-text>
-							<v-row>Total Price: {{ total }}</v-row>
 							<v-row>
-								<v-simple-table>
-									<thead>
-										<tr>
-											<th colspan="2">
-												Customer Details
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Name</td>
-											<td>{{ customer.name }}</td>
-										</tr>
-										<tr>
-											<td>Messenger ID</td>
-											<td>{{ customer.messenger }}</td>
-										</tr>
-										<tr>
-											<td>Remarks</td>
-											<td>{{ customer.remarks }}</td>
-										</tr>
-									</tbody>
-								</v-simple-table>
+								<span class="h3 mx-auto"
+									>Total Price:
+									<span class="primary--text">
+										&#8369;{{
+											Math.round((total + Number.EPSILON) * 100) / 100
+										}}
+									</span></span
+								>
 							</v-row>
 							<v-row>
-								<v-simple-table>
-									<tbody>
-										<tr>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
-								</v-simple-table>
+								<v-col>
+									<v-simple-table>
+										<thead>
+											<tr>
+												<th colspan="2">
+													Customer Details
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Name</td>
+												<td>{{ customer.name }}</td>
+											</tr>
+											<tr>
+												<td>Messenger ID</td>
+												<td>{{ customer.messenger }}</td>
+											</tr>
+											<tr>
+												<td>Remarks</td>
+												<td>{{ customer.remarks }}</td>
+											</tr>
+										</tbody>
+									</v-simple-table>
+									<v-container class="mt-4">
+										<v-row>
+											<v-btn
+												x-large
+												color="primary"
+												class="mx-auto"
+												@click="order"
+												>Order</v-btn
+											>
+										</v-row>
+
+										<v-row class="mt-4">
+											<v-btn
+												small
+												class="mx-auto"
+												color="secondary"
+												outlined
+												@click="reset"
+												>Restart</v-btn
+											>
+										</v-row>
+									</v-container>
+								</v-col>
+
+								<v-col>
+									<v-simple-table>
+										<thead>
+											<tr>
+												<th colspan="2">Components</th>
+												<th>Price</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Layout</td>
+												<td colspan="2">{{ layoutName }}</td>
+											</tr>
+											<tr>
+												<td>Switch</td>
+												<td>{{ findComponent(keyboard.switch).name }}</td>
+												<td>{{ findComponent(keyboard.switch).price }}</td>
+											</tr>
+											<tr>
+												<td>Keycap</td>
+												<td>{{ findComponent(keyboard.keycap).name }}</td>
+												<td>{{ findComponent(keyboard.keycap).price }}</td>
+											</tr>
+											<tr>
+												<td>Cable</td>
+												<td>{{ findComponent(keyboard.switch).name }}</td>
+												<td>{{ findComponent(keyboard.switch).price }}</td>
+											</tr>
+											<tr>
+												<td>Plate</td>
+												<td>{{ findComponent(keyboard.plate).name }}</td>
+												<td>{{ findComponent(keyboard.plate).price }}</td>
+											</tr>
+											<tr>
+												<td>Case</td>
+												<td>{{ findComponent(keyboard.case).name }}</td>
+												<td>{{ findComponent(keyboard.case).price }}</td>
+											</tr>
+										</tbody>
+									</v-simple-table>
+								</v-col>
 							</v-row>
 						</v-card-text>
 						<v-card-actions> </v-card-actions>
 					</v-card>
 				</v-stepper-content>
-			</v-stepper-items>
-			<v-stepper-items>
+
 				<v-stepper-content step="9"></v-stepper-content>
 			</v-stepper-items>
 		</v-stepper>
-		<!-- <v-list>
-			<v-list-item v-for="component in components" v-bind:key="component.id">
-				<v-list-item-title>{{ component.name }}</v-list-item-title>
-			</v-list-item>
-		</v-list> -->
 	</div>
 </template>
 
 <script>
 import CustomizePanel from "./KeyboardCustomizePanel";
 import CablePanel from "./CableCustomizePanel";
+import { Inertia } from "@inertiajs/inertia";
 export default {
 	components: {
 		CustomizePanel,
@@ -366,11 +462,43 @@ export default {
 			);
 		},
 		customerValid() {
+			const validComp =
+				this.keyboard.switch != "" &&
+				this.keyboard.keycap != "" &&
+				this.keyboard.case != "" &&
+				this.keyboard.plate != "";
+
 			return (
-				this.customer.name != "" &&
-				this.customer.messenger != "" &&
-				this.customer.remarks != ""
+				this.customer.name != "" && this.customer.messenger != "" && validComp
 			);
+		},
+		layoutName() {
+			switch (this.keyboard.layout) {
+				case 1:
+					return "Full-size";
+					break;
+				case 2:
+					return "1800-compact";
+					break;
+				case 3:
+					return "Tenkeyless";
+					break;
+				case 4:
+					return "75%";
+					break;
+				case 5:
+					return "60%";
+					break;
+				case 6:
+					return "40%";
+					break;
+				case 7:
+					return "20%";
+					break;
+				default:
+					return "Error";
+					break;
+			}
 		}
 	},
 	data() {
@@ -394,6 +522,35 @@ export default {
 		};
 	},
 	methods: {
+		order() {
+			this.ordering = true;
+			axios
+				.post("/custom", {
+					keyboard: this.keyboard,
+					customer: this.customer
+				})
+				.then(res => {
+					console.log(res);
+				});
+
+			// Inertia.post("/custom", {
+			// 	keyboard: this.keyboard,
+			// 	customer: this.customer
+			// }).then(res => {
+			// 	console.log(res);
+			// });
+		},
+		reset() {
+			this.step = 1;
+			this.keyboard = {
+				layout: 1,
+				switch: 0,
+				keycap: 0,
+				cable: {},
+				plate: 0,
+				case: 0
+			};
+		},
 		layoutSelect(id) {
 			this.keyboard.layout = id;
 			this.step++;
@@ -407,11 +564,24 @@ export default {
 			return cases.length <= 0 || plates.length <= 0;
 		},
 		findComponent(id) {
+			// console.log(id);
+			let comp = 0;
 			this.components.forEach(type => {
+				// console.log(type);
 				type.forEach(c => {
-					if (c.id == id) return c;
+					// console.log(c);
+					if (c.id == id) {
+						// console.log(c);
+						comp = c;
+					}
 				});
 			});
+			if (comp == 0)
+				return {
+					name: "Error",
+					price: 0
+				};
+			return comp;
 		}
 	}
 };
