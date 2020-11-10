@@ -33,6 +33,7 @@
         "@inertiajs/inertia": "^0.4.3",
         "@inertiajs/inertia-vue": "^0.3.2",
         "material-design-icons": "^3.0.1",
+        "prettier": "^2.1.2",
         "vuetify": "^2.3.14",
         "vuetify-loader": "^1.6.0"
     }

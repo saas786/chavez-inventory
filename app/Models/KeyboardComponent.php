@@ -70,4 +70,21 @@ class KeyboardComponent extends Model
 	{
 		return 23;
 	}
+
+	public static function deleteById($ids)
+	{
+		foreach ($ids as $id) {
+			$component = KeyboardComponent::findOrFail($id);
+			$component->delete();
+		}
+	}
+
+	public static function stockById($ids, $stock)
+	{
+		foreach ($ids as $id) {
+			$component = KeyboardComponent::findOrFail($id);
+			$component->stock += $stock;
+			$component->save();
+		}
+	}
 }

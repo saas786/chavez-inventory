@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomOrder extends Model
 {
-    use HasFactory;
+	use HasFactory;
+
+	protected $guarded = [];
+
+	//Relationships
+	public function order()
+	{
+		return $this->morphOne(Order::class, 'orderable');
+	}
 }

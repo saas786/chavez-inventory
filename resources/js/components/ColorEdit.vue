@@ -108,14 +108,14 @@ import { Inertia } from "@inertiajs/inertia";
 export default {
 	mounted() {
 		this.loading = true;
-		axios.get("/inventory/components/colors").then(res => {
+		axios.get("/inventory/components/colors").then((res) => {
 			this.loading = false;
-			this.color_edit = res.data.map(color => {
+			this.color_edit = res.data.map((color) => {
 				return {
 					name: color.name,
 					hexCode: color.hex_code,
 					primary: color.primary,
-					double: color.double_sleeved
+					double: color.double_sleeved,
 				};
 			});
 		});
@@ -123,7 +123,7 @@ export default {
 	computed: {
 		canAdd() {
 			return !(!!this.newColor.name && !!this.newColor.hexCode);
-		}
+		},
 	},
 	data() {
 		return {
@@ -133,38 +133,38 @@ export default {
 				{
 					text: "Name",
 					value: "name",
-					width: 100
+					width: 100,
 				},
 				{
 					text: "Hex Code",
 					value: "hexCode",
-					width: 100
+					width: 100,
 				},
 				{
 					text: "Single Sleeved",
 					value: "primary",
-					width: 1
+					width: 1,
 				},
 				{
 					text: "Double Sleeved",
 					value: "double",
-					width: 1
+					width: 1,
 				},
 				{
 					text: "",
 					value: "actions",
-					width: 1
-				}
+					width: 1,
+				},
 			],
 			newColor: {
 				name: "",
 				hexCode: "",
 				primary: false,
-				double: false
+				double: false,
 			},
 			rules: {
-				required: value => !!value || "Required"
-			}
+				required: (value) => !!value || "Required",
+			},
 		};
 	},
 	methods: {
@@ -174,22 +174,23 @@ export default {
 				name: "",
 				hexCode: "",
 				primary: false,
-				double: false
+				double: false,
 			};
 		},
 		removeColor(ind) {
 			this.color_edit.splice(ind, 1);
 		},
 		updateColors() {
-			console.log(this.color_edit);
-			const token = document.querySelector('meta[name="csrf-token"]');
-			axios.post("/inventory/components/colors", this.color_edit).then(res => {
-				this.$page.props.flash.success = "Colors updated!";
-				this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.flash_success = true;
-			});
+			// const token = document.querySelector('meta[name="csrf-token"]');
+			axios
+				.post("/inventory/components/colors", { colors: this.color_edit })
+				.then((res) => {
+					this.$page.props.flash.success = "Colors updated!";
+					this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.flash_success = true;
+				});
 			// Inertia.post("/inventory/components/colors", this.color_edit);
-		}
-	}
+		},
+	},
 };
 </script>
 

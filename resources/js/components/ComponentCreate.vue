@@ -45,7 +45,6 @@
 								accept="image"
 							>
 							</v-file-input>
-							</div>
 						</v-col>
 						<v-col>
 							<v-text-field
@@ -85,12 +84,12 @@ export default {
 
 	computed: {
 		component_type_options() {
-			return this.comp_types.map(comp => {
+			return this.comp_types.map((comp) => {
 				return { value: comp.id, text: comp.name };
 			});
 		},
 		layout_options() {
-			return this.layouts.map(layout => {
+			return this.layouts.map((layout) => {
 				return { value: layout.id, text: layout.name };
 			});
 		},
@@ -100,7 +99,7 @@ export default {
 				return true;
 			}
 			return false;
-		}
+		},
 	},
 
 	data() {
@@ -112,20 +111,20 @@ export default {
 				layout_id: null,
 				stock: "",
 				price: "",
-				image: []
+				image: [],
 			},
 			rules: {
 				name: [
-					v => !!v || "Name is required",
-					v =>
-						(v && v.length <= 255) || "Name must be less than 255 characters."
+					(v) => !!v || "Name is required",
+					(v) =>
+						(v && v.length <= 255) || "Name must be less than 255 characters.",
 				],
 				keyboard_component_type_id: [
-					v => !!v || "Type is required",
-					v => (v && v < 6 && v > 0) || "Select a valid type."
+					(v) => !!v || "Type is required",
+					(v) => (v && v < 6 && v > 0) || "Select a valid type.",
 				],
 				layout_id: [
-					v => {
+					(v) => {
 						if (
 							!!this.form.layout_id &&
 							this.form.keyboard_component_type_id >= 3
@@ -133,15 +132,15 @@ export default {
 							return true;
 						if (this.form.keyboard_component_type_id <= 2) return true;
 						return "Layout is required.";
-					}
+					},
 				],
 				stock: [
-					v =>
+					(v) =>
 						(Number.isInteger(Number(v)) && v >= 0) ||
-						"Stock must be a positive whole number."
+						"Stock must be a positive whole number.",
 				],
-				price: [v => Number(v) >= 0 || "Price must not be negative."]
-			}
+				price: [(v) => Number(v) >= 0 || "Price must not be negative."],
+			},
 		};
 	},
 
@@ -173,7 +172,7 @@ export default {
 			// console.log(data);
 
 			Inertia.post("/inventory/components", data);
-		}
-	}
+		},
+	},
 };
 </script>

@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class PrebuiltOrder extends Model
 {
 	use HasFactory;
 
-	protected $guarded = [];
-
 	//Relationships
-	public function orderable()
+	public function order()
 	{
-		return $this->morphTo();
+		return $this->morphOne(Order::class, 'orderable');
 	}
 }

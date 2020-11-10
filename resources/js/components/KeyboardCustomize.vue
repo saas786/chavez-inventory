@@ -81,9 +81,7 @@
 									:disabled="layoutDisable(1)"
 								>
 									<div class="d-flex flex-column">
-										<span class="text-h4">
-											Full-size
-										</span>
+										<span class="text-h4"> Full-size </span>
 										<span v-if="layoutDisable(1)" class="error--text h6"
 											>Components Out of Stock</span
 										>
@@ -99,9 +97,7 @@
 										:disabled="layoutDisable(2)"
 									>
 										<div class="d-flex flex-column">
-											<span class="text-h4">
-												1800-compact
-											</span>
+											<span class="text-h4"> 1800-compact </span>
 											<span v-if="layoutDisable(2)" class="error--text h6"
 												>Components Out of Stock</span
 											>
@@ -115,9 +111,7 @@
 										@click="layoutSelect(3)"
 										:disabled="layoutDisable(3)"
 										><div class="d-flex flex-column">
-											<span class="text-h4">
-												Tenkeyless
-											</span>
+											<span class="text-h4"> Tenkeyless </span>
 											<span v-if="layoutDisable(3)" class="error--text h6"
 												>Components Out of Stock</span
 											>
@@ -131,9 +125,7 @@
 										@click="layoutSelect(4)"
 										:disabled="layoutDisable(4)"
 										><div class="d-flex flex-column">
-											<span class="text-h4">
-												75%
-											</span>
+											<span class="text-h4"> 75% </span>
 											<span v-if="layoutDisable(4)" class="error--text h6"
 												>Components Out of Stock</span
 											>
@@ -149,9 +141,7 @@
 										@click="layoutSelect(5)"
 										:disabled="layoutDisable(5)"
 										><div class="d-flex flex-column">
-											<span class="text-h4">
-												60%
-											</span>
+											<span class="text-h4"> 60% </span>
 											<span v-if="layoutDisable(5)" class="error--text h6"
 												>Components Out of Stock</span
 											>
@@ -165,9 +155,7 @@
 										@click="layoutSelect(6)"
 										:disabled="layoutDisable(6)"
 										><div class="d-flex flex-column">
-											<span class="text-h4">
-												40%
-											</span>
+											<span class="text-h4"> 40% </span>
 											<span v-if="layoutDisable(6)" class="error--text h6"
 												>Components Out of Stock</span
 											>
@@ -181,9 +169,7 @@
 										@click="layoutSelect(7)"
 										:disabled="layoutDisable(7)"
 										><div class="d-flex flex-column">
-											<span class="text-h4">
-												20%
-											</span>
+											<span class="text-h4"> 20% </span>
 											<span v-if="layoutDisable(7)" class="error--text h6"
 												>Components Out of Stock</span
 											>
@@ -319,9 +305,7 @@
 									<v-simple-table>
 										<thead>
 											<tr>
-												<th colspan="2">
-													Customer Details
-												</th>
+												<th colspan="2">Customer Details</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -423,10 +407,10 @@ import { Inertia } from "@inertiajs/inertia";
 export default {
 	components: {
 		CustomizePanel,
-		CablePanel
+		CablePanel,
 	},
 	mounted() {
-		axios.get("/inventory/components/colors").then(res => {
+		axios.get("/inventory/components/colors").then((res) => {
 			this.colors = res.data;
 		});
 	},
@@ -441,7 +425,7 @@ export default {
 			types.forEach((value, index) => {
 				// console.log(value, index);
 				let comp = this.components[index].filter(
-					item => item.id == this.keyboard[value]
+					(item) => item.id == this.keyboard[value]
 				);
 				if (!!comp[0]) keyboardPrice += parseFloat(comp[0].price);
 			});
@@ -452,13 +436,13 @@ export default {
 			if (this.components.length < 4) return [];
 
 			return this.components[3].filter(
-				c => c.layout_id == this.keyboard.layout
+				(c) => c.layout_id == this.keyboard.layout
 			);
 		},
 		plateOptions() {
 			if (this.components.length < 4) return [];
 			return this.components[2].filter(
-				c => c.layout_id == this.keyboard.layout
+				(c) => c.layout_id == this.keyboard.layout
 			);
 		},
 		customerValid() {
@@ -499,7 +483,7 @@ export default {
 					return "Error";
 					break;
 			}
-		}
+		},
 	},
 	data() {
 		return {
@@ -512,13 +496,13 @@ export default {
 				keycap: 0,
 				cable: {},
 				plate: 0,
-				case: 0
+				case: 0,
 			},
 			customer: {
 				name: "",
 				messenger: "",
-				remarks: ""
-			}
+				remarks: "",
+			},
 		};
 	},
 	methods: {
@@ -527,10 +511,13 @@ export default {
 			axios
 				.post("/custom", {
 					keyboard: this.keyboard,
-					customer: this.customer
+					customer: this.customer,
 				})
-				.then(res => {
+				.then((res) => {
 					console.log(res);
+				})
+				.catch((error) => {
+					console.log("Error here!", error);
 				});
 
 			// Inertia.post("/custom", {
@@ -548,7 +535,7 @@ export default {
 				keycap: 0,
 				cable: {},
 				plate: 0,
-				case: 0
+				case: 0,
 			};
 		},
 		layoutSelect(id) {
@@ -558,17 +545,17 @@ export default {
 		layoutDisable(id) {
 			if (this.components.length < 4) return true;
 
-			let cases = this.components[3].filter(c => c.layout_id == id);
-			let plates = this.components[2].filter(c => c.layout_id == id);
+			let cases = this.components[3].filter((c) => c.layout_id == id);
+			let plates = this.components[2].filter((c) => c.layout_id == id);
 
 			return cases.length <= 0 || plates.length <= 0;
 		},
 		findComponent(id) {
 			// console.log(id);
 			let comp = 0;
-			this.components.forEach(type => {
+			this.components.forEach((type) => {
 				// console.log(type);
-				type.forEach(c => {
+				type.forEach((c) => {
 					// console.log(c);
 					if (c.id == id) {
 						// console.log(c);
@@ -579,11 +566,11 @@ export default {
 			if (comp == 0)
 				return {
 					name: "Error",
-					price: 0
+					price: 0,
 				};
 			return comp;
-		}
-	}
+		},
+	},
 };
 </script>
 

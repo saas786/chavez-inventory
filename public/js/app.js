@@ -2077,8 +2077,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -2186,8 +2184,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateStock: function updateStock() {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_5__["Inertia"].post("/inventory/components/stock", {
-        componentIds: this.table.selected,
-        stockAdd: this.stockAdd
+        ids: this.table.selected,
+        value: this.stockAdd
       });
     },
     deleteComponents: function deleteComponents() {
@@ -2197,10 +2195,14 @@ __webpack_require__.r(__webpack_exports__);
       // 		_token: document.head.querySelector('meta[name="csrf-token"]').content
       // 	}
       // });
+      // console.log(this.table.selected);
+      // Inertia.delete("/inventory/components/", {
+      // 	ids: this.table.selected,
+      // });
       this.$inertia.post("/inventory/components/", {
-        componentIds: this.table.selected,
-        _method: "DELETE",
-        _token: document.head.querySelector('meta[name="csrf-token"]').content
+        ids: this.table.selected,
+        _method: "DELETE" // _token: document.head.querySelector('meta[name="csrf-token"]').content,
+
       });
     }
   }
@@ -3291,9 +3293,10 @@ __webpack_require__.r(__webpack_exports__);
     updateColors: function updateColors() {
       var _this2 = this;
 
-      console.log(this.color_edit);
-      var token = document.querySelector('meta[name="csrf-token"]');
-      axios.post("/inventory/components/colors", this.color_edit).then(function (res) {
+      // const token = document.querySelector('meta[name="csrf-token"]');
+      axios.post("/inventory/components/colors", {
+        colors: this.color_edit
+      }).then(function (res) {
         _this2.$page.props.flash.success = "Colors updated!";
         _this2.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.flash_success = true;
       }); // Inertia.post("/inventory/components/colors", this.color_edit);
@@ -3314,7 +3317,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__);
-//
 //
 //
 //
@@ -4093,22 +4095,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4226,6 +4212,8 @@ __webpack_require__.r(__webpack_exports__);
         customer: this.customer
       }).then(function (res) {
         console.log(res);
+      })["catch"](function (error) {
+        console.log("Error here!", error);
       }); // Inertia.post("/custom", {
       // 	keyboard: this.keyboard,
       // 	customer: this.customer
@@ -40786,7 +40774,7 @@ var render = function() {
                   attrs: { color: "primary", text: "" },
                   on: { click: _vm.showAdd }
                 },
-                [_vm._v("\n\t\t\t\tAdd\n\t\t\t")]
+                [_vm._v(" Add ")]
               ),
               _vm._v(" "),
               _c(
@@ -43594,9 +43582,7 @@ var render = function() {
                                     { staticClass: "d-flex flex-column" },
                                     [
                                       _c("span", { staticClass: "text-h4" }, [
-                                        _vm._v(
-                                          "\n\t\t\t\t\t\t\t\t\t\tFull-size\n\t\t\t\t\t\t\t\t\t"
-                                        )
+                                        _vm._v(" Full-size ")
                                       ]),
                                       _vm._v(" "),
                                       _vm.layoutDisable(1)
@@ -43642,11 +43628,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             { staticClass: "text-h4" },
-                                            [
-                                              _vm._v(
-                                                "\n\t\t\t\t\t\t\t\t\t\t\t1800-compact\n\t\t\t\t\t\t\t\t\t\t"
-                                              )
-                                            ]
+                                            [_vm._v(" 1800-compact ")]
                                           ),
                                           _vm._v(" "),
                                           _vm.layoutDisable(2)
@@ -43695,11 +43677,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             { staticClass: "text-h4" },
-                                            [
-                                              _vm._v(
-                                                "\n\t\t\t\t\t\t\t\t\t\t\tTenkeyless\n\t\t\t\t\t\t\t\t\t\t"
-                                              )
-                                            ]
+                                            [_vm._v(" Tenkeyless ")]
                                           ),
                                           _vm._v(" "),
                                           _vm.layoutDisable(3)
@@ -43748,11 +43726,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             { staticClass: "text-h4" },
-                                            [
-                                              _vm._v(
-                                                "\n\t\t\t\t\t\t\t\t\t\t\t75%\n\t\t\t\t\t\t\t\t\t\t"
-                                              )
-                                            ]
+                                            [_vm._v(" 75% ")]
                                           ),
                                           _vm._v(" "),
                                           _vm.layoutDisable(4)
@@ -43807,11 +43781,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             { staticClass: "text-h4" },
-                                            [
-                                              _vm._v(
-                                                "\n\t\t\t\t\t\t\t\t\t\t\t60%\n\t\t\t\t\t\t\t\t\t\t"
-                                              )
-                                            ]
+                                            [_vm._v(" 60% ")]
                                           ),
                                           _vm._v(" "),
                                           _vm.layoutDisable(5)
@@ -43860,11 +43830,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             { staticClass: "text-h4" },
-                                            [
-                                              _vm._v(
-                                                "\n\t\t\t\t\t\t\t\t\t\t\t40%\n\t\t\t\t\t\t\t\t\t\t"
-                                              )
-                                            ]
+                                            [_vm._v(" 40% ")]
                                           ),
                                           _vm._v(" "),
                                           _vm.layoutDisable(6)
@@ -43913,11 +43879,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             { staticClass: "text-h4" },
-                                            [
-                                              _vm._v(
-                                                "\n\t\t\t\t\t\t\t\t\t\t\t20%\n\t\t\t\t\t\t\t\t\t\t"
-                                              )
-                                            ]
+                                            [_vm._v(" 20% ")]
                                           ),
                                           _vm._v(" "),
                                           _vm.layoutDisable(7)
@@ -44268,9 +44230,7 @@ var render = function() {
                                     _c("thead", [
                                       _c("tr", [
                                         _c("th", { attrs: { colspan: "2" } }, [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t\t\t\t\t\t\tCustomer Details\n\t\t\t\t\t\t\t\t\t\t\t"
-                                          )
+                                          _vm._v("Customer Details")
                                         ])
                                       ])
                                     ]),
@@ -102311,8 +102271,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\Libraries\Workspace\Laravel Workspace\custommkbd\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\Libraries\Workspace\Laravel Workspace\custommkbd\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /mnt/d/Libraries/Workspace/Laravel Workspace/custommkbd/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /mnt/d/Libraries/Workspace/Laravel Workspace/custommkbd/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

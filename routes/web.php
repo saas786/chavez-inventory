@@ -16,10 +16,10 @@ Route::get('/custom', [ShopController::class, 'custom'])->name('shop.custom');
 Route::get('/about', [ShopController::class, 'about'])->name('shop.about');
 Route::get('/faq', [ShopController::class, 'faq'])->name('shop.faq');
 
-Route::get('/inventory/components/debug', [
-	KeyboardComponentController::class,
-	'debug',
-])->name('components.debug');
+// Route::get('/inventory/components/debug', [
+// 	KeyboardComponentController::class,
+// 	'debug',
+// ])->name('components.debug');
 Route::post('/inventory/components/stock', [
 	KeyboardComponentController::class,
 	'stock',

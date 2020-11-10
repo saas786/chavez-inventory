@@ -8,9 +8,7 @@
 		<v-toolbar>
 			<v-toolbar-title class="mr-8">Controls</v-toolbar-title>
 			<v-toolbar-items>
-				<v-btn color="primary" text @click="showAdd">
-					Add
-				</v-btn>
+				<v-btn color="primary" text @click="showAdd"> Add </v-btn>
 				<v-dialog max-width="600">
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn color="success" text v-bind="attrs" v-on="on">Stock</v-btn>
@@ -148,7 +146,7 @@ export default {
 	components: {
 		ComponentCreate,
 		ComponentUpdate,
-		ColorEdit
+		ColorEdit,
 	},
 
 	props: ["components", "comp_types", "layouts"],
@@ -159,7 +157,7 @@ export default {
 
 	computed: {
 		items() {
-			return this.components.map(comp => {
+			return this.components.map((comp) => {
 				return {
 					id: comp.id,
 					Name: comp.name,
@@ -169,10 +167,10 @@ export default {
 					Type: comp.keyboard_component_type.name,
 					Stock: comp.stock,
 					Price: comp.price,
-					url: comp.url
+					url: comp.url,
 				};
 			});
-		}
+		},
 	},
 
 	data() {
@@ -186,29 +184,29 @@ export default {
 					{
 						text: "Name",
 						value: "Name",
-						groupable: false
+						groupable: false,
 					},
 					{
 						text: "Type",
-						value: "Type"
+						value: "Type",
 					},
 					{
 						text: "Layout",
-						value: "Layout"
+						value: "Layout",
 					},
 					{
 						text: "Price",
 						value: "Price",
-						groupable: false
+						groupable: false,
 					},
 					{
 						text: "Stock",
 						value: "Stock",
-						groupable: false
-					}
-				]
+						groupable: false,
+					},
+				],
 			},
-			componentAdd: false
+			componentAdd: false,
 		};
 	},
 
@@ -219,7 +217,7 @@ export default {
 	watch: {
 		table() {
 			console.log("CHANGED TABLE");
-		}
+		},
 	},
 
 	methods: {
@@ -231,7 +229,7 @@ export default {
 				keyboard_component_type_id: item.keyboard_component_type_id,
 				stock: item.Stock,
 				price: item.Price,
-				image: []
+				image: [],
 			};
 		},
 		expandRow(item) {
@@ -258,8 +256,8 @@ export default {
 		},
 		updateStock() {
 			Inertia.post("/inventory/components/stock", {
-				componentIds: this.table.selected,
-				stockAdd: this.stockAdd
+				ids: this.table.selected,
+				value: this.stockAdd,
 			});
 		},
 		deleteComponents() {
@@ -269,12 +267,16 @@ export default {
 			// 		_token: document.head.querySelector('meta[name="csrf-token"]').content
 			// 	}
 			// });
+			// console.log(this.table.selected);
+			// Inertia.delete("/inventory/components/", {
+			// 	ids: this.table.selected,
+			// });
 			this.$inertia.post("/inventory/components/", {
-				componentIds: this.table.selected,
+				ids: this.table.selected,
 				_method: "DELETE",
-				_token: document.head.querySelector('meta[name="csrf-token"]').content
+				// _token: document.head.querySelector('meta[name="csrf-token"]').content,
 			});
-		}
-	}
+		},
+	},
 };
 </script>

@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderCustomKeyboard;
 use App\Models\Cable;
 use App\Models\Color;
+use App\Models\CustomOrder;
 use App\Models\Keyboard;
 use App\Models\KeyboardComponent;
+use App\Models\Order;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class ShopController extends Controller
@@ -68,40 +72,34 @@ class ShopController extends Controller
 		return Inertia::render('Shop/Custom');
 	}
 
-	public function custom_order(Request $request)
+	public function custom_order(OrderCustomKeyboard $request)
 	{
-		// $decrypted = [
-		// 	'layout_id' => $request['keyboard']['layout'],
-		// 	'switch_id' => Crypt::decrypt($request['keyboard']['switch']),
-		// 	'keycap_id' => Crypt::decrypt($request['keyboard']['keycap']),
-		// 	'plate_id' => Crypt::decrypt($request['keyboard']['plate']),
-		// 	'case_id' => Crypt::decrypt($request['keyboard']['case']),
-		// ];
+		// return $request->all();
 
-		// return $decrypted;
+		$valid = $request->validated();
 
-		// $cable = Cable::firstOrCreate([
-		// 	'cable_length' => $request['keyboard']['cable']['cable_length'],
-		// 	'coil_length' => $request['keyboard']['cable']['coil_length'],
-		// 	'color_id' => $request['keyboard']['cable']['color_id'],
-		// 	'double_sleeved' => $request['keyboard']['cable']['double_sleeved'],
-		// 	'double_sleeve_color_id' =>
-		// 		$request['keyboard']['cable']['double_sleeve_color_id'],
-		// 	'detachable' => $request['keyboard']['cable']['detachable'],
-		// ]);
+		$valid['keyboard']['cable_id'] = Cable::firstOrCreate($valid['cable'])->id;
 
-		$cable = Cable::firstOrCreate($request['keyboard']['cable']);
+		$keyboard = Keyboard::create($valid['keyboard']);
 
-		$keyboard = Keyboard::create([
-			'layout_id' => $request['keyboard']['layout'],
-			'switch_id' => Crypt::decrypt($request['keyboard']['switch']),
-			'keycap_id' => Crypt::decrypt($request['keyboard']['keycap']),
-			'cable_id' => $cable->id,
-			'plate_id' => Crypt::decrypt($request['keyboard']['plate']),
-			'case_id' => Crypt::decrypt($request['keyboard']['case']),
+		$customOrder = CustomOrder::create([
+			'keyboard_id' => $keyboard->id,
+			'remarks' => $request['customer']['remarks'],
 		]);
 
-		return $keyboard;
+		// return $keyboard;
+
+		$order = new Order([
+			'customer_name' => $valid['customer']['name'],
+			'messenger_name' => $valid['customer']['messenger'],
+		]);
+
+		$order
+			->orderable()
+			->associate($customOrder)
+			->save();
+
+		return $order;
 	}
 
 	public function about()
