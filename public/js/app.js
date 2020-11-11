@@ -8824,7 +8824,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9":
 /*!***********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuetify/dist/vuetify.min.css ***!
   \***********************************************************************************************************************************/
@@ -8855,7 +8855,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.border-radius-0 {\r\n\tborder-radius: 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.border-radius-0 {\n\tborder-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -8874,7 +8874,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.full {\r\n\tbackground: url(\"https://custom-mech-kbd.s3-ap-northeast-1.amazonaws.com/static/header.jpg\");\r\n\tbackground-size: cover;\r\n\tbackground-attachment: scroll;\n}\n.full-height {\r\n\theight: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.full {\n\tbackground: url(\"https://custom-mech-kbd.s3-ap-northeast-1.amazonaws.com/static/header.jpg\");\n\tbackground-size: cover;\n\tbackground-attachment: scroll;\n}\n.full-height {\n\theight: 100% !important;\n}\n", ""]);
 
 // exports
 
@@ -8893,7 +8893,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.full-height {\r\n\theight: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.full-height {\n\theight: 100% !important;\n}\n", ""]);
 
 // exports
 
@@ -100527,7 +100527,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuetify.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuetify/dist/vuetify.min.css?bdb9");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -102271,8 +102271,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/d/Libraries/Workspace/Laravel Workspace/custommkbd/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /mnt/d/Libraries/Workspace/Laravel Workspace/custommkbd/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mth-lily/Projects/chavez-inventory/chavez-inventory/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mth-lily/Projects/chavez-inventory/chavez-inventory/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
