@@ -19,20 +19,10 @@ class StoreKeyboardComponent extends FormRequest
 		return Auth::check();
 	}
 
-	// /**
-	//  * Get custom attributes for validator errors.
-	//  *
-	//  * @return array
-	//  */
-	// public function attributes()
-	// {
-	// 	return [
-	// 		'image' => 'image_url',
-	// 	];
-	// }
-
 	/**
 	 * Prepare the data for validation.
+	 * If prices/stocks are null, then turn it into 0
+	 * If the type is a keycap or switch, null the layout_id field
 	 *
 	 * @return void
 	 */
@@ -65,6 +55,7 @@ class StoreKeyboardComponent extends FormRequest
 
 	/**
 	 * Configure the validator instance.
+	 * After validation, store the image in Amazon S3 and store the image url
 	 *
 	 * @param  \Illuminate\Validation\Validator  $validator
 	 * @return void

@@ -13,27 +13,27 @@ use Illuminate\Support\Facades\Redirect;
 class KeyboardComponentController extends Controller
 {
 	/**
-	 * Store Keyboard Component
+	 * Store a keyboard component
 	 *
 	 * @param StoreKeyboardComponent $request
-	 * @return HTTPRequest
+	 * @return \Illuminate\Routing\Redirector
 	 */
 	public function store(StoreKeyboardComponent $request)
 	{
 		KeyboardComponent::create($request->except(['image']));
 
-		return Redirect::route('inventory.components')->with(
+		return Redirect::route('inventory.components.index')->with(
 			'success',
 			'Component successfully created!'
 		);
 	}
 
 	/**
-	 * Update Keyboard Component
+	 * Update a keyboard component.
 	 *
 	 * @param StoreKeyboardComponent $request
 	 * @param KeyboardComponent $component
-	 * @return HTTPRequest
+	 * @return \Illuminate\Routing\Redirector
 	 */
 	public function update(
 		StoreKeyboardComponent $request,
@@ -41,7 +41,7 @@ class KeyboardComponentController extends Controller
 	) {
 		$component->update($request->except(['image']));
 
-		return Redirect::route('inventory.components')->with(
+		return Redirect::route('inventory.components.index')->with(
 			'success',
 			'Component details updated!'
 		);
@@ -64,30 +64,32 @@ class KeyboardComponentController extends Controller
 	 * Stock Components
 	 *
 	 * @param Request $request
-	 * @return HTTPRequest
+	 * @return \Illuminate\Routing\Redirector
 	 */
 	public function stock(Request $request)
 	{
 		KeyboardComponent::stockById($request['ids'], $request['value']);
 
-		return redirect()
-			->to('/inventory/components')
-			->with('success', 'Stocks successfully added!');
+		return Redirect::route('inventory.components.index')->with(
+			'success',
+			'Stocks successfully added!'
+		);
 	}
 
 	/**
 	 * Destroy Keyboard Component
 	 *
 	 * @param Request $request
-	 * @return HTTPRequest
+	 * @return \Illuminate\Routing\Redirector
 	 */
 	public function destroy(IDRequest $request)
 	{
 		KeyboardComponent::deleteById($request['ids']);
 
-		return redirect()
-			->to('/inventory/components')
-			->with('success', 'Stocks successfully deleted!');
+		return Redirect::route('inventory.components.index')->with(
+			'success',
+			'Stocks successfully deleted!'
+		);
 	}
 
 	/**

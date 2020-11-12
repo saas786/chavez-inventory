@@ -66,7 +66,7 @@
 				<v-divider></v-divider>
 				<v-stepper-step :complete="step > 9" step="9">Done!</v-stepper-step>
 			</v-stepper-header>
-			<v-progress-linear v-if="ordering"></v-progress-linear>
+			<v-progress-linear v-if="ordering" indeterminate></v-progress-linear>
 			<v-stepper-items>
 				<v-stepper-content step="1">
 					<v-card>
@@ -287,7 +287,7 @@
 				</v-stepper-content>
 
 				<v-stepper-content step="8">
-					<v-card>
+					<v-card v-if="!ordering">
 						<v-card-title>Review</v-card-title>
 						<v-card-text>
 							<v-row>
@@ -392,9 +392,61 @@
 						</v-card-text>
 						<v-card-actions> </v-card-actions>
 					</v-card>
+					<v-card v-else>
+						<v-card-title class="justify-center display-2"
+							>Ordering...</v-card-title
+						>
+						<v-card-text>
+							<v-row class="justify-center">
+								<v-progress-circular
+									indeterminate
+									color="primary"
+									:size="300"
+									:width="10"
+								></v-progress-circular>
+							</v-row>
+						</v-card-text>
+					</v-card>
 				</v-stepper-content>
 
-				<v-stepper-content step="9"></v-stepper-content>
+				<v-stepper-content step="9">
+					<v-card v-if="!errors">
+						<v-card-title class="display-1 justify-center"
+							>Order successful!</v-card-title
+						>
+						<v-card-text>
+							<v-row class="justify-center"
+								><v-icon color="success" size="300"
+									>mdi-check-circle</v-icon
+								></v-row
+							>
+							<v-row class="text-h4 justify-center"
+								>Thank you for ordering from us!</v-row
+							>
+							<v-row class="text-subtitle-1 justify-center">
+								Your tracking id is
+								<input type="hidden" id="tracking_id" :value="tracking_id" />
+								<span class="primary--text ml-1"> {{ tracking_id }}</span>
+							</v-row>
+						</v-card-text>
+					</v-card>
+					<v-card v-if="errors">
+						<v-card-title class="display-1 justify-center">Error</v-card-title>
+						<v-card-text>
+							<v-row class="justify-center"
+								><v-icon color="error" size="300"
+									>mdi-alert-circle</v-icon
+								></v-row
+							>
+							<v-row class="text-h4 justify-center"
+								>Something went wrong in the ordering process!</v-row
+							>
+							<v-row class="text-subtitle-1 justify-center">
+								Try again later.
+							</v-row>
+						</v-card-text>
+					</v-card>
+				</v-stepper-content>
 			</v-stepper-items>
 		</v-stepper>
 	</div>
@@ -489,7 +541,9 @@ export default {
 		return {
 			colors: [],
 			ordering: false,
+			errors: false,
 			step: 1,
+			tracking_id: "the tracking id",
 			keyboard: {
 				layout: 1,
 				switch: 0,
@@ -506,6 +560,15 @@ export default {
 		};
 	},
 	methods: {
+		copyToClipboard() {
+			console.log("HELLO");
+			let copy = document.querySelector("#tracking_id");
+			copy.setAttribute("type", "text");
+			copy.select;
+			document.execCommand("copy");
+			copy.setAttribute("type", "hidden");
+			window.getSelection().removeAllRanges();
+		},
 		order() {
 			this.ordering = true;
 			axios
@@ -513,11 +576,16 @@ export default {
 					keyboard: this.keyboard,
 					customer: this.customer,
 				})
-				.then((res) => {
-					console.log(res);
+				.then(({ data }) => {
+					this.tracking_id = data["tracking_id"];
+					this.step++;
+					this.ordering = false;
+					this.errors = false;
 				})
 				.catch((error) => {
-					console.log("Error here!", error);
+					this.step++;
+					this.ordering = false;
+					this.errors = true;
 				});
 
 			// Inertia.post("/custom", {

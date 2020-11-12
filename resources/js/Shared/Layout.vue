@@ -7,7 +7,7 @@
 			pa-4
 			transition="slide-y-transition"
 		>
-			{{ $page.props.flash.success }}
+			<span class="black--text">{{ $page.props.flash.success }}</span>
 		</v-snackbar>
 		<v-snackbar
 			v-model="flash_error"
@@ -47,21 +47,11 @@
 			<v-toolbar-title>Custom Mech KBD</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-toolbar-items>
-				<v-btn @click="inertiaVisit('/')" text>
-					Home
-				</v-btn>
-				<v-btn @click="inertiaVisit('/shop')" text>
-					Shop
-				</v-btn>
-				<v-btn @click="inertiaVisit('/custom')" text>
-					Custom
-				</v-btn>
-				<v-btn @click="inertiaVisit('/about')" text>
-					About Us
-				</v-btn>
-				<v-btn @click="inertiaVisit('/faq')" text>
-					FAQ
-				</v-btn>
+				<v-btn @click="inertiaVisit('/')" text> Home </v-btn>
+				<v-btn @click="inertiaVisit('/shop')" text> Shop </v-btn>
+				<v-btn @click="inertiaVisit('/custom')" text> Custom </v-btn>
+				<v-btn @click="inertiaVisit('/about')" text> About Us </v-btn>
+				<v-btn @click="inertiaVisit('/faq')" text> FAQ </v-btn>
 				<v-menu offset-x offset-y open-on-hover>
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn
@@ -112,25 +102,26 @@ export default {
 		page_status: true,
 		app_bar_img_url: "https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg",
 		flash_success: false,
-		flash_error: false
+		flash_error: false,
 	}),
 
 	mounted() {
 		axios
 			.get("https://api.unsplash.com/photos/4IxPVkFGJGI", {
 				headers: {
-					Authorization: "Client-ID 3LkI5pmvOcEs72PtTZFbsnoX_n2jDpBDa0JOXh4OJbU"
-				}
+					Authorization:
+						"Client-ID 3LkI5pmvOcEs72PtTZFbsnoX_n2jDpBDa0JOXh4OJbU",
+				},
 			})
-			.then(response => {
+			.then((response) => {
 				// this.app_bar_img_url = response.data.urls.full;
 				this.page_status = false;
 			});
 
-		Inertia.on("start", event => {
+		Inertia.on("start", (event) => {
 			this.page_status = true;
 		});
-		Inertia.on("success", event => {
+		Inertia.on("success", (event) => {
 			this.flash_success = !!this.$page.props.flash.success;
 			this.flash_error = Object.keys(this.$page.props.error).length != 0;
 			this.page_status = false;
@@ -138,11 +129,11 @@ export default {
 	},
 
 	methods: {
-		logoutUser: function() {
+		logoutUser: function () {
 			axios.post("/logout");
 			Inertia.visit("/");
-		}
-	}
+		},
+	},
 };
 </script>
 

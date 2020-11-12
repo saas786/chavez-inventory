@@ -9,10 +9,9 @@ use App\Models\CustomOrder;
 use App\Models\Keyboard;
 use App\Models\KeyboardComponent;
 use App\Models\Order;
-use Error;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class ShopController extends Controller
@@ -22,12 +21,27 @@ class ShopController extends Controller
 		// $this->middleware('auth');
 	}
 
+	/**
+	 * Go to the shop index
+	 *
+	 * @return Inertia\Response
+	 */
 	public function index()
 	{
 		return Inertia::render('Shop/Index');
 	}
 
 	public function shop()
+	{
+		return Inertia::render('Shop/Shop');
+	}
+
+	/**
+	 * Show page for the custom keyboards.
+	 *
+	 * @return Inertia\Response
+	 */
+	public function custom()
 	{
 		$components = KeyboardComponent::with(['layout', 'keyboardComponentType'])
 			->get()
@@ -61,17 +75,18 @@ class ShopController extends Controller
 			];
 		});
 
-		return Inertia::render('Shop/Shop', [
+		return Inertia::render('Shop/Custom', [
 			'colors' => $colors,
 			'components' => $components,
 		]);
 	}
 
-	public function custom()
-	{
-		return Inertia::render('Shop/Custom');
-	}
-
+	/**
+	 * Create a custom order.
+	 *
+	 * @param OrderCustomKeyboard $request
+	 * @return \App\Models\Order
+	 */
 	public function custom_order(OrderCustomKeyboard $request)
 	{
 		// return $request->all();
@@ -92,6 +107,7 @@ class ShopController extends Controller
 		$order = new Order([
 			'customer_name' => $valid['customer']['name'],
 			'messenger_name' => $valid['customer']['messenger'],
+			'tracking_id' => Str::random(15),
 		]);
 
 		$order
@@ -99,7 +115,15 @@ class ShopController extends Controller
 			->associate($customOrder)
 			->save();
 
-		return $order;
+		sleep(5);
+
+		return Response::json(
+			[
+				'success' => 'Ordered successfully!',
+				'tracking_id' => $order->tracking_id,
+			],
+			201
+		);
 	}
 
 	public function about()

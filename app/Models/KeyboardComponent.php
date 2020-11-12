@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Throwable;
 
 class KeyboardComponent extends Model
 {
@@ -16,6 +14,14 @@ class KeyboardComponent extends Model
 	protected $hidden = ['updated_at', 'created_at'];
 
 	//Accessors
+
+	/**
+	 * Accessor for the url attribute.
+	 * Gets the url for the AWS Cloudfront server.
+	 * If no image is assinged, then retrieve the default static image.
+	 *
+	 * @return String
+	 */
 	public function getUrlAttribute()
 	{
 		if ($this->image_url != null) {

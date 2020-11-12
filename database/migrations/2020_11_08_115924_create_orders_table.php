@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
 			$table->id();
 			$table->string('customer_name');
 			$table->string('messenger_name');
+			$table->string('tracking_id');
 			$table->unsignedBigInteger('orderable_id');
 			$table->string('orderable_type');
 			$table->timestamps();

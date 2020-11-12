@@ -1,16 +1,12 @@
 <template>
-	<v-container fill-height ma-0 class="align-start full-height">
-		<v-row class="full-height">
-			<v-col cols="2" fill-height>
-				<v-navigation-drawer permanent class="primary full-height">
+	<v-container fill-height ma-0 class="align-start">
+		<v-row>
+			<v-col cols="2">
+				<v-navigation-drawer permanent class="primary">
 					<v-list-item link @click="inertiaVisit('/inventory')">
 						<v-list-item-content>
-							<v-list-item-title class="title">
-								Inventory
-							</v-list-item-title>
-							<v-list-item-subtitle>
-								Notifications!
-							</v-list-item-subtitle>
+							<v-list-item-title class="title"> Inventory </v-list-item-title>
+							<v-list-item-subtitle> Notifications! </v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
 
@@ -50,9 +46,7 @@
 				</v-container>
 			</v-col>
 		</v-row>
-		<v-footer absolute>
-			HEllo
-		</v-footer>
+		<v-footer absolute> HEllo </v-footer>
 	</v-container>
 </template>
 
@@ -61,9 +55,9 @@ import { Inertia } from "@inertiajs/inertia";
 
 export default {
 	computed: {
-		page_status: function() {
+		page_status: function () {
 			return this.$parent.$parent.$parent.page_status;
-		}
+		},
 	},
 
 	mounted() {},
@@ -72,17 +66,20 @@ export default {
 		return {
 			items: [
 				{ title: "Components", link: "/inventory/components" },
-				{ title: "Keyboards", link: "/inventory/keyboards" },
-				{ title: "Prebuilt Orders", link: "/inventory/prebuilt_orders" },
-				{ title: "Custom Orders", link: "/inventory/custom_orders" }
+				{ title: "Catalog", link: "/inventory/catalog" },
+				{ title: "Orders", link: "/inventory/orders" },
 			],
 			right: null,
-			overlay: true
+			overlay: true,
 		};
 	},
 
-	methods: {}
+	methods: {},
 };
 </script>
 
-<style></style>
+<style>
+.full-height {
+	height: 80vh;
+}
+</style>

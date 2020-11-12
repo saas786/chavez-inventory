@@ -22,27 +22,11 @@ class InventoryController extends Controller
 
 	public function components()
 	{
-		// $components = \App\Models\KeyboardComponent::all()->map( function( $comp ){
-		//         return [
-		//             'id' => $comp->id,
-		//             'Name' => $comp->name,
-		//             'Layout' => (is_null($comp->layout)) ? '' : $comp->layout->name,
-		//             'layout_id' => $comp->layout_id,
-		//             'Type' => $comp->keyboardComponentType->name,
-		//             'keyboard_component_type_id' => $comp->keyboard_component_type_id,
-		//             'Stock' => $comp->stock,
-		//             'Price' => $comp->price,
-		//             'url' => $comp->url,
-		//         ];
-		//     });
-
 		$components = \App\Models\KeyboardComponent::with('layout')
 			->with('keyboardComponentType')
 			->get()
 			->sortBy('id')
 			->values();
-
-		// $components = \App\Models\KeyboardComponent::with( 'layout');
 
 		return Inertia::render('Inventory/Components', [
 			'components' => $components,
@@ -51,18 +35,13 @@ class InventoryController extends Controller
 		]);
 	}
 
-	public function keyboards()
+	public function catalog()
 	{
-		return Inertia::render('Inventory/Keyboards');
+		return Inertia::render('Inventory/Catalog');
 	}
 
-	public function prebuilt()
+	public function orders()
 	{
-		return Inertia::render('Inventory/Prebuilts');
-	}
-
-	public function custom()
-	{
-		return Inertia::render('Inventory/Customs');
+		return Inertia::render('Inventory/Orders');
 	}
 }
