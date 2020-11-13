@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\KeyboardComponentController;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,9 @@ Route::middleware(['auth'])->group(function () {
 		Route::prefix('catalog')->group(function () {
 			Route::get('/', [InventoryController::class, 'catalog'])->name(
 				'inventory.catalog.index'
+			);
+			Route::post('/', [CatalogController::class, 'store'])->name(
+				'inventory.catalog.store'
 			);
 		});
 

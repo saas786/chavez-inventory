@@ -18,9 +18,9 @@ class CreatePrebuiltOrdersTable extends Migration
 			$table->id();
 			$table->string('name');
 			$table->foreignIdFor(Keyboard::class)->constrained();
-			$table->unsignedBigInteger('price');
+			$table->unsignedFloat('price');
 			$table->string('image_url');
-			$table->text('description');
+			$table->text('description')->nullable();
 			$table->timestamps();
 		});
 	}

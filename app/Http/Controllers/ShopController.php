@@ -43,41 +43,8 @@ class ShopController extends Controller
 	 */
 	public function custom()
 	{
-		$components = KeyboardComponent::with(['layout', 'keyboardComponentType'])
-			->get()
-			->sortBy('keyboard_component_type_id')
-			->groupBy('keyboard_component_type_id')
-			->map(function ($collection) {
-				return $collection
-					->sortBy('price')
-					->map(function ($comp) {
-						return [
-							'id' => Crypt::encrypt($comp->id),
-							'name' => $comp->name,
-							'price' => $comp->price,
-							'layout_id' => $comp->layout_id,
-							'stock' => $comp->availableStock,
-							'url' => $comp->url,
-						];
-					})
-					->where('stock', '>', 0)
-					->values();
-			})
-			->values();
-
-		$colors = Color::all()->map(function ($color) {
-			return [
-				'id' => Crypt::encrypt($color->id),
-				'name' => $color->name,
-				'hexCode' => $color->hex_code,
-				'primary' => $color->primary,
-				'double' => $color->double_sleeved,
-			];
-		});
-
 		return Inertia::render('Shop/Custom', [
-			'colors' => $colors,
-			'components' => $components,
+			'components' => KeyboardComponent::categorizedComponents(true),
 		]);
 	}
 
@@ -89,8 +56,6 @@ class ShopController extends Controller
 	 */
 	public function custom_order(OrderCustomKeyboard $request)
 	{
-		// return $request->all();
-
 		$valid = $request->validated();
 
 		$valid['keyboard']['cable_id'] = Cable::firstOrCreate($valid['cable'])->id;
@@ -101,8 +66,6 @@ class ShopController extends Controller
 			'keyboard_id' => $keyboard->id,
 			'remarks' => $request['customer']['remarks'],
 		]);
-
-		// return $keyboard;
 
 		$order = new Order([
 			'customer_name' => $valid['customer']['name'],
@@ -115,7 +78,7 @@ class ShopController extends Controller
 			->associate($customOrder)
 			->save();
 
-		sleep(5);
+		sleep(1);
 
 		return Response::json(
 			[

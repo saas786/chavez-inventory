@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 
 class KeyboardComponent extends Model
 {
@@ -72,6 +73,39 @@ class KeyboardComponent extends Model
 	}
 
 	//Static Functions
+
+	/**
+	 * Return a collection of components that are
+	 * grouped into their separate categories.
+	 *
+	 * @param boolean $encrypted
+	 * @return Collection
+	 */
+	public static function categorizedComponents($encrypted)
+	{
+		return KeyboardComponent::with(['layout', 'keyboardComponentType'])
+			->get()
+			->sortBy('keyboard_component_type_id')
+			->groupBy('keyboard_component_type_id')
+			->map(function ($collection) use ($encrypted) {
+				return $collection
+					->sortBy('price')
+					->map(function ($comp) use ($encrypted) {
+						return [
+							'id' => $encrypted ? Crypt::encrypt($comp->id) : $comp->id,
+							'name' => $comp->name,
+							'price' => $comp->price,
+							'layout_id' => $comp->layout_id,
+							'stock' => $comp->availableStock,
+							'url' => $comp->url,
+						];
+					})
+					->where('stock', '>', 0)
+					->values();
+			})
+			->values();
+	}
+
 	public static function available()
 	{
 		return 23;

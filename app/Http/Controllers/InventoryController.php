@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KeyboardComponent;
+use App\Models\PrebuiltOrder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -37,7 +39,10 @@ class InventoryController extends Controller
 
 	public function catalog()
 	{
-		return Inertia::render('Inventory/Catalog');
+		return Inertia::render('Inventory/Catalog', [
+			'components' => KeyboardComponent::categorizedComponents(false),
+			'catalog_items' => PrebuiltOrder::all(),
+		]);
 	}
 
 	public function orders()

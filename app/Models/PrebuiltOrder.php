@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PrebuiltOrder extends Model
 {
 	use HasFactory;
+	protected $guarded = [];
 
 	//Relationships
 	public function order()
