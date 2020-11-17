@@ -47,8 +47,6 @@ class CatalogController extends Controller
 
 		$valid['keyboard']['cable_id'] = Cable::firstOrCreate($valid['cable'])->id;
 
-		// dd($request, $request->validated());
-
 		$item->keyboard->update($valid['keyboard']);
 
 		$valid['catalog_item']['image_url'] = $request['catalog_item']['image_url'];
