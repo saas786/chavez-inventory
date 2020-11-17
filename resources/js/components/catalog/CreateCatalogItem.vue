@@ -289,7 +289,6 @@ export default {
 	methods: {
 		imageUploadChange(e) {
 			let pic = e;
-			console.log(pic);
 			let reader = new FileReader();
 
 			reader.addEventListener(
@@ -340,8 +339,6 @@ export default {
 					(c) => c.layout_id == layout
 				);
 			else options = [];
-
-			console.log(options);
 
 			return options.map((c) => {
 				return {

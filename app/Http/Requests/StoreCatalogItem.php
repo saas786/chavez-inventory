@@ -38,15 +38,19 @@ class StoreCatalogItem extends FormRequest
 			"price" => $this->price,
 			"description" => $this->description,
 			"image_url" => $this->image_url,
+			"keyboard_id" => $this->keyboard_id,
 		];
 
 		$cable = [
 			"cable_length" => $this->cable_length,
 			"coil_length" => $this->coil_length,
 			"color_id" => $this->color_id,
-			"double_sleeved" => (bool) $this->double_sleeved,
-			"double_sleeve_color_id" => $this->double_sleeve_color_id,
-			"detachable" => (bool) $this->detachable,
+			"double_sleeved" => $this->double_sleeved == "true" ? true : false,
+			"double_sleeve_color_id" =>
+				$this->double_sleeve_color_id == "null"
+					? null
+					: $this->double_sleeve_color_id,
+			"detachable" => $this->detachable == "true" ? true : false,
 		];
 
 		$this->merge([
@@ -68,6 +72,7 @@ class StoreCatalogItem extends FormRequest
 			"catalog_item.price" => "required",
 			"catalog_item.description" => "nullable",
 			"catalog_item.image_url" => "nullable|image",
+			"catalog_item.keyboard_id" => "nullable|integer",
 			"keyboard.layout_id" => "required|integer",
 			"keyboard.switch_id" => "required|integer",
 			"keyboard.plate_id" => "required|integer",

@@ -12,6 +12,18 @@
 					<template v-slot:item.primary="{ item }">
 						<v-simple-checkbox v-model="item.primary"></v-simple-checkbox>
 					</template>
+					<template v-slot:item.name="{ item }">
+						<v-edit-dialog :return-value.sync="item.name">
+							{{ item.name }}
+							<template v-slot:input>
+								<v-text-field
+									v-model="item.name"
+									label="Edit"
+									single-line
+								></v-text-field>
+							</template>
+						</v-edit-dialog>
+					</template>
 					<template v-slot:item.double="{ item }">
 						<v-simple-checkbox v-model="item.double"></v-simple-checkbox>
 					</template>

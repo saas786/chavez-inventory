@@ -65,6 +65,12 @@ Route::middleware(['auth'])->group(function () {
 			Route::post('/', [CatalogController::class, 'store'])->name(
 				'inventory.catalog.store'
 			);
+			Route::delete('/', [CatalogController::class, 'destroy'])->name(
+				'inventory.catalog.destroy'
+			);
+			Route::patch('/{item}', [CatalogController::class, 'update'])->name(
+				'inventory.catalog.update'
+			);
 		});
 
 		Route::prefix('orders')->group(function () {

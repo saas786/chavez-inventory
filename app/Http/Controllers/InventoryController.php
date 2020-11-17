@@ -41,7 +41,10 @@ class InventoryController extends Controller
 	{
 		return Inertia::render('Inventory/Catalog', [
 			'components' => KeyboardComponent::categorizedComponents(false),
-			'catalog_items' => PrebuiltOrder::all(),
+			'catalog_items' => PrebuiltOrder::with(
+				'keyboard',
+				'keyboard.cable'
+			)->get(),
 		]);
 	}
 
