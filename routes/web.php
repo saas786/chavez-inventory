@@ -3,7 +3,6 @@
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\KeyboardComponentController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 

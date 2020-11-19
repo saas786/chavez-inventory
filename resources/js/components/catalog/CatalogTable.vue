@@ -79,6 +79,10 @@ export default {
 					text: "Description",
 					value: "description",
 				},
+				{
+					text: "Status",
+					value: "status",
+				},
 			],
 		};
 	},

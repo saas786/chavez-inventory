@@ -101,7 +101,7 @@
 				</td>
 			</template>
 			<template v-slot:item.Name="{ item }">
-				<v-tooltip bottom v-if="item.url === null">
+				<v-tooltip bottom v-if="item.image_url === null">
 					<template v-slot:activator="{ on, attrs }">
 						<span v-bind="attrs" v-on="on">{{ item.Name }}</span>
 					</template>
@@ -168,6 +168,7 @@ export default {
 					Stock: comp.stock,
 					Price: comp.price,
 					url: comp.url,
+					image_url: comp.image_url,
 				};
 			});
 		},

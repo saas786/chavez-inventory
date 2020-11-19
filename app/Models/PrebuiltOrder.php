@@ -9,7 +9,7 @@ class PrebuiltOrder extends Model
 {
 	use HasFactory;
 	protected $guarded = [];
-	protected $appends = ['url'];
+	protected $appends = ['url', 'status'];
 
 	//Accessors
 	public function getUrlAttribute()
@@ -18,6 +18,15 @@ class PrebuiltOrder extends Model
 			return env('AWS_CLOUDFRONT_URL') . $this->image_url;
 		}
 		return null;
+	}
+
+	public function getStatusAttribute()
+	{
+		if ($this->order != null) {
+			return "Ordered";
+		} else {
+			return "For Sale";
+		}
 	}
 
 	//Relationships

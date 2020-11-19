@@ -9,6 +9,7 @@ use App\Models\CustomOrder;
 use App\Models\Keyboard;
 use App\Models\KeyboardComponent;
 use App\Models\Order;
+use App\Models\PrebuiltOrder;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -33,7 +34,14 @@ class ShopController extends Controller
 
 	public function shop()
 	{
-		return Inertia::render('Shop/Shop');
+		return Inertia::render('Shop/Shop', [
+			'catalog' => PrebuiltOrder::with(
+				'keyboard',
+				'keyboard.cable',
+				'keyboard.cable.color',
+				'keyboard.cable.double_sleeve_color'
+			)->get(),
+		]);
 	}
 
 	/**

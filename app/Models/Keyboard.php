@@ -10,6 +10,7 @@ class Keyboard extends Model
 	use HasFactory;
 
 	protected $guarded = [];
+	protected $appends = ['price'];
 
 	//Relationships
 	public function switch()
@@ -47,5 +48,16 @@ class Keyboard extends Model
 			$this->plate,
 			$this->case,
 		]);
+	}
+
+	public function getPriceAttribute()
+	{
+		$price = 0;
+		$price += $this->switch->price;
+		$price += $this->keycap->price;
+		$price += $this->plate->price;
+		$price += $this->case->price;
+
+		return $price;
 	}
 }
