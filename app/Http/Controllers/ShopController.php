@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderCustomKeyboard;
+use App\Http\Requests\OrderPrebuiltKeyboard;
 use App\Models\Cable;
 use App\Models\Color;
 use App\Models\CustomOrder;
@@ -42,6 +43,24 @@ class ShopController extends Controller
 				'keyboard.cable.double_sleeve_color'
 			)->get(),
 		]);
+	}
+
+	public function shop_order(OrderPrebuiltKeyboard $request)
+	{
+		$order = new Order($request->except('prebuilt_order_id'));
+
+		$order
+			->orderable()
+			->associate(PrebuiltOrder::find($request['prebuilt_order_id']))
+			->save();
+
+		return Response::json(
+			[
+				'success' => 'Ordered successfully!',
+				'tracking_id' => $order->tracking_id,
+			],
+			201
+		);
 	}
 
 	/**
@@ -85,8 +104,6 @@ class ShopController extends Controller
 			->orderable()
 			->associate($customOrder)
 			->save();
-
-		sleep(1);
 
 		return Response::json(
 			[

@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
 			$table->string('tracking_id');
 			$table->unsignedBigInteger('orderable_id');
 			$table->string('orderable_type');
+			$table->string('status');
 			$table->timestamps();
 		});
 	}

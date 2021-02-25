@@ -11,6 +11,14 @@ class Order extends Model
 
 	protected $guarded = [];
 
+	//Accessors
+	public function type()
+	{
+		return is_a($this->orderable, 'App\Models\PrebuiltOrder')
+			? "Prebuilt"
+			: "Custom";
+	}
+
 	//Relationships
 	public function orderable()
 	{

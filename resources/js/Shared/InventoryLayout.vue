@@ -6,7 +6,6 @@
 					<v-list-item link @click="inertiaVisit('/inventory')">
 						<v-list-item-content>
 							<v-list-item-title class="title"> Inventory </v-list-item-title>
-							<v-list-item-subtitle> Notifications! </v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
 
@@ -68,6 +67,7 @@ export default {
 				{ title: "Components", link: "/inventory/components" },
 				{ title: "Catalog", link: "/inventory/catalog" },
 				{ title: "Orders", link: "/inventory/orders" },
+				{ title: "About & FAQs", link: "/inventory/about_faqs" },
 			],
 			right: null,
 			overlay: true,

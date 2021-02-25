@@ -2707,7 +2707,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
@@ -2727,6 +2726,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: "Orders",
         link: "/inventory/orders"
+      }, {
+        title: "About & FAQs",
+        link: "/inventory/about_faqs"
       }],
       right: null,
       overlay: true
@@ -4518,6 +4520,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4655,8 +4659,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["item"]
+  props: ["item"],
+  data: function data() {
+    return {
+      customer_name: "",
+      messenger_name: "",
+      order: false
+    };
+  },
+  methods: {
+    order: function order() {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"].post("/shop", {
+        customer_name: this.customer_name,
+        messenger_name: this.messenger_name,
+        prebuilt_order_id: this.item.id
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -44134,10 +44183,6 @@ var render = function() {
                         [
                           _c("v-list-item-title", { staticClass: "title" }, [
                             _vm._v(" Inventory ")
-                          ]),
-                          _vm._v(" "),
-                          _c("v-list-item-subtitle", [
-                            _vm._v(" Notifications! ")
                           ])
                         ],
                         1
@@ -47694,16 +47739,100 @@ var render = function() {
             { staticClass: "justify-center" },
             [
               _c(
-                "v-btn",
+                "v-dialog",
                 {
-                  attrs: { color: "success", outlined: "" },
-                  on: {
-                    click: function($event) {
-                      return _vm.$emit("order", _vm.item.id)
+                  attrs: { "max-width": "500" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function(ref) {
+                        var on = ref.on
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._g(
+                              _vm._b(
+                                {
+                                  attrs: { color: "success", outlined: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$emit("order", _vm.item.id)
+                                    }
+                                  }
+                                },
+                                "v-btn",
+                                attrs,
+                                false
+                              ),
+                              on
+                            ),
+                            [_vm._v("Order")]
+                          )
+                        ]
+                      }
                     }
-                  }
+                  ])
                 },
-                [_vm._v("Order")]
+                [
+                  _vm._v(" "),
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [_vm._v("Customer details")]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "Name" },
+                            model: {
+                              value: _vm.customer_name,
+                              callback: function($$v) {
+                                _vm.customer_name = $$v
+                              },
+                              expression: "customer_name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: { label: "Messenger Name" },
+                            model: {
+                              value: _vm.messenger_name,
+                              callback: function($$v) {
+                                _vm.messenger_name = $$v
+                              },
+                              expression: "messenger_name"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "mx-auto black--text",
+                              attrs: {
+                                color: "success",
+                                disabled:
+                                  !_vm.customer_name || !_vm.messenger_name
+                              },
+                              on: { click: _vm.order }
+                            },
+                            [_vm._v("Order")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1

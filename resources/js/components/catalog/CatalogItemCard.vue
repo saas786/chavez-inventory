@@ -127,17 +127,62 @@
 				</v-row>
 			</v-card-text>
 			<v-card-actions class="justify-center">
-				<v-btn color="success" @click="$emit('order', item.id)" outlined
-					>Order</v-btn
-				>
+				<v-dialog max-width="500">
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn
+							color="success"
+							@click="$emit('order', item.id)"
+							outlined
+							v-on="on"
+							v-bind="attrs"
+							>Order</v-btn
+						>
+					</template>
+					<v-card>
+						<v-card-title>Customer details</v-card-title>
+						<v-card-text>
+							<v-text-field label="Name" v-model="customer_name"></v-text-field>
+							<v-text-field
+								label="Messenger Name"
+								v-model="messenger_name"
+							></v-text-field>
+						</v-card-text>
+						<v-card-actions>
+							<v-btn
+								class="mx-auto black--text"
+								color="success"
+								@click="order"
+								:disabled="!customer_name || !messenger_name"
+								>Order</v-btn
+							>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
 </template>
 
 <script>
+import { Inertia } from "@inertiajs/inertia";
 export default {
 	props: ["item"],
+	data() {
+		return {
+			customer_name: "",
+			messenger_name: "",
+			order: false,
+		};
+	},
+	methods: {
+		order() {
+			Inertia.post("/shop", {
+				customer_name: this.customer_name,
+				messenger_name: this.messenger_name,
+				prebuilt_order_id: this.item.id,
+			});
+		},
+	},
 };
 </script>
 

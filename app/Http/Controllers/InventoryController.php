@@ -52,4 +52,9 @@ class InventoryController extends Controller
 	{
 		return Inertia::render('Inventory/Orders');
 	}
+
+	public function about_faqs()
+	{
+		return Inertia::render('Inventory/Orders');
+	}
 }

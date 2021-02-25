@@ -16,4 +16,9 @@ class CustomOrder extends Model
 	{
 		return $this->morphOne(Order::class, 'orderable');
 	}
+
+	public function keyboard()
+	{
+		return $this->belongsTo(Keyboard::class);
+	}
 }

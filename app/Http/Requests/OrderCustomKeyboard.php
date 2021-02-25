@@ -63,21 +63,5 @@ class OrderCustomKeyboard extends FormRequest
 			'customer.messenger' => 'required|string|max:255',
 			'customer.remarks' => 'nullable|string|max:255',
 		];
-		// return [
-		// 	'keyboard.layout' => 'required|integer',
-		// 	'keyboard.switch' => 'required|alpha_num',
-		// 	'keyboard.keycap' => 'required|alpha_num',
-		// 	'keyboard.plate' => 'required|alpha_num',
-		// 	'keyboard.case' => 'required|alpha_num',
-		// 	'keyboard.cable.cable_length' => 'required|integer',
-		// 	'keyboard.cable.coil_length' => 'required|integer',
-		// 	'keyboard.cable.color_id' => 'required|integer',
-		// 	'keyboard.cable.double_sleeved' => 'required|boolean',
-		// 	'keyboard.cable.double_sleeve_color_id' => 'nullable|integer',
-		// 	'keyboard.cable.detachable' => 'required|boolean',
-		// 	'customer.name' => 'required|string|max:255',
-		// 	'customer.messenger' => 'required|string|max:255',
-		// 	'customer.remarks' => 'nullable|string|max:255',
-		// ];
 	}
 }

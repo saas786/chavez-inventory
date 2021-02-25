@@ -6,76 +6,94 @@ use App\Http\Controllers\KeyboardComponentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 
-//Shop Routes
-Route::get('/', [ShopController::class, 'index'])->name('shop.index');
-Route::get('/shop', [ShopController::class, 'shop'])->name('shop.prebuilt');
-Route::post('/custom', [ShopController::class, 'custom_order'])->name(
-	'shop.custom_order'
-);
-Route::get('/custom', [ShopController::class, 'custom'])->name('shop.custom');
-Route::get('/about', [ShopController::class, 'about'])->name('shop.about');
-Route::get('/faq', [ShopController::class, 'faq'])->name('shop.faq');
+Route::prefix('/')->group(function () {
+	Route::get('/', [ShopController::class, 'index'])->name('shop.index');
+	Route::get('/about', [ShopController::class, 'about'])->name('shop.about');
+	Route::get('/faq', [ShopController::class, 'faq'])->name('shop.faq');
 
-//Authorized Routes
-Route::middleware(['auth'])->group(function () {
-	Route::prefix('inventory')->group(function () {
-		Route::get('/', [InventoryController::class, 'index'])->name(
-			'inventory.index'
+	//Shop Routes
+	Route::prefix('/shop')->group(function () {
+		Route::get('/', [ShopController::class, 'shop'])->name('shop.prebuilt');
+		Route::post('/', [ShopController::class, 'shop_order'])->name(
+			'shop.prebuilt_order'
 		);
+	});
 
-		Route::prefix('components')->group(function () {
-			Route::post('/stock', [
-				KeyboardComponentController::class,
-				'stock',
-			])->name('inventory.components.stock');
+	//Customize Keyboard Routes
+	Route::prefix('/custom')->group(function () {
+		Route::post('/', [ShopController::class, 'custom_order'])->name(
+			'shop.custom_order'
+		);
+		Route::get('/', [ShopController::class, 'custom'])->name('shop.custom');
+	});
 
-			Route::post('/colors', [
-				KeyboardComponentController::class,
-				'colorsUpdate',
-			])->name('inventory.components.colors.update');
-
-			Route::get('/colors', [
-				KeyboardComponentController::class,
-				'colors',
-			])->name('inventory.components.colors');
-
-			Route::post('/{component}', [
-				KeyboardComponentController::class,
-				'update',
-			])->name('inventory.components.update');
-
-			Route::delete('/', [KeyboardComponentController::class, 'destroy'])->name(
-				'inventory.components.delete'
+	//Authorized Routes
+	Route::middleware(['auth'])->group(function () {
+		Route::prefix('inventory')->group(function () {
+			Route::get('/', [InventoryController::class, 'index'])->name(
+				'inventory.index'
 			);
 
-			Route::post('/', [KeyboardComponentController::class, 'store'])->name(
-				'inventory.components.store'
-			);
+			Route::get('/about_faqs', [
+				InventoryController::class,
+				'about_faqs',
+			])->name('inventory.about_faqs');
 
-			Route::get('/', [InventoryController::class, 'components'])->name(
-				'inventory.components.index'
-			);
-		});
+			Route::prefix('components')->group(function () {
+				Route::post('/stock', [
+					KeyboardComponentController::class,
+					'stock',
+				])->name('inventory.components.stock');
 
-		Route::prefix('catalog')->group(function () {
-			Route::get('/', [InventoryController::class, 'catalog'])->name(
-				'inventory.catalog.index'
-			);
-			Route::post('/', [CatalogController::class, 'store'])->name(
-				'inventory.catalog.store'
-			);
-			Route::delete('/', [CatalogController::class, 'destroy'])->name(
-				'inventory.catalog.destroy'
-			);
-			Route::patch('/{item}', [CatalogController::class, 'update'])->name(
-				'inventory.catalog.update'
-			);
-		});
+				Route::post('/colors', [
+					KeyboardComponentController::class,
+					'colorsUpdate',
+				])->name('inventory.components.colors.update');
 
-		Route::prefix('orders')->group(function () {
-			Route::get('/', [InventoryController::class, 'orders'])->name(
-				'inventory.orders.index'
-			);
+				Route::get('/colors', [
+					KeyboardComponentController::class,
+					'colors',
+				])->name('inventory.components.colors');
+
+				Route::post('/{component}', [
+					KeyboardComponentController::class,
+					'update',
+				])->name('inventory.components.update');
+
+				Route::delete('/', [
+					KeyboardComponentController::class,
+					'destroy',
+				])->name('inventory.components.delete');
+
+				Route::post('/', [KeyboardComponentController::class, 'store'])->name(
+					'inventory.components.store'
+				);
+
+				Route::get('/', [InventoryController::class, 'components'])->name(
+					'inventory.components.index'
+				);
+			});
+
+			Route::prefix('catalog')->group(function () {
+				Route::get('/', [InventoryController::class, 'catalog'])->name(
+					'inventory.catalog.index'
+				);
+				Route::post('/', [CatalogController::class, 'store'])->name(
+					'inventory.catalog.store'
+				);
+				Route::delete('/', [CatalogController::class, 'destroy'])->name(
+					'inventory.catalog.destroy'
+				);
+				Route::patch('/{item}', [CatalogController::class, 'update'])->name(
+					'inventory.catalog.update'
+				);
+			});
+
+			Route::prefix('orders')->group(function () {
+				Route::get('/', [InventoryController::class, 'orders'])->name(
+					'inventory.orders.index'
+				);
+			});
 		});
 	});
 });
