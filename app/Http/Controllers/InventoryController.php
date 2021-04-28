@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KeyboardComponent;
 use App\Models\PrebuiltOrder;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -50,7 +51,9 @@ class InventoryController extends Controller
 
 	public function orders()
 	{
-		return Inertia::render('Inventory/Orders');
+		return Inertia::render('Inventory/Orders', [
+			'orders' => Order::with('orderable.keyboard')->get(),
+		]);
 	}
 
 	public function about_faqs()

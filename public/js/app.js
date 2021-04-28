@@ -2443,11 +2443,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["orders"],
   layout: function layout(h, page) {
     return h(_Shared_Layout__WEBPACK_IMPORTED_MODULE_1__["default"], [h(_Shared_InventoryLayout__WEBPACK_IMPORTED_MODULE_0__["default"], [page])]);
   }
@@ -43978,7 +43977,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("v-container", { attrs: { "fill-height": "" } }, [
-    _vm._v("\n    Hello\n")
+    _vm._v(" Hello ")
   ])
 }
 var staticRenderFns = []

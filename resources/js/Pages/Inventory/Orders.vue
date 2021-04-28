@@ -1,21 +1,16 @@
 <template>
-    <v-container fill-height>
-        Hello
-    </v-container>
+	<v-container fill-height> Hello </v-container>
 </template>
 
 <script>
-
-import InventoryLayout from './../../Shared/InventoryLayout'
-import Layout from './../../Shared/Layout'
+import InventoryLayout from "./../../Shared/InventoryLayout";
+import Layout from "./../../Shared/Layout";
 
 export default {
-    
-    layout: (h, page) => {
-        return h( Layout, [
-            h( InventoryLayout, [page] )
-        ])
-    },
+	props: ["orders"],
 
-}
+	layout: (h, page) => {
+		return h(Layout, [h(InventoryLayout, [page])]);
+	},
+};
 </script>
