@@ -11,6 +11,7 @@ use App\Models\Keyboard;
 use App\Models\KeyboardComponent;
 use App\Models\Order;
 use App\Models\PrebuiltOrder;
+use App\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -116,11 +117,15 @@ class ShopController extends Controller
 
 	public function about()
 	{
-		return Inertia::render('Shop/About');
+		return Inertia::render('Shop/Info', [
+			'content' => User::find(1)->about,
+		]);
 	}
 
 	public function faq()
 	{
-		return Inertia::render('Shop/FAQ');
+		return Inertia::render('Shop/Info', [
+			'content' => User::find(1)->faqs,
+		]);
 	}
 }

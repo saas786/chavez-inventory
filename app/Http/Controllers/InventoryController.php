@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KeyboardComponent;
 use App\Models\PrebuiltOrder;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -58,6 +59,19 @@ class InventoryController extends Controller
 
 	public function about_faqs()
 	{
-		return Inertia::render('Inventory/Orders');
+		return Inertia::render('Inventory/AboutFAQs', [
+			'aboutContent' => User::find(1)->about,
+			'faqsContent' => User::find(1)->faqs,
+		]);
+	}
+
+	public function about_faqs_update(Request $request)
+	{
+		User::where('id', 1)->update($request->all());
+
+		return Inertia::render('Inventory/AboutFAQs', [
+			'aboutContent' => User::find(1)->about,
+			'faqsContent' => User::find(1)->faqs,
+		]);
 	}
 }

@@ -34,10 +34,15 @@ Route::prefix('/')->group(function () {
 				'inventory.index'
 			);
 
-			Route::get('/about_faqs', [
-				InventoryController::class,
-				'about_faqs',
-			])->name('inventory.about_faqs');
+			Route::prefix('about_faqs')->group(function () {
+				Route::get('/', [InventoryController::class, 'about_faqs'])->name(
+					'inventory.about_faqs'
+				);
+				Route::post('/', [
+					InventoryController::class,
+					'about_faqs_update',
+				])->name('inventory.about_faqs.update');
+			});
 
 			Route::prefix('components')->group(function () {
 				Route::post('/stock', [

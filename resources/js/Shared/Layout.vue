@@ -59,7 +59,7 @@
 							v-if="$page.props['auth.user']"
 							v-bind="attrs"
 							v-on="on"
-							@click="inertiaVisit('/inventory')"
+							@click="inertiaVisit('/inventory/components')"
 						>
 							Welcome, {{ $page.props["auth.user"].name }}
 						</v-btn>
@@ -68,17 +68,14 @@
 						<v-list-item link @click="inertiaVisit('/inventory/components')">
 							<v-list-item-title>Components</v-list-item-title>
 						</v-list-item>
-						<v-list-item link @click="inertiaVisit('/inventory/cables')">
-							<v-list-item-title>Cables</v-list-item-title>
-						</v-list-item>
-						<v-list-item
-							link
-							@click="inertiaVisit('/inventory/prebuilt_orders')"
-						>
+						<v-list-item link @click="inertiaVisit('/inventory/catalog')">
 							<v-list-item-title>Prebuilt Orders</v-list-item-title>
 						</v-list-item>
-						<v-list-item link @click="inertiaVisit('/inventory/custom_orders')">
-							<v-list-item-title>Custom Orders</v-list-item-title>
+						<v-list-item link @click="inertiaVisit('/inventory/orders')">
+							<v-list-item-title>Orders</v-list-item-title>
+						</v-list-item>
+						<v-list-item link @click="inertiaVisit('/inventory/about_faqs')">
+							<v-list-item-title>About & FAQs</v-list-item-title>
 						</v-list-item>
 						<v-list-item link @click="logoutUser">
 							<v-list-item-title>Logout</v-list-item-title>

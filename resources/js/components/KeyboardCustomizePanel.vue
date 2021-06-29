@@ -7,7 +7,15 @@
 		>
 		<v-card-text class="text-center">
 			<v-row>
-				<v-col cols="1">
+				<v-col
+					cols="1"
+					v-if="
+						!(
+							$vuetify.breakpoint.name == 'xs' ||
+							$vuetify.breakpoint.name == 'sm'
+						)
+					"
+				>
 					<v-btn class="full-height" @click="$emit('step-back')"
 						><v-icon>mdi-arrow-left</v-icon></v-btn
 					>
@@ -40,10 +48,39 @@
 					</v-container>
 					<v-select v-model="selectId" :items="selectItems"></v-select>
 				</v-col>
-				<v-col cols="1">
+				<v-col
+					cols="1"
+					v-if="
+						!(
+							$vuetify.breakpoint.name == 'xs' ||
+							$vuetify.breakpoint.name == 'sm'
+						)
+					"
+				>
 					<v-btn
 						color="primary"
 						class="full-height"
+						:disabled="!this.select_id"
+						@click="$emit('step-forward')"
+						><v-icon>mdi-arrow-right</v-icon></v-btn
+					>
+				</v-col>
+			</v-row>
+			<v-row
+				v-if="
+					$vuetify.breakpoint.name == 'xs' || $vuetify.breakpoint.name == 'sm'
+				"
+			>
+				<v-col>
+					<v-btn @click="$emit('step-back')" width="100%"
+						><v-icon>mdi-arrow-left</v-icon></v-btn
+					>
+				</v-col>
+				<v-col>
+					<v-btn
+						color="primary"
+						height="100%"
+						width="100%"
 						:disabled="!this.select_id"
 						@click="$emit('step-forward')"
 						><v-icon>mdi-arrow-right</v-icon></v-btn
@@ -68,21 +105,21 @@ export default {
 	props: ["items", "layout", "price", "select_id"],
 	data() {
 		return {
-			image_url: ""
+			image_url: "",
 		};
 	},
 	computed: {
 		selectId: {
-			get: function() {
+			get: function () {
 				return this.select_id;
 			},
-			set: function(v) {
-				this.image_url = this.items.filter(i => i.id == v)[0].url;
+			set: function (v) {
+				this.image_url = this.items.filter((i) => i.id == v)[0].url;
 				this.$emit("select-update", v);
-			}
+			},
 		},
 		selectItems() {
-			return this.items.map(item => {
+			return this.items.map((item) => {
 				return { text: `${item.name} - ₱${item.price}`, value: item.id };
 			});
 		},
@@ -100,8 +137,8 @@ export default {
 					return 400;
 			}
 			return 200;
-		}
-	}
+		},
+	},
 };
 </script>
 

@@ -151,7 +151,7 @@
 							<v-btn
 								class="mx-auto black--text"
 								color="success"
-								@click="order"
+								@click="orderItem"
 								:disabled="!customer_name || !messenger_name"
 								>Order</v-btn
 							>
@@ -175,7 +175,7 @@ export default {
 		};
 	},
 	methods: {
-		order() {
+		orderItem() {
 			Inertia.post("/shop", {
 				customer_name: this.customer_name,
 				messenger_name: this.messenger_name,
