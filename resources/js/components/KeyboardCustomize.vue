@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<!-- <cable-panel :price="total" :colors="colors"></cable-panel> -->
 		<v-stepper v-model="step">
 			<v-stepper-header>
 				<v-stepper-step :complete="step > 1" step="1">
