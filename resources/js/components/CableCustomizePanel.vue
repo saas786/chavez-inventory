@@ -8,12 +8,30 @@
 			>
 			<v-card-text>
 				<v-row>
-					<v-col cols="1">
+					<!-- Next Button -->
+					<v-col
+						cols="1"
+						v-if="
+							!(
+								$vuetify.breakpoint.name == 'xs' ||
+								$vuetify.breakpoint.name == 'sm'
+							)
+						"
+					>
 						<v-btn class="full-height" @click="$emit('step-back')"
 							><v-icon>mdi-arrow-left</v-icon></v-btn
 						>
 					</v-col>
-					<v-col>
+
+					<!-- Layout for sizes md and up -->
+					<v-col
+						v-if="
+							!(
+								$vuetify.breakpoint.name == 'xs' ||
+								$vuetify.breakpoint.name == 'sm'
+							)
+						"
+					>
 						<v-sheet class="pa-12 mx-12">
 							<v-sparkline
 								:gradient="cableGradient"
@@ -86,12 +104,122 @@
 							</v-col>
 						</v-row>
 					</v-col>
-					<v-col cols="1">
+
+					<!-- Layout for sizes sm and down -->
+					<v-col
+						v-if="
+							$vuetify.breakpoint.name == 'xs' ||
+							$vuetify.breakpoint.name == 'sm'
+						"
+					>
+						<v-sheet class="pa-12 mx-12">
+							<v-sparkline
+								:gradient="cableGradient"
+								gradient-direction="left"
+								type="trend"
+								auto-draw
+								padding="10"
+								height="50"
+								smooth
+								line-width="2"
+								stroke-linecap="round"
+								:value="cableLine"
+							></v-sparkline
+						></v-sheet>
+
+						<v-row>
+							<v-col cols="12" class="col-md-6">
+								<v-slider
+									v-model="cable.cable_length"
+									min="1"
+									max="10"
+									thumb-label
+									:label="`Cable Length ${cable.cable_length} feet`"
+								></v-slider>
+							</v-col>
+							<v-col cols="12" class="col-md-6">
+								<v-slider
+									v-model="cable.coil_length"
+									min="0"
+									:max="cable.cable_length"
+									hint="Coil length"
+									thumb-label
+									:label="`Coil Length ${cable.coil_length} inches`"
+								></v-slider>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col class="justify-center">
+								<v-checkbox
+									label="Detachable?"
+									v-model="cable.detachable"
+								></v-checkbox>
+							</v-col>
+							<v-col class="justify-center">
+								<v-checkbox
+									label="Double Sleeved?"
+									v-model="cable.double_sleeved"
+								></v-checkbox>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col>
+								<v-select
+									label="Cable Color"
+									v-model="cable.color_id"
+									:items="primaryColors"
+									item-text="name"
+									item-value="id"
+								></v-select>
+							</v-col>
+							<v-col v-if="cable.double_sleeved">
+								<v-select
+									label="Sleeve Color"
+									v-model="cable.double_sleeve_color_id"
+									:items="sleeveColors"
+									item-text="name"
+									item-value="id"
+								></v-select>
+							</v-col>
+						</v-row>
+					</v-col>
+
+					<!-- Next Button -->
+					<v-col
+						cols="1"
+						v-if="
+							!(
+								$vuetify.breakpoint.name == 'xs' ||
+								$vuetify.breakpoint.name == 'sm'
+							)
+						"
+					>
 						<v-btn
 							class="full-height"
 							@click="nextStep"
 							color="primary"
 							:disabled="!valid"
+							><v-icon>mdi-arrow-right</v-icon></v-btn
+						>
+					</v-col>
+				</v-row>
+				<v-row
+					v-if="
+						$vuetify.breakpoint.name == 'xs' || $vuetify.breakpoint.name == 'sm'
+					"
+				>
+					<v-col>
+						<v-btn @click="$emit('step-back')" width="100%"
+							><v-icon>mdi-arrow-left</v-icon></v-btn
+						>
+					</v-col>
+					<v-col>
+						<v-btn
+							color="primary"
+							height="100%"
+							width="100%"
+							:disabled="!valid"
+							@click="$emit('step-forward')"
 							><v-icon>mdi-arrow-right</v-icon></v-btn
 						>
 					</v-col>
@@ -120,17 +248,17 @@ export default {
 			);
 		},
 		primaryColor() {
-			let color = this.colors.filter(c => c.id == this.cable.color_id)[0];
+			let color = this.colors.filter((c) => c.id == this.cable.color_id)[0];
 			// console.log("COLOR: ", color);
 			if (!!color) return color;
 			return {
 				name: "No color",
-				hex_code: "#FFF"
+				hex_code: "#FFF",
 			};
 		},
 		sleeveColor() {
 			let color = this.colors.filter(
-				c => c.id == this.cable.double_sleeve_color_id
+				(c) => c.id == this.cable.double_sleeve_color_id
 			)[0];
 			// console.log("COLOR: ", color);
 			if (!!color) return color;
@@ -143,14 +271,14 @@ export default {
 				this.sleeveColor.hex_code,
 				this.sleeveColor.hex_code,
 				this.sleeveColor.hex_code,
-				this.primaryColor.hex_code
+				this.primaryColor.hex_code,
 			];
 		},
 		primaryColors() {
-			return this.colors.filter(color => color.primary == true);
+			return this.colors.filter((color) => color.primary == true);
 		},
 		sleeveColors() {
-			return this.colors.filter(color => color.double_sleeved == true);
+			return this.colors.filter((color) => color.double_sleeved == true);
 		},
 		cableLine() {
 			// return [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0];
@@ -167,7 +295,7 @@ export default {
 			values.push(1);
 			values.push(1);
 			return values;
-		}
+		},
 	},
 	data() {
 		return {
@@ -177,15 +305,15 @@ export default {
 				color_id: "",
 				double_sleeved: false,
 				double_sleeve_color_id: "",
-				detachable: false
-			}
+				detachable: false,
+			},
 		};
 	},
 	methods: {
 		nextStep() {
 			this.$emit("step-forward");
 			this.$emit("select-update", this.cable);
-		}
-	}
+		},
+	},
 };
 </script>

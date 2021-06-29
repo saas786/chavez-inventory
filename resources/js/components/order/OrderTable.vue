@@ -1,28 +1,20 @@
 <template>
 	<v-data-table
 		:headers="headers"
-		single-select
+		:items="tableItems"
+		class="w-100"
 		item-key="id"
 		show-expand
 		show-select
 		:expanded.sync="expanded"
 		@click:row="expand"
 	>
-		<template v-slot:top="props">
+		<template v-slot:top="">
 			<v-toolbar class="mb-2">
 				<v-toolbar-title class="mr-8">Orders</v-toolbar-title>
 
 				<v-toolbar-items> </v-toolbar-items>
 			</v-toolbar>
-		</template>
-
-		<template v-slot:expanded-item="{ item }">
-			<td colspan="6">
-				<catalog-item-details
-					:components="components"
-					:item="item"
-				></catalog-item-details>
-			</td>
 		</template>
 	</v-data-table>
 </template>
@@ -32,8 +24,12 @@ import { Inertia } from "@inertiajs/inertia";
 
 export default {
 	components: {},
-	computed: {},
-	props: [],
+	computed: {
+		tableItems() {
+			return this.orders;
+		},
+	},
+	props: ["orders"],
 	data() {
 		return {
 			selected: [],
@@ -45,15 +41,19 @@ export default {
 				},
 				{
 					text: "Messenger",
-					value: "messenger",
+					value: "messenger_name",
 				},
 				{
 					text: "Tracking ID",
-					value: "track_id",
+					value: "tracking_id",
 				},
 				{
 					text: "Status",
 					value: "status",
+				},
+				{
+					text: "Actions",
+					value: "",
 				},
 			],
 		};

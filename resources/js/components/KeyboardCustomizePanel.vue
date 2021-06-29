@@ -20,7 +20,7 @@
 						><v-icon>mdi-arrow-left</v-icon></v-btn
 					>
 				</v-col>
-				<v-col cols="10">
+				<v-col class="col-md-10 col-sm-12">
 					<v-container fluid>
 						<v-row align="center" justify="center">
 							<v-img

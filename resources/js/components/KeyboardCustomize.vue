@@ -245,7 +245,16 @@
 						<v-card-title>Customer Details</v-card-title>
 						<v-card-text class="text-center">
 							<v-row>
-								<v-col cols="1">
+								<v-col
+									cols="1"
+									v-if="
+										!(
+											$vuetify.breakpoint.name == 'xs' ||
+											$vuetify.breakpoint.name == 'md' ||
+											$vuetify.breakpoint.name == 'sm'
+										)
+									"
+								>
 									<v-btn class="full-height" @click="step--"
 										><v-icon>mdi-arrow-left</v-icon></v-btn
 									>
@@ -275,9 +284,39 @@
 								<v-col cols="1">
 									<v-btn
 										class="full-height"
+										v-if="
+											!(
+												$vuetify.breakpoint.name == 'xs' ||
+												$vuetify.breakpoint.name == 'md' ||
+												$vuetify.breakpoint.name == 'sm'
+											)
+										"
 										:disabled="!customerValid"
 										@click="step++"
 										color="primary"
+										><v-icon>mdi-arrow-right</v-icon></v-btn
+									>
+								</v-col>
+							</v-row>
+							<v-row
+								v-if="
+									$vuetify.breakpoint.name == 'xs' ||
+									$vuetify.breakpoint.name == 'md' ||
+									$vuetify.breakpoint.name == 'sm'
+								"
+							>
+								<v-col>
+									<v-btn @click="step--" width="100%"
+										><v-icon>mdi-arrow-left</v-icon></v-btn
+									>
+								</v-col>
+								<v-col>
+									<v-btn
+										color="primary"
+										height="100%"
+										width="100%"
+										:disabled="!customerValid"
+										@click="step++"
 										><v-icon>mdi-arrow-right</v-icon></v-btn
 									>
 								</v-col>

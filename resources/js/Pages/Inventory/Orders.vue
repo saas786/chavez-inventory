@@ -1,6 +1,6 @@
 <template>
 	<v-container fill-height>
-		<order-table></order-table>
+		<order-table :orders="orders"></order-table>
 	</v-container>
 </template>
 
@@ -16,6 +16,9 @@ export default {
 
 	layout: (h, page) => {
 		return h(Layout, [h(InventoryLayout, [page])]);
+	},
+	mounted() {
+		console.log(this.orders);
 	},
 };
 </script>
