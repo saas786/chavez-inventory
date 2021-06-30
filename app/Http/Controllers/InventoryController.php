@@ -50,16 +50,6 @@ class InventoryController extends Controller
 		]);
 	}
 
-	public function orders()
-	{
-		return Inertia::render('Inventory/Orders', [
-			'orders' => Order::with(
-				'orderable.keyboard.cable.color',
-				'orderable.keyboard.cable.double_sleeve_color'
-			)->get(),
-		]);
-	}
-
 	public function about_faqs()
 	{
 		return Inertia::render('Inventory/AboutFAQs', [

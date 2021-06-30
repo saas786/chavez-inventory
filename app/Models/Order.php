@@ -24,4 +24,13 @@ class Order extends Model
 	{
 		return $this->morphTo();
 	}
+
+	public static function updateById($ids, $status)
+	{
+		foreach ($ids as $id) {
+			$order = Order::findOrFail($id);
+			$order->status = $status;
+			$order->save();
+		}
+	}
 }

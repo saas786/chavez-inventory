@@ -2,19 +2,55 @@
 	<v-data-table
 		:headers="headers"
 		:items="tableItems"
-		class="w-100"
+		style="width: 100%"
 		item-key="id"
 		show-expand
-		style="width: 100%"
 		show-select
 		:expanded.sync="expanded"
-		@click:row="expand"
 	>
+		<!-- Get rid of select all -->
+		<template v-slot:header.data-table-select> </template>
+		<!-- Select Option -->
+		<template v-slot:item.data-table-select="{ item }">
+			<v-checkbox v-model="selected" :value="item.id"></v-checkbox>
+		</template>
+
+		<!-- Top Bar -->
 		<template v-slot:top="">
 			<v-toolbar class="mb-2">
 				<v-toolbar-title class="mr-8">Orders</v-toolbar-title>
 
-				<v-toolbar-items> </v-toolbar-items>
+				<v-toolbar-items>
+					<v-dialog max-width="500">
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn text v-bind="attrs" v-on="on" color="primary"
+								>Update Status</v-btn
+							>
+						</template>
+						<v-card>
+							<v-card-title>Are you sure?</v-card-title>
+							<v-card-text>
+								<v-select
+									:items="statusOptions"
+									label="Status"
+									v-model="status"
+								></v-select>
+
+								You have selected
+								<span class="primary--text">{{ selected.length }}</span>
+								items
+							</v-card-text>
+							<v-card-actions class="justify-center">
+								<v-btn
+									:color="statusColor"
+									:disabled="selected.length == 0 || status == ''"
+									@click="updateStatus"
+									>Update</v-btn
+								>
+							</v-card-actions>
+						</v-card>
+					</v-dialog>
+				</v-toolbar-items>
 			</v-toolbar>
 		</template>
 
@@ -52,16 +88,6 @@
 		<template v-slot:expanded-item="{ headers, item }">
 			<td :colspan="headers.length">
 				<order-details :item="item.orderable"></order-details>
-				<!-- <component
-					:is="
-						item.orderable_type == `App\\Models\\CustomOrder`
-							? `div`
-							: `PrebuiltKeyboardDetails`
-					"
-					:item="item.orderable"
-					readonly
-				>
-				</component> -->
 			</td>
 		</template>
 	</v-data-table>
@@ -76,6 +102,18 @@ export default {
 	computed: {
 		tableItems() {
 			return this.orders;
+		},
+		statusColor() {
+			const options = {
+				Pending: "warning",
+				Rejected: "error",
+				Accepted: "success",
+				Delivered: "primary",
+			};
+
+			console.log(options[this.status]);
+
+			return options[this.status];
 		},
 	},
 	props: ["orders"],
@@ -104,11 +142,9 @@ export default {
 					text: "Status",
 					value: "status",
 				},
-				{
-					text: "Actions",
-					value: "",
-				},
 			],
+			status: "",
+			statusOptions: ["Pending", "Rejected", "Accepted", "Delivered"],
 		};
 	},
 	methods: {
@@ -116,6 +152,12 @@ export default {
 			if (this.expanded.includes(item)) {
 				this.expanded.splice(this.expanded.indexOf(item), 1);
 			} else this.expanded.push(item);
+		},
+		updateStatus() {
+			Inertia.post("/inventory/orders/status", {
+				ids: this.selected,
+				value: this.status,
+			});
 		},
 	},
 };

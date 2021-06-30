@@ -52,6 +52,7 @@
 				<v-btn @click="inertiaVisit('/custom')" text> Custom </v-btn>
 				<v-btn @click="inertiaVisit('/about')" text> About Us </v-btn>
 				<v-btn @click="inertiaVisit('/faq')" text> FAQ </v-btn>
+				<v-btn @click="inertiaVisit('/check')" text> Check </v-btn>
 				<v-menu offset-x offset-y open-on-hover>
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn

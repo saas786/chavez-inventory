@@ -2,9 +2,10 @@
 	<v-data-table
 		:headers="headers"
 		:items="prebuilt_orders"
-		single-select
+		style="width: 100%"
 		item-key="id"
 		show-expand
+		single-select
 		show-select
 		:expanded.sync="expanded"
 		@click:row="expand"

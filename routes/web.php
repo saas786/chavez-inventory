@@ -3,6 +3,7 @@
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\KeyboardComponentController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 
@@ -25,6 +26,13 @@ Route::prefix('/')->group(function () {
 			'shop.custom_order'
 		);
 		Route::get('/', [ShopController::class, 'custom'])->name('shop.custom');
+	});
+
+	Route::prefix('/check')->group(function () {
+		Route::get('/{order:tracking_id}', [OrderController::class, 'show'])->name(
+			'shop.check.show'
+		);
+		Route::get('/', [OrderController::class, 'check'])->name('shop.check');
 	});
 
 	//Authorized Routes
@@ -95,8 +103,12 @@ Route::prefix('/')->group(function () {
 			});
 
 			Route::prefix('orders')->group(function () {
-				Route::get('/', [InventoryController::class, 'orders'])->name(
+				Route::get('/', [OrderController::class, 'index'])->name(
 					'inventory.orders.index'
+				);
+
+				Route::post('/status', [OrderController::class, 'update'])->name(
+					'inventory.orders.update'
 				);
 			});
 		});
