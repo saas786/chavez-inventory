@@ -76,7 +76,7 @@
 				</v-card>
 			</v-col>
 			<v-col cols="4">
-				<v-card height="25vh" link href="/">
+				<v-card height="25vh" link href="/check">
 					<v-img
 						height="100%"
 						src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
