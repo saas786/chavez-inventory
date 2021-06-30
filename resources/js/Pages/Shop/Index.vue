@@ -42,14 +42,36 @@
 		</v-row>
 		<v-row>
 			<v-col cols="4">
-				<v-card height="25vh" link href="/">
+				<v-card height="25vh" link href="/about">
 					<v-img
 						height="100%"
 						src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
 					>
-						<v-row>
-							<div>About Us</div>
-						</v-row>
+						<v-container class="justify-end fill-height align-end">
+							<v-row class="flex-column px-3">
+								<h1 align="right" class="text-h3">About Us</h1>
+								<h3 align="right" class="text-subtitle-1">
+									Learn more about us!
+								</h3>
+							</v-row>
+						</v-container>
+					</v-img>
+				</v-card>
+			</v-col>
+			<v-col cols="4">
+				<v-card height="25vh" link href="/faq">
+					<v-img
+						height="100%"
+						src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
+					>
+						<v-container class="justify-end fill-height align-end">
+							<v-row class="flex-column px-3">
+								<h1 align="right" class="text-h3">FAQs</h1>
+								<h3 align="right" class="text-subtitle-1">
+									Have any questions?
+								</h3>
+							</v-row>
+						</v-container>
 					</v-img>
 				</v-card>
 			</v-col>
@@ -59,21 +81,14 @@
 						height="100%"
 						src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
 					>
-						<v-row>
-							<div>FAQs</div>
-						</v-row>
-					</v-img>
-				</v-card>
-			</v-col>
-			<v-col cols="4">
-				<v-card height="25vh" link href="/">
-					<v-img
-						height="100%"
-						src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-					>
-						<v-row>
-							<div>Something Else</div>
-						</v-row>
+						<v-container class="justify-end fill-height align-end">
+							<v-row class="flex-column px-3">
+								<h1 align="right" class="text-h3">Check Order</h1>
+								<h3 align="right" class="text-subtitle-1">
+									Find out more about your order here.
+								</h3>
+							</v-row>
+						</v-container>
 					</v-img>
 				</v-card>
 			</v-col>
