@@ -5,6 +5,7 @@
 		class="w-100"
 		item-key="id"
 		show-expand
+		style="width: 100%"
 		show-select
 		:expanded.sync="expanded"
 		@click:row="expand"
@@ -16,14 +17,62 @@
 				<v-toolbar-items> </v-toolbar-items>
 			</v-toolbar>
 		</template>
+
+		<!-- Custom Template for Type of Order -->
+		<template v-slot:item.orderable_type="{ item }">
+			<td>
+				{{
+					item.orderable_type == "App\\Models\\CustomOrder"
+						? "Custom"
+						: "Prebuilt"
+				}}
+			</td>
+		</template>
+
+		<!-- Custom Template for Messenger Name -->
+		<template v-slot:item.messenger_name="{ item }">
+			<td>
+				<v-tooltip bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<a
+							v-bind="attrs"
+							v-on="on"
+							class="app-link text-decoration-none"
+							target="_blank"
+							:href="`https://www.facebook.com/${item.messenger_name}`"
+							>{{ item.messenger_name }}</a
+						>
+					</template>
+					<span>Contact on facebook</span>
+				</v-tooltip>
+			</td>
+		</template>
+
+		<!-- Template for Expanded Rows -->
+		<template v-slot:expanded-item="{ headers, item }">
+			<td :colspan="headers.length">
+				<order-details :item="item.orderable"></order-details>
+				<!-- <component
+					:is="
+						item.orderable_type == `App\\Models\\CustomOrder`
+							? `div`
+							: `PrebuiltKeyboardDetails`
+					"
+					:item="item.orderable"
+					readonly
+				>
+				</component> -->
+			</td>
+		</template>
 	</v-data-table>
 </template>
 
 <script>
 import { Inertia } from "@inertiajs/inertia";
+import OrderDetails from "./OrderDetails";
 
 export default {
-	components: {},
+	components: { OrderDetails },
 	computed: {
 		tableItems() {
 			return this.orders;
@@ -46,6 +95,10 @@ export default {
 				{
 					text: "Tracking ID",
 					value: "tracking_id",
+				},
+				{
+					text: "Type",
+					value: "orderable_type",
 				},
 				{
 					text: "Status",

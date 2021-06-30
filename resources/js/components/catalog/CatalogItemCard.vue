@@ -126,7 +126,7 @@
 					</v-col>
 				</v-row>
 			</v-card-text>
-			<v-card-actions class="justify-center">
+			<v-card-actions class="justify-center" v-if="!readonly">
 				<v-dialog max-width="500">
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn
@@ -166,7 +166,7 @@
 <script>
 import { Inertia } from "@inertiajs/inertia";
 export default {
-	props: ["item"],
+	props: ["item", "readonly"],
 	data() {
 		return {
 			customer_name: "",
